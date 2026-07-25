@@ -46,27 +46,49 @@ function VerifyScreen() {
       return;
     }
 
-    try {
-      // Decode Base64 and parse JSON
-      const decodedString = decodeURIComponent(atob(dataParam));
-      const parsedData = JSON.parse(decodedString) as MinifiedPayload;
-      
-      if (!parsedData.vs || !parsedData.ct || !parsedData.id) {
-        throw new Error('Invalid or corrupted pass data. Signature or ID missing.');
+    const verifyDocument = async () => {
+      try {
+        // Decode Base64 and parse JSON
+        const decodedString = decodeURIComponent(atob(dataParam));
+        const parsedData = JSON.parse(decodedString) as MinifiedPayload;
+        
+        if (!parsedData.vs || !parsedData.ct || !parsedData.id) {
+          throw new Error('Invalid or corrupted pass data. Signature or ID missing.');
+        }
+
+        // Fetch live verification status from MongoDB database
+        const res = await fetch(`/api/journey/verify?id=${encodeURIComponent(parsedData.id)}`);
+        if (!res.ok) {
+          throw new Error('Server returned an error during verification.');
+        }
+        const dbResult = await res.json();
+        
+        if (!dbResult.success || !dbResult.valid) {
+          setError(dbResult.error || 'Failed to verify pass. It may be invalid or revoked in the database.');
+          return;
+        }
+
+        // Merge live database status into parsed payload
+        parsedData.st = dbResult.status || parsedData.st;
+
+        setPayload(parsedData);
+        
+        // Load photo from database, payload, or fallback
+        const dbPhoto = dbResult.journey?.pilgrims?.find((p: any) => p.relationship === 'Self' || p.relationship === 'self')?.photo;
+        if (dbPhoto) {
+          setPhotoUrl(dbPhoto);
+        } else if (parsedData.ph) {
+          setPhotoUrl(parsedData.ph);
+        } else if ((citizenProfile as any)?.photo) {
+          setPhotoUrl((citizenProfile as any).photo);
+        }
+      } catch (e: any) {
+        console.error(e);
+        setError(e.message || 'Failed to verify document. The QR code may be tampered with, corrupted, or not issued by the Mahakumbh Authority.');
       }
-      
-      setPayload(parsedData);
-      
-      // Attempt to load photo from payload or fallback to local storage (for prototype demo)
-      if (parsedData.ph) {
-        setPhotoUrl(parsedData.ph);
-      } else if ((citizenProfile as any)?.photo) {
-        setPhotoUrl((citizenProfile as any).photo);
-      }
-    } catch (e) {
-      console.error(e);
-      setError('Failed to verify document. The QR code may be tampered with, corrupted, or not issued by the Mahakumbh Authority.');
-    }
+    };
+
+    verifyDocument();
   }, [dataParam, citizenProfile]);
 
   if (error) {

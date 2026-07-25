@@ -68,17 +68,19 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, user, logout, language } = useAuthStore();
-  const { journey, citizenProfile } = useJourneyStore();
+  const { journey, citizenProfile, fetchJourneyFromDatabase } = useJourneyStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Authenticate user and mount check
+  // Authenticate user, fetch database records, and mount check
   useEffect(() => {
     setMounted(true);
     if (!isAuthenticated) {
       router.replace('/auth/login');
+    } else if (user?.id) {
+      fetchJourneyFromDatabase(user.id);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, user?.id, router, fetchJourneyFromDatabase]);
 
   // Handle direct navigation to locked pages
   useEffect(() => {

@@ -84,8 +84,8 @@ if (typeof window !== 'undefined') {
         try {
           SafeStorage.setItem(`mahakumbh_user_data_${session.user.id}`, JSON.stringify(state));
           
-          // Dynamically synchronize the active journey object with MongoDB Atlas database
-          if (state.journey) {
+          // Dynamically synchronize both the active journey and citizenProfile objects with MongoDB database
+          if (state.journey || state.citizenProfile) {
             await fetch('/api/journey', {
               method: 'POST',
               headers: {
@@ -93,7 +93,8 @@ if (typeof window !== 'undefined') {
               },
               body: JSON.stringify({
                 userId: session.user.id,
-                journey: state.journey,
+                journey: state.journey || null,
+                citizenProfile: state.citizenProfile || null,
               }),
             });
           }

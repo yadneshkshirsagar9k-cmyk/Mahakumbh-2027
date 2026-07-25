@@ -884,16 +884,24 @@ export const useJourneyStore = create<JourneyState>()(
           const res = await fetch(`/api/journey?userId=${encodeURIComponent(userId)}`);
           if (!res.ok) return;
           const data = await res.json();
+          
+          const updates: Partial<JourneyState> = {};
+          
           if (data.journey) {
-            // Map the DB record back to the store's Journey shape
             const dbJ = data.journey;
-            set({
-              journey: {
-                ...dbJ,
-                id: dbJ.journeyId || dbJ.id,
-                audit: dbJ.audit || touchAudit(undefined),
-              } as any,
-            });
+            updates.journey = {
+              ...dbJ,
+              id: dbJ.journeyId || dbJ.id,
+              audit: dbJ.audit || touchAudit(undefined),
+            } as any;
+          }
+          
+          if (data.citizenProfile) {
+            updates.citizenProfile = data.citizenProfile;
+          }
+          
+          if (Object.keys(updates).length > 0) {
+            set(updates);
           }
         } catch (err) {
           console.error('Failed to fetch journey from database:', err);
