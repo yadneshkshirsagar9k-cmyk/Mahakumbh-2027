@@ -202,6 +202,10 @@ interface JourneyState {
   getPipelineStep: () => { stepNumber: number; title: string; desc: string; link: string; btnText: string; isComplete: boolean } | null;
   isPipelineComplete: () => boolean;
 
+  // --- Database Sync ---
+  syncWithDatabase: () => void;
+  fetchJourneyFromDatabase: (userId: string) => Promise<void>;
+
   // --- Session Management ---
   resetStore: () => void;
 }
@@ -425,6 +429,7 @@ export const useJourneyStore = create<JourneyState>()(
         set({ journey });
         if (journey) {
           get().recalculateStatus();
+          get().syncWithDatabase();
         }
       },
 
@@ -480,6 +485,7 @@ export const useJourneyStore = create<JourneyState>()(
 
         set({ journey: updated });
         get().recalculateStatus();
+        get().syncWithDatabase();
       },
 
       // --- Pilgrim Actions ---
@@ -499,6 +505,7 @@ export const useJourneyStore = create<JourneyState>()(
           },
         });
         get().recalculateStatus();
+        get().syncWithDatabase();
       },
 
       removePilgrim: (pilgrimId) => {
@@ -514,6 +521,7 @@ export const useJourneyStore = create<JourneyState>()(
           },
         });
         get().recalculateStatus();
+        get().syncWithDatabase();
       },
 
       updatePilgrim: (pilgrimId, fields) => {
@@ -535,6 +543,7 @@ export const useJourneyStore = create<JourneyState>()(
             audit: touchAudit(current.audit),
           },
         });
+        get().syncWithDatabase();
       },
 
       // --- Booking Actions ---
@@ -555,6 +564,7 @@ export const useJourneyStore = create<JourneyState>()(
           },
         });
         get().recalculateStatus();
+        get().syncWithDatabase();
       },
 
       addDarshanBooking: (booking) => {
@@ -573,6 +583,7 @@ export const useJourneyStore = create<JourneyState>()(
           },
         });
         get().recalculateStatus();
+        get().syncWithDatabase();
       },
 
       removeSnanBooking: (code) => {
@@ -586,6 +597,7 @@ export const useJourneyStore = create<JourneyState>()(
           },
         });
         get().recalculateStatus();
+        get().syncWithDatabase();
       },
 
       removeDarshanBooking: (code) => {
@@ -599,6 +611,7 @@ export const useJourneyStore = create<JourneyState>()(
           },
         });
         get().recalculateStatus();
+        get().syncWithDatabase();
       },
 
       // --- Status Recalculation ---
@@ -835,6 +848,47 @@ export const useJourneyStore = create<JourneyState>()(
             }, 1500);
           }, 1500);
         }, 1000);
+      },
+      // --- Database Sync ---
+      syncWithDatabase: () => {
+        const journey = get().journey;
+        if (!journey) return;
+
+        // We need the userId from the auth store
+        // Import dynamically to avoid circular deps
+        const authState = (typeof window !== 'undefined')
+          ? JSON.parse(localStorage.getItem('mahakumbh_auth_store') || '{}')
+          : null;
+        const userId = authState?.state?.user?.id;
+        if (!userId) return;
+
+        // Fire & forget background POST
+        fetch('/api/journey', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, journey }),
+        }).catch((err) => console.error('Background sync failed:', err));
+      },
+
+      fetchJourneyFromDatabase: async (userId: string) => {
+        try {
+          const res = await fetch(`/api/journey?userId=${encodeURIComponent(userId)}`);
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data.journey) {
+            // Map the DB record back to the store's Journey shape
+            const dbJ = data.journey;
+            set({
+              journey: {
+                ...dbJ,
+                id: dbJ.journeyId || dbJ.id,
+                audit: dbJ.audit || touchAudit(undefined),
+              } as any,
+            });
+          }
+        } catch (err) {
+          console.error('Failed to fetch journey from database:', err);
+        }
       },
 
       // --- Session Management ---

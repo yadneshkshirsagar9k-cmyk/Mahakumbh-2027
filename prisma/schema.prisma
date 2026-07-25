@@ -201,6 +201,10 @@ type VehicleInformation {
   fuelType           String
   fasTagId           String
   vehiclePassId      String
+  rcNumber           String?
+  chassisNumber      String?
+  engineNumber       String?
+  drivingLicenseNumber String?
   audit              AuditMetadata
 }
 

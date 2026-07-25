@@ -18,6 +18,7 @@ import { useJourneyStore } from '@/store/journey-store';
 import { createDefaultAccommodation, createDefaultVehicleInfo, createAuditMetadata, GovernmentApplication } from '@/types/citizen.types';
 import { cn } from '@/utils/cn';
 import { ApplicationDetailsDrawer } from '@/components/bookings/unified-application';
+import { VehicleRegistrationWizard } from '@/components/bookings/vehicle-registration-wizard';
 import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 function getBookingIcon(iconName: string, className?: string) {
@@ -96,14 +97,16 @@ export default function BookingsPortal() {
     setVehicleFormOpen(true);
   };
 
-  const submitVehicleForm = (e: React.FormEvent) => {
-    e.preventDefault();
+  const submitVehicleForm = (wizardData: any) => {
     const mockFormData = {
       ...createDefaultVehicleInfo(),
       vehicleType: vehicleFormCategory.category as any,
-      vehicleNumber: vehicleData.vehicleNumber || `MH-${Math.floor(10 + Math.random() * 89)}-${Math.floor(1000 + Math.random() * 8999)}`,
-      driverName: vehicleData.driverName || 'Verified Pilgrim',
-      driverMobile: vehicleData.driverMobile || '+91 9999999999',
+      vehicleNumber: wizardData.vehicleNumber,
+      chassisNumber: wizardData.chassisNumber,
+      engineNumber: wizardData.engineNumber,
+      driverName: wizardData.driverName,
+      driverMobile: wizardData.driverMobile,
+      drivingLicenseNumber: wizardData.drivingLicenseNumber,
       fuelType: 'Petrol',
       referenceNumber: `VEH-MH27-${Math.floor(100000 + Math.random() * 900000)}`
     };
@@ -111,7 +114,7 @@ export default function BookingsPortal() {
     submitApplication('vehicleInfo', mockFormData);
     simulateApplicationWorkflow('vehicleInfo');
     setVehicleFormOpen(false);
-    alert("Vehicle Registration Application Submitted!");
+    alert("Vehicle Registration Application Submitted Successfully!");
   };
 
   const handleBookLodging = (id: string, name: string, price: number, type: string) => {
@@ -274,47 +277,12 @@ export default function BookingsPortal() {
       {/* Vehicle Form Modal */}
       <AnimatePresence>
          {vehicleFormOpen && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4">
-               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-white rounded-xl shadow-2xl max-w-md w-full overflow-hidden">
-                  <div className="p-4 border-b bg-stone-50">
-                     <h3 className="font-bold text-lg">Vehicle Details ({vehicleFormCategory.label})</h3>
-                     <p className="text-xs text-stone-500">Provide registration details before applying.</p>
-                  </div>
-                  <form onSubmit={submitVehicleForm} className="p-5 space-y-4">
-                     <div>
-                        <label className="block text-xs font-bold text-stone-700 mb-1">Registration Number</label>
-                        <input required type="text" placeholder="e.g. MH-15-AB-1234" className="w-full border p-2 rounded text-sm" value={vehicleData.vehicleNumber} onChange={(e) => setVehicleData({...vehicleData, vehicleNumber: e.target.value})} />
-                     </div>
-                     <div>
-                        <label className="block text-xs font-bold text-stone-700 mb-1">Driver Name</label>
-                        <input required type="text" placeholder="Enter driver name" className="w-full border p-2 rounded text-sm" value={vehicleData.driverName} onChange={(e) => setVehicleData({...vehicleData, driverName: e.target.value})} />
-                     </div>
-                     <div>
-                        <label className="block text-xs font-bold text-stone-700 mb-1">Driver Mobile</label>
-                        <input 
-                           required 
-                           type="tel" 
-                           pattern="\d{10}"
-                           title="Please enter a valid 10-digit mobile number"
-                           maxLength={10}
-                           placeholder="e.g. 9876543210" 
-                           className="w-full border p-2 rounded text-sm" 
-                           value={vehicleData.driverMobile} 
-                           onChange={(e) => {
-                              const val = e.target.value.replace(/\D/g, '');
-                              if (val.length <= 10) {
-                                 setVehicleData({...vehicleData, driverMobile: val});
-                              }
-                           }} 
-                        />
-                     </div>
-                     <div className="flex gap-2 pt-2 border-t">
-                        <button type="button" onClick={() => setVehicleFormOpen(false)} className="flex-1 py-2 rounded bg-stone-100 text-stone-700 font-bold text-sm">Cancel</button>
-                        <button type="submit" className="flex-1 py-2 rounded bg-[#005BAC] text-white font-bold text-sm">Submit Application</button>
-                     </div>
-                  </form>
-               </motion.div>
-            </div>
+            <VehicleRegistrationWizard
+               categoryLabel={vehicleFormCategory.label}
+               categoryCode={vehicleFormCategory.category}
+               onClose={() => setVehicleFormOpen(false)}
+               onSubmit={submitVehicleForm}
+            />
          )}
       </AnimatePresence>
 

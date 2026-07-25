@@ -136,36 +136,20 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
     }
   }, [journey, user]);
 
-  // Adjust pilgrim list length based on numPilgrims
+  // Adjust pilgrim list length based on numPilgrims (handled elsewhere now, just keep a base entry for primary user)
   useEffect(() => {
-    if (step === 4) {
-      const targetCount = numPilgrims;
-      let updated = [...pilgrims];
-      if (updated.length < targetCount) {
-        for (let i = updated.length; i < targetCount; i++) {
-          const base = createDefaultPilgrimProfile(generatePilgrimId());
-          updated.push({
-            ...base,
-            fullName: i === 0 ? user?.name || '' : '',
-            gender: 'Male',
-            mobile: i === 0 ? user?.phone || '' : '',
-            address: {
-              ...base.address,
-              state: 'Maharashtra',
-              country: 'India',
-            },
-            bloodGroup: 'O+ Positive',
-          });
-        }
-      } else if (updated.length > targetCount) {
-        updated = updated.slice(0, targetCount);
-      }
-      setPilgrims(updated);
-      if (activePilgrimIdx >= targetCount) {
-        setActivePilgrimIdx(targetCount - 1);
-      }
+    if (pilgrims.length === 0 && user) {
+      const base = createDefaultPilgrimProfile(generatePilgrimId());
+      setPilgrims([{
+        ...base,
+        fullName: user.name || '',
+        gender: 'Male',
+        mobile: user.phone || '',
+        address: { ...base.address, state: 'Maharashtra', country: 'India' },
+        bloodGroup: 'O+ Positive',
+      }]);
     }
-  }, [step, numPilgrims]);
+  }, [user]);
 
   const handlePurposeToggle = (id: string) => {
     if (selectedPurposes.includes(id)) {
@@ -517,141 +501,7 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
         {step === 4 && (
           <div className="space-y-4">
             <h4 className="font-extrabold text-xs text-[#FF9933] uppercase tracking-wide">
-              Step 4 — Accompanying Pilgrims Information
-            </h4>
-            <div className="flex flex-wrap gap-1 border-b border-[#E5E7EB] pb-2">
-              {pilgrims.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setActivePilgrimIdx(i)}
-                  className={cn(
-                    'px-3 py-1.5 rounded font-bold text-[10px] transition-all cursor-pointer border-none bg-transparent',
-                    activePilgrimIdx === i ? 'bg-[#005BAC] text-white' : 'text-[#374151] hover:bg-[#F5F7FA]'
-                  )}
-                >
-                  Pilgrim {i + 1} {i === 0 && '(Leader)'}
-                </button>
-              ))}
-            </div>
-
-            {pilgrims[activePilgrimIdx] && (
-              <div className="p-4 border border-[#E5E7EB] bg-[#FAFBFC] rounded-xl space-y-4 animate-fadeIn">
-                <div className="flex flex-col sm:flex-row gap-4 items-start">
-                  <div className="w-24 h-24 border-2 border-dashed border-[#E5E7EB] bg-white rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-[#005BAC] relative shrink-0">
-                    {pilgrims[activePilgrimIdx].photo ? (
-                      <img src={pilgrims[activePilgrimIdx].photo} alt="Pilgrim preview" className="w-full h-full object-cover rounded-lg" />
-                    ) : (
-                      <>
-                        <Upload size={20} className="text-[#6B7280] mb-1" />
-                        <span className="text-[8px] text-[#6B7280] font-bold uppercase text-center px-1">Upload Photo</span>
-                      </>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          try {
-                            const compressedUrl = await compressImageToDataUrl(file);
-                            updatePilgrimField(activePilgrimIdx, 'photo', compressedUrl);
-                          } catch (err) {
-                            console.error('Failed to compress photo', err);
-                          }
-                        }
-                      }}
-                      className="absolute inset-0 opacity-0 cursor-pointer"
-                    />
-                  </div>
-
-                  <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs w-full">
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">Full Name *</label>
-                      <input type="text" value={pilgrims[activePilgrimIdx].fullName} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'fullName', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827]" placeholder="e.g. Alok Sharma" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">Date of Birth *</label>
-                      <input type="date" value={pilgrims[activePilgrimIdx].dateOfBirth} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'dateOfBirth', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827]" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">Gender *</label>
-                      <select value={pilgrims[activePilgrimIdx].gender} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'gender', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827] font-semibold">
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">Government ID / Aadhaar *</label>
-                      <input type="text" value={pilgrims[activePilgrimIdx].governmentId.number} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'governmentId.number', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827]" placeholder="Aadhaar or Passport ID" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">Mobile Number *</label>
-                      <input type="tel" value={pilgrims[activePilgrimIdx].mobile} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'mobile', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827]" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">Emergency Contact *</label>
-                      <input type="tel" value={pilgrims[activePilgrimIdx].emergencyContact.phone} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'emergencyContact.phone', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827]" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">State *</label>
-                      <input type="text" value={pilgrims[activePilgrimIdx].address.state} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'address.state', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827]" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="font-bold text-[#374151] block">Blood Group *</label>
-                      <select value={pilgrims[activePilgrimIdx].bloodGroup} onChange={(e) => updatePilgrimField(activePilgrimIdx, 'bloodGroup', e.target.value)} className="w-full p-2 border border-[#E5E7EB] rounded bg-white text-[#111827] font-semibold">
-                        <option>A+ Positive</option>
-                        <option>B+ Positive</option>
-                        <option>O+ Positive</option>
-                        <option>AB+ Positive</option>
-                        <option>A- Negative</option>
-                        <option>B- Negative</option>
-                        <option>O- Negative</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2 pt-2 border-t border-[#E5E7EB]">
-                  <span className="text-[10px] font-black uppercase text-[#111827] tracking-wider block">Medical & Assistance Flags</span>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                    {([
-                      { id: 'diabetes', label: 'Diabetes' },
-                      { id: 'pregnant', label: 'Pregnant' },
-                      { id: 'wheelchairRequired', label: 'Wheelchair Req.' },
-                      { id: 'physicalDisability', label: 'Disabled (Divyang)' },
-                      { id: 'regularMedication', label: 'Medical Assist.' },
-                    ] as const).map((flag) => (
-                      <label
-                        key={flag.id}
-                        className={cn(
-                          'p-2 border rounded-lg flex items-center gap-1.5 cursor-pointer font-bold transition-all text-[9px]',
-                          pilgrims[activePilgrimIdx].medical[flag.id]
-                            ? 'border-red-500 bg-red-550/5 text-red-650'
-                            : 'border-[#E5E7EB] bg-white text-[#374151]'
-                        )}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={pilgrims[activePilgrimIdx].medical[flag.id]}
-                          onChange={(e) => updatePilgrimMedicalFlag(activePilgrimIdx, flag.id, e.target.checked)}
-                          className="w-3.5 h-3.5 accent-red-650 shrink-0"
-                        />
-                        <span>{flag.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {step === 5 && (
-          <div className="space-y-4">
-            <h4 className="font-extrabold text-xs text-[#FF9933] uppercase tracking-wide">
-              Step 5 — Review Your Registration Details
+              Step 4 — Review Your Registration Details
             </h4>
             <div className="bg-[#FAFBFC] border border-[#E5E7EB] rounded-xl p-4 space-y-4 max-h-[300px] overflow-y-auto">
               <div className="space-y-1.5 border-b border-[#E5E7EB]/80 pb-3">
@@ -674,35 +524,17 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
                 </div>
               </div>
 
-              <div className="space-y-1.5 border-b border-[#E5E7EB]/80 pb-3">
+              <div className="space-y-1.5 pb-3">
                 <span className="font-black text-[#005BAC] text-[9px] uppercase tracking-widest block">Accommodation</span>
                 <div className="text-[11px]">
                   Assigned Location: <span className="font-extrabold text-[#111827]">{accommodationName} ({accommodationType})</span>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <span className="font-black text-[#005BAC] text-[9px] uppercase tracking-widest block">Pilgrims (Count: {pilgrims.length})</span>
-                <div className="space-y-1.5">
-                  {pilgrims.map((p, idx) => (
-                    <div key={idx} className="p-2 border border-[#E5E7EB] bg-white rounded-lg flex items-center justify-between text-[10px]">
-                      <div>
-                        <span className="font-extrabold text-[#111827]">{idx + 1}. {p.fullName || 'Accompanying Pilgrim'}</span>
-                        <span className="text-stone-500 font-semibold ml-2">({p.gender}, DOB: {p.dateOfBirth})</span>
-                        <span className="block text-[8px] font-mono text-[#005BAC] mt-0.5">Gov ID: {p.governmentId.number || 'Pending'}</span>
-                      </div>
-                      <span className="font-bold text-[#FF9933] bg-[#FFF5EB] border border-[#FF9933]/15 px-2 py-0.5 rounded text-[8px] uppercase">
-                        {p.bloodGroup}
-                      </span>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {step === 6 && (
+        {step === 5 && (
           <div className="space-y-5 text-center py-4 max-w-sm mx-auto">
             <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500 text-emerald-600 flex items-center justify-center mx-auto">
               <Check size={24} />
@@ -755,19 +587,18 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
           </div>
         )}
       </div>
-
-      {step < 6 && (
+      {step < 5 && (
         <div className="flex justify-between items-center pt-4 border-t border-[#E5E7EB]">
           <button type="button" onClick={handleBack} className="px-4 py-2 border border-[#E5E7EB] text-[#374151] rounded font-bold uppercase tracking-wider text-[10px] transition-all hover:bg-[#FAFBFC] select-none cursor-pointer bg-transparent">
             {step === 1 ? translate('cancel', language) : translate('back', language)}
           </button>
-          <button type="button" onClick={step === 5 ? handleRegister : handleNext} className="px-6 py-2 bg-[#005BAC] hover:bg-[#005BAC]/90 text-white rounded font-bold uppercase tracking-wider text-[10px] transition-all select-none border-none cursor-pointer">
-            {step === 5 ? 'Register Journey' : translate('continue', language)}
+          <button type="button" onClick={step === 4 ? handleRegister : handleNext} className="px-6 py-2 bg-[#005BAC] hover:bg-[#005BAC]/90 text-white rounded font-bold uppercase tracking-wider text-[10px] transition-all select-none border-none cursor-pointer">
+            {step === 4 ? 'Register Journey' : translate('continue', language)}
           </button>
         </div>
       )}
 
-      {step === 6 && (
+      {step === 5 && (
         <div className="flex justify-center pt-2">
           <button type="button" onClick={onClose} className="px-6 py-2.5 bg-[#FF9933] text-white hover:bg-[#E0852A] rounded-xl font-bold uppercase tracking-wider text-[10px] transition-all select-none border-none cursor-pointer">
             Return to Dashboard

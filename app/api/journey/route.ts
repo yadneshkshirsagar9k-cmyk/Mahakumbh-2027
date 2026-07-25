@@ -1,6 +1,45 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+/**
+ * GET /api/journey?userId=<authStoreUserId>
+ * Retrieve the most recent journey for a user from MongoDB.
+ */
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('userId');
+
+    if (!userId) {
+      return NextResponse.json({ error: 'Missing userId query parameter' }, { status: 400 });
+    }
+
+    // Look up the internal user record by the auth-store userId
+    const user = await prisma.user.findUnique({
+      where: { userId }
+    });
+
+    if (!user) {
+      return NextResponse.json({ journey: null, message: 'User not found' }, { status: 200 });
+    }
+
+    // Fetch the most recent journey for this user
+    const journey = await prisma.journey.findFirst({
+      where: { userId: user.id },
+      orderBy: { updatedAt: 'desc' }
+    });
+
+    if (!journey) {
+      return NextResponse.json({ journey: null }, { status: 200 });
+    }
+
+    return NextResponse.json({ success: true, journey });
+  } catch (error: any) {
+    console.error('Get journey API error:', error);
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -61,6 +100,10 @@ export async function POST(request: Request) {
       fuelType: journey.vehicleInfo.fuelType || 'Petrol',
       fasTagId: journey.vehicleInfo.fasTagId || '',
       vehiclePassId: journey.vehicleInfo.vehiclePassId || '',
+      rcNumber: journey.vehicleInfo.rcNumber || null,
+      chassisNumber: journey.vehicleInfo.chassisNumber || null,
+      engineNumber: journey.vehicleInfo.engineNumber || null,
+      drivingLicenseNumber: journey.vehicleInfo.drivingLicenseNumber || null,
       audit: {
         createdAt: journey.vehicleInfo.audit?.createdAt || new Date().toISOString(),
         updatedAt: journey.vehicleInfo.audit?.updatedAt || new Date().toISOString(),

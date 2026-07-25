@@ -323,6 +323,14 @@ export interface VehicleInformation extends Partial<GovernmentApplication> {
   fasTagId: string;
   /** Immutable Vehicle Pass ID (e.g. VP-MH27-00485) — generated once */
   vehiclePassId: string;
+  /** RC (Registration Certificate) Number */
+  rcNumber?: string;
+  /** Chassis Number */
+  chassisNumber?: string;
+  /** Engine Number */
+  engineNumber?: string;
+  /** Driver License Number */
+  drivingLicenseNumber?: string;
   /** Audit trail */
   audit: AuditMetadata;
 }

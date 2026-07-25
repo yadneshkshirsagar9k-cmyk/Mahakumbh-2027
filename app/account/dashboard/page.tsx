@@ -29,10 +29,17 @@ import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
-  const { journey, citizenProfile, archiveCurrentJourney } = useJourneyStore();
+  const { journey, citizenProfile, archiveCurrentJourney, fetchJourneyFromDatabase } = useJourneyStore();
   const syncJourneyCredentials = useCredentialStore(state => state.syncJourneyCredentials);
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Hydrate journey from MongoDB on mount (authoritative source)
+  useEffect(() => {
+    if (user?.id && !journey) {
+      fetchJourneyFromDatabase(user.id);
+    }
+  }, [user?.id]);
 
   useEffect(() => {
     if (journey && citizenProfile) {
