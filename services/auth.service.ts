@@ -192,6 +192,11 @@ export class AuthService {
         category: params.category,
         state: params.state || '',
         district: params.district || '',
+        address: params.address || '',
+        aadhaar: params.aadhaar || '',
+        gender: params.gender || '',
+        dob: params.dob || '',
+        emergencyContact: params.emergencyContact || '',
       }),
     });
 
@@ -211,11 +216,46 @@ export class AuthService {
     const regId = 'MK-' + Math.floor(100000 + Math.random() * 900000);
     const store = useJourneyStore.getState();
 
-    // Fully initialize profile
+    // Fully initialize profile with registration inputs
     store.updateCitizenProfile({
       fullName: params.fullName,
-      primaryMobile: identifier,
+      primaryMobile: params.mobile || params.nriMobile || identifier,
       email: params.email || '',
+      gender: params.gender || '',
+      dateOfBirth: params.dob || '',
+      nationality: params.category === 'foreign' ? 'Foreign National' : 'Indian Citizen',
+      address: {
+        houseFlatNumber: '',
+        buildingSociety: '',
+        streetRoad: params.address || '',
+        areaLocality: '',
+        villageTownCity: params.district || '',
+        talukaTehsil: '',
+        district: params.district || '',
+        state: params.state || '',
+        country: params.category === 'foreign' ? 'Foreign' : 'India',
+        pinCode: '',
+      },
+      governmentIds: params.aadhaar ? [{
+        type: 'Aadhaar',
+        number: params.aadhaar,
+        verificationStatus: 'Not Verified',
+        verifiedBy: '',
+        verificationMethod: '',
+        verificationTimestamp: '',
+        maskedDisplay: 'XXXX-XXXX-' + params.aadhaar.slice(-4),
+      } as any] : [],
+      emergencyContacts: {
+        primary: {
+          name: 'Primary Contact',
+          relationship: 'Family',
+          phone: params.emergencyContact || '',
+          notes: '',
+        },
+        secondary: { name: '', relationship: '', phone: '', notes: '' },
+        doctor: { name: '', relationship: '', phone: '', notes: '' },
+        localContact: { name: '', relationship: '', phone: '', notes: '' },
+      },
     });
 
     // Fully initialize journey instead of updating a null object
