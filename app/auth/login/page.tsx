@@ -773,10 +773,9 @@ function LoginForm({ language }: { language: 'en' | 'hi' | 'mr' }) {
           <>
             <div>
               <p className="text-xs font-semibold text-[#363636] mb-2">{labelT('login_category')} <span className="text-red-600">*</span></p>
-              <div className="grid grid-cols-2 gap-1 bg-[#F5F7FA] p-1 rounded border border-[#DFDFDF] text-xs font-semibold">
+              <div className="grid grid-cols-3 gap-1 bg-[#F5F7FA] p-1 rounded border border-[#DFDFDF] text-xs font-semibold">
                 {[
                   { value: 'indian', labelKey: 'login_mobile' },
-                  { value: 'nri', labelKey: 'login_nri_id' },
                   { value: 'foreign', labelKey: 'login_passport' },
                   { value: 'operator', labelKey: 'login_op_id' },
                 ].map((t) => (
