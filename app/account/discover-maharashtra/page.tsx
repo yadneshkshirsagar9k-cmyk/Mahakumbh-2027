@@ -67,7 +67,11 @@ const DESTINATIONS: Destination[] = [
     howToReach: 'Situated in Trimbak town, 28 km from Nashik city. Well connected by state transport buses and private cabs from Nashik Central Bus Stand.',
     rituals: ['Rudrabhishek Puja', 'Kaal Sarp Dosh Nivaran Puja', 'Tripindi Shradha', 'Mahamrityunjay Mantra Jaap', 'Panchamrut Snan'],
     detailedInfo: 'Trimbakeshwar Shiva Temple houses one of the 12 sacred Jyotirlingas. The unique feature of the Jyotirlinga here is its three faces representing Lord Brahma, Lord Vishnu, and Lord Rudra (Shiva). The temple is built of black stone in the classic Nagara architectural style and sits at the foothills of the Brahmagiri Mountain range. The holy Godavari River originates from the Brahmagiri hills at Kushavarta Kund, the sacred pond where millions of pilgrims bathe during the Simhastha Mahakumbh Mela to wash away their sins.',
-    images: ['https://commons.wikimedia.org/wiki/Special:FilePath/Trimbakeshwar_Shiva_Temple.jpg']
+    images: [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Trimbakeshwar_Shiva_Temple.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Trimbakeshwar_Temple,_Nashik.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Trimbakeshwar_Shiva_Temple_2005.jpg'
+    ]
   },
   {
     id: 'ramkund',
@@ -85,7 +89,11 @@ const DESTINATIONS: Destination[] = [
     howToReach: 'Located in Nashik city. Easily accessible by local auto-rickshaws, city buses, and cabs from Nashik Railway Station.',
     rituals: ['Asthi Visarjan (Ashes immersion)', 'Pitri Shradha & Tarpan', 'Ganga Aarti (Every Evening)', 'Holy Dip (Snan)'],
     detailedInfo: 'Ram Kund is the holiest spot on the Godavari River ghats in Nashik. According to the Ramayana, Lord Rama spent a significant part of his 14-year exile here and regularly bathed here. Lord Rama also performed the funeral rites and ash immersion of his father King Dasharatha at this pool. It is believed that the water of Ram Kund possesses unique properties that dissolve bone ashes instantly, making it a key national center for ancestral rites.',
-    images: ['https://commons.wikimedia.org/wiki/Special:FilePath/Ramkund_Nashik.jpg']
+    images: [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Ram_Kund,_Nashik.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Ramkund_Nashik.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Panchavati-Ramkund.jpg'
+    ]
   },
 
   {
@@ -104,7 +112,11 @@ const DESTINATIONS: Destination[] = [
     howToReach: 'Located 30 km from Aurangabad city (Chhatrapati Sambhajinagar). Regularly served by MSRTC buses, taxi tours, and auto-rickshaws.',
     rituals: ['Historical exploration', 'Cave meditation sessions', 'Photography'],
     detailedInfo: 'Ellora is a UNESCO World Heritage site representing the pinnacle of ancient Indian rock-cut architecture. Spanning Cave 1 to 34, it houses Buddhist, Hindu, and Jain temples carved side-by-side between the 6th and 10th centuries, demonstrating religious harmony. The crown jewel is Cave 16 (The Kailash Temple), the largest monolithic rock excavation in the world. Carved from top to bottom out of a single volcanic basalt cliff, ancient sculptors removed over 200,000 tons of rock to carve this complex structure.',
-    images: ['https://commons.wikimedia.org/wiki/Special:FilePath/Kailash_Temple_at_Ellora.jpg']
+    images: [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Ellora_Caves_Aurangabad_Maharashtra.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/The_Beautiful_Ellora_Caves.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Ellora_caves!.jpg'
+    ]
   },
   {
     id: 'ajanta-caves',
@@ -122,7 +134,11 @@ const DESTINATIONS: Destination[] = [
     howToReach: 'Situated 100 km from Aurangabad. Connected via regular tourism buses. Visitors must park at the T-point and board eco-friendly green buses to reach the caves.',
     rituals: ['Art Appreciation Tours', 'Buddhist Vihara Meditation', 'Scenic Viewpoint Hiking'],
     detailedInfo: 'The Ajanta Caves are 30 rock-cut Buddhist cave monuments dating from the 2nd century BCE to about 480 CE. Nestled in a horse-shoe shaped gorge along the Waghora River, the caves served as monsoon retreats for Buddhist monks. Ajanta is universally renowned for its classic frescoes and wall paintings, which represent the finest surviving examples of ancient Indian art. The murals depict stories from Jataka tales, illustrating the life events and past births of Gautama Buddha.',
-    images: ['https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta_Caves_panorama.jpg']
+    images: [
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta_Caves,_India,_Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta_Padmapani.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta_(63).jpg'
+    ]
   }
 ];
 
