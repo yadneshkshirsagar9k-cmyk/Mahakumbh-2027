@@ -326,7 +326,7 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
       selectedTemples,
       snanBookings: journey?.snanBookings || [],
       darshanBookings: journey?.darshanBookings || [],
-      journeyPlannerData: journey?.journeyPlannerData || null,
+      journeyPlannerData: journey?.journeyPlannerData || {},
       journeyProgress: 25,
       timelineEvents: [],
       audit: createAuditMetadata(),

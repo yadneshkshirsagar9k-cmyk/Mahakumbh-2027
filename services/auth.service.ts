@@ -184,7 +184,7 @@ export class AuthService {
         selectedTemples: journey.selectedTemples || [],
         snanBookings: journey.snanBookings || [],
         darshanBookings: journey.darshanBookings || [],
-        journeyPlannerData: journey.journeyPlannerData || null,
+        journeyPlannerData: journey.journeyPlannerData || {},
         journeyProgress: journey.journeyProgress || 0,
         journeyMetadata: journey.journeyMetadata || { exitZone: '', category: 'Individual', purpose: [], arrivalStation: '', departurePoint: '', sector: '', zone: '', route: '', batch: '', expectedArrivalDate: '', expectedArrivalTime: '', expectedDepartureDate: '', expectedDepartureTime: '' },
         timelineEvents: journey.timelineEvents || [],
