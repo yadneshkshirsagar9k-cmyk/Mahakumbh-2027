@@ -3,8 +3,8 @@ import { ShieldCheck, XCircle, Users, Calendar, Bus, MapPin, CheckCircle, Info }
 
 export const dynamic = 'force-dynamic';
 
-export default async function VerifyJourneyPage({ params }: { params: { journeyId: string } }) {
-  const { journeyId } = params;
+export default async function VerifyJourneyPage({ params }: { params: Promise<{ journeyId: string }> }) {
+  const { journeyId } = await params;
 
   // Search by the unique Journey ID assigned to the user
   const journey = await prisma.journey.findUnique({
