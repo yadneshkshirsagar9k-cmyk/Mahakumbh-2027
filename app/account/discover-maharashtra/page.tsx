@@ -145,13 +145,13 @@ export default function DiscoverMaharashtra() {
   // ─── DEDICATED DETAILS SUB-PAGE VIEW ───
   if (selectedDest) {
     return (
-      <div className="space-y-6 text-[#1A1A1A] dark:text-stone-200 animate-fadeIn">
+      <div className="space-y-6 text-[#1A1A1A] animate-fadeIn">
         
         {/* Back header button */}
-        <div className="flex items-center justify-between pb-4 border-b border-[#DFDFDF] dark:border-white/10">
+        <div className="flex items-center justify-between pb-4 border-b border-[#E5E7EB]">
           <button
             onClick={() => setSelectedDestId(null)}
-            className="flex items-center gap-2 text-xs font-bold text-[#022B5D] dark:text-white bg-white dark:bg-[#011D40] border border-[#DFDFDF] dark:border-white/10 px-4 py-2 rounded-xl shadow-sm hover:bg-slate-50 dark:hover:bg-white/5 transition-all cursor-pointer"
+            className="flex items-center gap-2 text-xs font-bold text-[#022B5D] bg-white border border-[#E5E7EB] px-4 py-2 rounded-xl shadow-sm hover:bg-slate-50 transition-all cursor-pointer"
           >
             <ArrowLeft size={14} />
             <span>Back to Explorer</span>
@@ -163,7 +163,7 @@ export default function DiscoverMaharashtra() {
         </div>
 
         {/* Hero Section Container */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#0b1623] to-[#1e3d68] text-white shadow-xl relative overflow-hidden">
+        <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-[#005BAC] to-[#0070D2] text-white shadow-md relative overflow-hidden">
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
           <div className="relative z-10 space-y-3 max-w-3xl">
             <div className="flex items-center gap-2 text-xs font-bold text-stone-300">
@@ -186,38 +186,38 @@ export default function DiscoverMaharashtra() {
           <div className="lg:col-span-8 space-y-6">
             
             {/* Detailed description card */}
-            <div className="bg-white dark:bg-[#011D40] border border-[#DFDFDF] dark:border-white/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
-              <h3 className="text-sm font-extrabold text-[#022B5D] dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-[#EFEFEF] dark:border-white/5 pb-2">
+            <div className="bg-white border border-[#E5E7EB] p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+              <h3 className="text-sm font-extrabold text-[#005BAC] uppercase tracking-wider flex items-center gap-2 border-b border-[#E5E7EB] pb-2">
                 <Award size={16} className="text-[#F26F21]" />
                 <span>Overview & History</span>
               </h3>
-              <p className="text-xs text-[#444] dark:text-stone-300 leading-relaxed">
+              <p className="text-xs text-[#374151] leading-relaxed font-medium">
                 {selectedDest.detailedInfo}
               </p>
             </div>
 
             {/* Travel Directions and accessibility */}
-            <div className="bg-white dark:bg-[#011D40] border border-[#DFDFDF] dark:border-white/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
-              <h3 className="text-sm font-extrabold text-[#022B5D] dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-[#EFEFEF] dark:border-white/5 pb-2">
+            <div className="bg-white border border-[#E5E7EB] p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+              <h3 className="text-sm font-extrabold text-[#005BAC] uppercase tracking-wider flex items-center gap-2 border-b border-[#E5E7EB] pb-2">
                 <Footprints size={16} className="text-[#F26F21]" />
                 <span>Travel & Route Directions</span>
               </h3>
-              <p className="text-xs text-[#444] dark:text-stone-300 leading-relaxed">
+              <p className="text-xs text-[#374151] leading-relaxed font-medium">
                 {selectedDest.howToReach}
               </p>
             </div>
 
             {/* Rituals and Pujas card */}
-            <div className="bg-white dark:bg-[#011D40] border border-[#DFDFDF] dark:border-white/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
-              <h3 className="text-sm font-extrabold text-[#022B5D] dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-[#EFEFEF] dark:border-white/5 pb-2">
+            <div className="bg-white border border-[#E5E7EB] p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+              <h3 className="text-sm font-extrabold text-[#005BAC] uppercase tracking-wider flex items-center gap-2 border-b border-[#E5E7EB] pb-2">
                 <Landmark size={16} className="text-[#F26F21]" />
                 <span>Key Rituals & Sacred Timings</span>
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {selectedDest.rituals.map((ritual, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl bg-[#FAFBFC] border border-[#E5E7EB] text-xs">
+                  <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs shadow-sm">
                     <Check size={14} className="text-[#005BAC] shrink-0 mt-0.5" />
-                    <span className="font-semibold">{ritual}</span>
+                    <span className="font-bold text-slate-700">{ritual}</span>
                   </div>
                 ))}
               </div>
