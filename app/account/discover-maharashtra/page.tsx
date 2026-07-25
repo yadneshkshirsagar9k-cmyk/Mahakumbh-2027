@@ -49,7 +49,11 @@ const DESTINATIONS: Destination[] = [
     howToReach: 'Located in Shirdi city center. Connected via Shirdi Railway Station (SNSI) and Shirdi Airport (15 km away). Regular bus connectivity from Mumbai, Pune, and Nashik.',
     rituals: ['Kakad Aarti (4:30 AM)', 'Madhyan Aarti (12:00 PM)', 'Dhoop Aarti (Sunset)', 'Shej Aarti (10:30 PM)', 'Satyanarayan Pooja'],
     detailedInfo: 'Shri Saibaba Sansthan Temple is the governing body of the world-famous shrine of Saint Saibaba of Shirdi. Saibaba is revered as one of the greatest saints ever born in India, who preached "Shraddha" (faith) and "Saburi" (patience) as key paths to spiritual liberation. The temple complex spans across a massive campus hosting the main Samadhi Mandir, Dwarkamai (the mosque where Baba lived), Chavadi, Gurusthan, and Lendi Baug. The Sansthan runs one of the largest community kitchens in Asia, serving free Prasad meals to over 100,000 devotees daily.',
-    images: ['/assets/images/shirdi/shirdi-1.jpg', '/assets/images/shirdi/shirdi-2.jpg', '/assets/images/shirdi/shirdi-3.jpg']
+    images: [
+      '/assets/images/shirdi/shirdi-1.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Sri_Sai_Baba_Temple_,_Shirdi.jpg',
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Shirdi_Sai_Baba_Samadhi.jpg'
+    ]
   },
   {
     id: 'trimbakeshwar',
