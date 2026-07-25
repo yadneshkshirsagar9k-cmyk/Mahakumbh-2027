@@ -54,12 +54,21 @@ export const useCredentialStore = create<CredentialState>()(
       syncJourneyCredentials: (journey, citizen) => {
         if (!journey || !citizen) return [];
         
-        const typesToEnsure = [
-          CredentialType.REGISTRATION_CERTIFICATE,
-          CredentialType.PILGRIM_IDENTITY,
-          CredentialType.VEHICLE_PASS,
-          CredentialType.EMERGENCY_CARD,
-        ];
+        // Define strict validation gates for credential generation
+        const hasPilgrims = journey.pilgrims && journey.pilgrims.length >= 1;
+        const hasBookings = (journey.snanBookings && journey.snanBookings.length >= 1) || 
+                            (journey.darshanBookings && journey.darshanBookings.length >= 1);
+        const pilgrimPassCondition = hasPilgrims && hasBookings;
+
+        const hasVehicleDetails = journey.hasPrivateVehicle && 
+                                  journey.vehicleInfo && 
+                                  journey.vehicleInfo.vehicleNumber && 
+                                  journey.vehicleInfo.vehicleNumber.trim() !== '';
+        const vehiclePassCondition = hasVehicleDetails;
+
+        const hasEmergencyContact = citizen.emergencyContacts?.primary?.phone && 
+                                    citizen.emergencyContacts.primary.phone.trim() !== '';
+        const emergencyCardCondition = hasEmergencyContact;
         
         set((state) => {
           // 1. Deduplicate existing credentials (keep the latest one)
@@ -72,13 +81,27 @@ export const useCredentialStore = create<CredentialState>()(
           });
           const dedupedCredentials = Array.from(uniqueCredentials.values());
 
-          // 2. Generate missing credentials
+          // 2. Generate missing credentials ONLY if respective conditions are satisfied
           const newCreds: GovernmentCredential[] = [];
-          for (const type of typesToEnsure) {
-            const exists = dedupedCredentials.some(c => c.credentialType === type && c.linkedJourneyId === journey.id && c.isActive);
-            if (!exists) {
-              newCreds.push(CredentialGenerationService.generateNewCredential(type, journey, citizen));
-            }
+          
+          // REGISTRATION_CERTIFICATE: always generated once journey is active
+          if (!dedupedCredentials.some(c => c.credentialType === CredentialType.REGISTRATION_CERTIFICATE && c.linkedJourneyId === journey.id && c.isActive)) {
+            newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.REGISTRATION_CERTIFICATE, journey, citizen));
+          }
+
+          // PILGRIM_IDENTITY: requires pilgrims added & snan/darshan slots booked
+          if (pilgrimPassCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.PILGRIM_IDENTITY && c.linkedJourneyId === journey.id && c.isActive)) {
+            newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.PILGRIM_IDENTITY, journey, citizen));
+          }
+
+          // VEHICLE_PASS: requires private vehicle details completed
+          if (vehiclePassCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.VEHICLE_PASS && c.linkedJourneyId === journey.id && c.isActive)) {
+            newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.VEHICLE_PASS, journey, citizen));
+          }
+
+          // EMERGENCY_CARD: requires emergency contact numbers
+          if (emergencyCardCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.EMERGENCY_CARD && c.linkedJourneyId === journey.id && c.isActive)) {
+            newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.EMERGENCY_CARD, journey, citizen));
           }
           
           if (newCreds.length === 0 && dedupedCredentials.length === state.credentials.length) {
