@@ -59,17 +59,17 @@ export default function DashboardPage() {
             </p>
           </div>
           <button
-            onClick={() => router.push('/account/dashboard')}
+            onClick={() => { window.location.href = '/account/dashboard'; }}
             className="flex items-center gap-1.5 px-3 py-1.5 border border-[#E5E7EB] hover:bg-[#F5F7FA] hover:text-[#005BAC] rounded text-xs font-bold transition-all text-[#374151] cursor-pointer bg-white"
           >
             <X size={14} />
-            <span>Exit Wizard</span>
+            <span>Exit</span>
           </button>
         </div>
 
         <RegistrationWizard
           editTourId={editId}
-          onClose={() => router.push('/account/dashboard')}
+          onClose={() => { window.location.href = '/account/dashboard'; }}
         />
       </div>
     );
