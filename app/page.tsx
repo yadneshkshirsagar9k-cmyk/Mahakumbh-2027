@@ -19,6 +19,7 @@ import { WelcomePopup } from '@/components/welcome/welcome-popup';
 import { useWelcomePopup } from '@/hooks/use-welcome-popup';
 import { HelpCircle } from 'lucide-react';
 import { cn } from '@/utils/cn';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export default function Home() {
   const { isOpen, close, reopen } = useWelcomePopup();
@@ -50,28 +51,30 @@ export default function Home() {
       <Footer />
 
       {/* Floating Action Button for CM's Welcome Address */}
-      <div className="fixed bottom-6 right-24 z-[100]">
-        <button
-          onClick={reopen}
-          className={cn(
-            'inline-flex items-center gap-2',
-            'px-5 py-3 rounded-full',
-            'text-sm font-semibold tracking-wide',
-            'bg-gov-blue-500 hover:bg-gov-blue-600',
-            'text-white border border-gold-500/20',
-            'shadow-premium hover:shadow-premium-hover',
-            'active:scale-95 transition-all duration-200',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2'
-          )}
-          aria-label="Read Chief Minister's message again"
-        >
-          <HelpCircle size={18} className="text-saffron-300 animate-pulse" />
-          <span>CM Message</span>
-        </button>
-      </div>
+      {GOVERNMENT_PORTAL_ENABLED && (
+        <div className="fixed bottom-6 right-24 z-[100]">
+          <button
+            onClick={reopen}
+            className={cn(
+              'inline-flex items-center gap-2',
+              'px-5 py-3 rounded-full',
+              'text-sm font-semibold tracking-wide',
+              'bg-gov-blue-500 hover:bg-gov-blue-600',
+              'text-white border border-gold-500/20',
+              'shadow-premium hover:shadow-premium-hover',
+              'active:scale-95 transition-all duration-200',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2'
+            )}
+            aria-label="Read Chief Minister's message again"
+          >
+            <HelpCircle size={18} className="text-saffron-300 animate-pulse" />
+            <span>CM Message</span>
+          </button>
+        </div>
+      )}
 
       {/* Official Government Welcome Popup */}
-      <WelcomePopup isOpen={isOpen} onClose={close} />
+      {GOVERNMENT_PORTAL_ENABLED && <WelcomePopup isOpen={isOpen} onClose={close} />}
     </div>
   );
 }

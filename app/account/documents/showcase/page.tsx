@@ -19,6 +19,7 @@ import { EmergencyMedicalCardBlueprint } from '@/components/credentials/blueprin
 
 import { ArrowLeft, Monitor, Smartphone, Printer, Settings, Download } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export default function CredentialShowcasePage() {
   const router = useRouter();
@@ -209,7 +210,7 @@ export default function CredentialShowcasePage() {
           <div>
             <h1 className="text-lg font-black text-[#111827] flex items-center gap-2">
               <Settings size={18} className="text-[#005BAC]" />
-              Government Document Viewer
+              {GOVERNMENT_PORTAL_ENABLED ? 'Government Document Viewer' : 'Credential Document Viewer'}
             </h1>
             <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Official Credential Preview & Export</p>
           </div>

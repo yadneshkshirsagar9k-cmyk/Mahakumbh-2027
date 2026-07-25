@@ -22,6 +22,8 @@ import { motionVariants, motionTransitions } from '@/lib/animations';
 import { useAuthStore } from '@/store/auth-store';
 
 
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
+// We still import GlobalSearch to keep code intact, but conditionalize its render
 import { GlobalSearch } from './global-search';
 
 // ============================================================
@@ -207,7 +209,7 @@ export function Navbar() {
 
         {/* Right Side: Global Search, Auth, and Mobile Menu */}
         <div className="flex items-center gap-2 lg:gap-4">
-          <GlobalSearch />
+          {GOVERNMENT_PORTAL_ENABLED && <GlobalSearch />}
           
           <div className="hidden lg:flex items-center">
             {mounted && isAuthenticated ? (

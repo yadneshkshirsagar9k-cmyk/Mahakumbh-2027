@@ -33,6 +33,7 @@ import {
   CentreCategory, 
   CATEGORY_METADATA 
 } from '@/constants/registration-centres';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 import { MapWrapper } from '@/components/maps/map-wrapper';
 import { cn } from '@/utils/cn';
 import { motionVariants, motionTransitions } from '@/lib/animations';
@@ -66,7 +67,7 @@ export function RegistrationNetwork() {
     { value: 'railway', label: 'Railway Stations' },
     { value: 'bus', label: 'Bus Stands' },
     { value: 'airport', label: 'Airports' },
-    { value: 'government', label: 'Govt Centres' },
+    { value: 'government', label: GOVERNMENT_PORTAL_ENABLED ? 'Govt Centres' : 'Official Centres' },
     { value: 'medical', label: 'Medical Screening' },
     { value: 'police', label: 'Police Help' },
     { value: 'info', label: 'Info Centres' }

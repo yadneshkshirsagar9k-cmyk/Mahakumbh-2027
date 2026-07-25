@@ -14,6 +14,7 @@ import {
   QrCode
 } from 'lucide-react';
 import { CredentialStatus, VerificationStatus, CredentialType, DocumentCategory } from '@/types/credential.types';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export default function MyDocumentsPage() {
   const citizenProfile = useJourneyStore(state => state.citizenProfile);
@@ -70,7 +71,7 @@ export default function MyDocumentsPage() {
               My Documents
             </h1>
             <p className="text-xs font-bold text-[#6B7280]">
-              View, download, and manage your official Government credentials.
+              View, download, and manage your official {GOVERNMENT_PORTAL_ENABLED ? 'Government ' : ''}credentials.
             </p>
           </div>
           <button 
@@ -134,7 +135,7 @@ export default function MyDocumentsPage() {
                       
                       <div className="pt-3 border-t border-gray-100 flex items-center gap-2 text-[10px] text-gray-500 font-medium">
                         <ShieldCheck size={12} className="text-[#005BAC]" />
-                        Official Government Credential
+                        Official {GOVERNMENT_PORTAL_ENABLED ? 'Government ' : ''}Credential
                       </div>
                     </div>
                     

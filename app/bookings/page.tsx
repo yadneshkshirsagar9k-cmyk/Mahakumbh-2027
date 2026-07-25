@@ -18,6 +18,7 @@ import { useJourneyStore } from '@/store/journey-store';
 import { createDefaultAccommodation, createDefaultVehicleInfo, createAuditMetadata, GovernmentApplication } from '@/types/citizen.types';
 import { cn } from '@/utils/cn';
 import { ApplicationDetailsDrawer } from '@/components/bookings/unified-application';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 function getBookingIcon(iconName: string, className?: string) {
   switch (iconName) {
@@ -159,13 +160,13 @@ export default function BookingsPortal() {
           
           <div className="text-center space-y-4">
             <span className="text-xs md:text-sm font-semibold tracking-widest uppercase text-[#005BAC] bg-[#F5F7FA] px-3.5 py-1.5 rounded-full border border-[#E5E7EB] inline-block">
-              Government Application Portal
+              {GOVERNMENT_PORTAL_ENABLED ? 'Government ' : 'Service '}Application Portal
             </span>
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#111827] font-[var(--font-heading)] leading-tight">
               Unified Services Dashboard
             </h1>
             <p className="text-sm sm:text-base text-[#6B7280] max-w-2xl mx-auto leading-relaxed">
-              Submit, track, and manage your official Government digital applications.
+              Submit, track, and manage your official {GOVERNMENT_PORTAL_ENABLED ? 'Government ' : ''}digital applications.
             </p>
           </div>
 

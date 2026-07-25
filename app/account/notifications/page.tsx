@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { Bell, ShieldAlert, CloudRain, HeartPulse, Sparkles, MessageSquare, Check, Eye } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useJourneyStore } from '@/store/journey-store';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 interface NotificationItem {
   id: string;
@@ -203,7 +204,7 @@ export default function NotificationsPage() {
             Notification Center
           </h1>
           <p className="text-xs text-[#6B7280]">
-            View government announcements, emergency alerts, and slot updates.
+            View {GOVERNMENT_PORTAL_ENABLED ? 'government' : 'official'} announcements, emergency alerts, and slot updates.
           </p>
         </div>
         {unreadCount > 0 && (

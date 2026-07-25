@@ -4,6 +4,7 @@ import { useCredentialContext } from './CredentialContext';
 import { getOfficialRegistrationRecord, generateQrPayload } from '@/utils/credential-generator';
 import { CredentialType, type GovernmentCredential } from '@/types/credential.types';
 import type { OfficialRegistrationRecord } from '@/types/citizen.types';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 // Existing Zones
 import { GovernmentHeaderZone } from '../zones/GovernmentHeaderZone';
@@ -36,10 +37,10 @@ const PilgrimSmartIdCardView = ({ record, credential }: { record: OfficialRegist
       {/* Top Banner Bar (34px) */}
       <div className="w-full bg-gradient-to-r from-[#005BAC] via-[#0A3161] to-[#005BAC] text-white px-2 py-1 flex items-center justify-between border-b-2 border-[#EA580C] z-10 shrink-0 h-[34px]">
         <div className="w-6 h-6 rounded-full bg-white border border-amber-400 flex items-center justify-center shrink-0 shadow-2xs">
-          <span className="text-[9px] font-black text-[#005BAC] leading-none">GOV</span>
+          <span className="text-[9px] font-black text-[#005BAC] leading-none">{GOVERNMENT_PORTAL_ENABLED ? 'GOV' : 'MHK27'}</span>
         </div>
         <div className="flex-1 text-center px-1">
-          <div className="text-[7.5px] font-bold text-amber-300 uppercase tracking-widest leading-none">GOVERNMENT OF MAHARASHTRA • SIMHASTHA 2027</div>
+          <div className="text-[7.5px] font-bold text-amber-300 uppercase tracking-widest leading-none">{GOVERNMENT_PORTAL_ENABLED ? 'GOVERNMENT OF MAHARASHTRA' : 'NASHIK SIMHASTHA COMMITTEE'} • SIMHASTHA 2027</div>
           <h2 className="text-[10px] font-black uppercase tracking-wider text-white leading-tight">PILGRIM SMART IDENTITY CARD</h2>
         </div>
         <div className="w-6 h-6 rounded-full bg-[#047857] border border-white flex items-center justify-center shrink-0">
@@ -124,7 +125,7 @@ const EmergencySmartIdCardView = ({ record, credential }: { record: OfficialRegi
           ➕
         </div>
         <div className="flex-1 text-center px-1">
-          <div className="text-[7.5px] font-bold text-amber-200 uppercase tracking-widest leading-none">HEALTH & FAMILY WELFARE DEPT • GOVT OF MH</div>
+          <div className="text-[7.5px] font-bold text-amber-200 uppercase tracking-widest leading-none">{GOVERNMENT_PORTAL_ENABLED ? 'HEALTH & FAMILY WELFARE DEPT • GOVT OF MH' : 'HEALTH & FAMILY WELFARE SERVICES • MHK27'}</div>
           <h2 className="text-[10px] font-black uppercase tracking-wider text-white leading-tight">EMERGENCY MEDICAL & CONTACT CARD</h2>
         </div>
         <div className="w-6 h-6 rounded-full bg-white text-[#B91C1C] font-black text-[8px] flex items-center justify-center shrink-0">

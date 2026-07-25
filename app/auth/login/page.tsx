@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 import { useAuthStore } from '@/store/auth-store';
 import { cn } from '@/utils/cn';
 import { REGISTRATION_CONFIGS } from '@/config/registration-config';
@@ -750,20 +751,22 @@ function LoginForm({ language }: { language: 'en' | 'hi' | 'mr' }) {
   return (
     <div className="space-y-4">
       {/* Dual Access Toggle */}
-      <div className="flex bg-[#F5F7FA] p-1 rounded-lg border border-[#DFDFDF] mb-4">
-        <button
-          onClick={() => setAuthMode('citizen')}
-          className={cn('flex-1 py-2 text-sm font-bold rounded-md transition-all', authMode === 'citizen' ? 'bg-[#F26F21] text-white shadow' : 'text-[#525252] hover:text-[#022B5D]')}
-        >
-          Citizen Login
-        </button>
-        <button
-          onClick={() => setAuthMode('government')}
-          className={cn('flex-1 py-2 text-sm font-bold rounded-md transition-all', authMode === 'government' ? 'bg-[#022B5D] text-white shadow' : 'text-[#525252] hover:text-[#022B5D]')}
-        >
-          Government Login
-        </button>
-      </div>
+      {GOVERNMENT_PORTAL_ENABLED && (
+        <div className="flex bg-[#F5F7FA] p-1 rounded-lg border border-[#DFDFDF] mb-4">
+          <button
+            onClick={() => setAuthMode('citizen')}
+            className={cn('flex-1 py-2 text-sm font-bold rounded-md transition-all', authMode === 'citizen' ? 'bg-[#F26F21] text-white shadow' : 'text-[#525252] hover:text-[#022B5D]')}
+          >
+            Citizen Login
+          </button>
+          <button
+            onClick={() => setAuthMode('government')}
+            className={cn('flex-1 py-2 text-sm font-bold rounded-md transition-all', authMode === 'government' ? 'bg-[#022B5D] text-white shadow' : 'text-[#525252] hover:text-[#022B5D]')}
+          >
+            Government Login
+          </button>
+        </div>
+      )}
 
       <form key={authMode + loginType} onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
         {authMode === 'citizen' && (
@@ -979,30 +982,36 @@ export default function AuthPage() {
 
   const CONTENT = {
     en: {
-      heroBadge: 'Government of Maharashtra',
+      heroBadge: GOVERNMENT_PORTAL_ENABLED ? 'Government of Maharashtra' : 'Nashik Simhastha Committee',
       heroTitle: 'Nashik Mahakumbh 2027',
       heroSubtitle: 'Official Simhastha Pilgrim Registration & Login Portal',
-      heroNote: 'Managed by Government of Maharashtra • Smart Crowd Management System',
+      heroNote: GOVERNMENT_PORTAL_ENABLED
+        ? 'Managed by Government of Maharashtra • Smart Crowd Management System'
+        : 'Managed by Nashik Simhastha Committee • Smart Pilgrim System',
       regTitle: 'Register for Nashik Mahakumbh',
       regSubtitle: 'Create your official Mahakumbh pilgrim identity to access all services.',
       loginTitle: 'Login to Your Account',
       loginSubtitle: 'If you are already a registered pilgrim, sign in here.',
     },
     hi: {
-      heroBadge: 'महाराष्ट्र सरकार',
+      heroBadge: GOVERNMENT_PORTAL_ENABLED ? 'महाराष्ट्र सरकार' : 'नाशिक सिंहस्थ समिति',
       heroTitle: 'नाशिक महाकुंभ 2027',
       heroSubtitle: 'आधिकारिक सिंहस्थ तीर्थयात्री पंजीकरण एवं लॉगिन पोर्टल',
-      heroNote: 'महाराष्ट्र सरकार द्वारा प्रबंधित • स्मार्ट भीड़ प्रबंधन प्रणाली',
+      heroNote: GOVERNMENT_PORTAL_ENABLED
+        ? 'महाराष्ट्र सरकार द्वारा प्रबंधित • स्मार्ट भीड़ प्रबंधन प्रणाली'
+        : 'नाशिक सिंहस्थ समिति द्वारा प्रबंधित • स्मार्ट तीर्थयात्री प्रणाली',
       regTitle: 'नाशिक महाकुंभ के लिए पंजीकरण करें',
       regSubtitle: 'सभी सेवाओं तक पहुंचने के लिए अपनी आधिकारिक महाकुंभ तीर्थयात्री पहचान बनाएं।',
       loginTitle: 'अपने खाते में लॉगिन करें',
       loginSubtitle: 'यदि आप पहले से पंजीकृत तीर्थयात्री हैं, तो यहाँ साइन इन करें।',
     },
     mr: {
-      heroBadge: 'महाराष्ट्र शासन',
+      heroBadge: GOVERNMENT_PORTAL_ENABLED ? 'महाराष्ट्र शासन' : 'नाशिक सिंहस्थ समिती',
       heroTitle: 'नाशिक महाकुंभ 2027',
       heroSubtitle: 'अधिकृत सिंहस्थ यात्रेकरू नोंदणी आणि लॉगिन पोर्टल',
-      heroNote: 'महाराष्ट्र शासनाद्वारे व्यवस्थापित • स्मार्ट गर्दी व्यवस्थापन प्रणाली',
+      heroNote: GOVERNMENT_PORTAL_ENABLED
+        ? 'महाराष्ट्र शासनाद्वारे व्यवस्थापित • स्मार्ट गर्दी व्यवस्थापन प्रणाली'
+        : 'नाशिक सिंहस्थ समितीद्वारे व्यवस्थापित • स्मार्ट यात्रेकरू प्रणाली',
       regTitle: 'नाशिक महाकुंभसाठी नोंदणी करा',
       regSubtitle: 'सर्व सेवांचा लाभ घेण्यासाठी आपली अधिकृत महाकुंभ यात्रेकरू ओळख तयार करा।',
       loginTitle: 'आपल्या खात्यात लॉगिन करा',
@@ -1085,7 +1094,7 @@ export default function AuthPage() {
         <div className="bg-[#FFFEF8] border-b border-[#EFEFEF]">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5">
             {[
-              { icon: '🏛️', text: 'Official Government Portal' },
+              { icon: '🏛️', text: GOVERNMENT_PORTAL_ENABLED ? 'Official Government Portal' : 'Official Simhastha Portal' },
               { icon: '🔒', text: 'SSL Secured & Encrypted' },
               { icon: '📋', text: 'NIC Certified Platform' },
               { icon: '✅', text: 'WCAG 2.1 Accessible' },

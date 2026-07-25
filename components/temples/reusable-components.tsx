@@ -25,6 +25,7 @@ import {
   CheckCircle,
   HelpCircle,
 } from 'lucide-react';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 // ============================================================
 // TEMPLE HERO
@@ -81,7 +82,7 @@ export function TempleHero({ title, subtitle, heroImage, className }: TempleHero
           className="space-y-2 md:space-y-3"
         >
           <span className="text-xs md:text-sm font-semibold tracking-widest uppercase text-[#F26F21] bg-[#F26F21]/15 px-3.5 py-1 rounded-full border border-[#F26F21]/20 inline-block">
-            Administrative Information
+            {GOVERNMENT_PORTAL_ENABLED ? 'Administrative Information' : 'Visitor Information'}
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-[var(--font-heading)] leading-none text-gold-200">
             {title}

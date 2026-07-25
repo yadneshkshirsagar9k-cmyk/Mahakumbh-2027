@@ -7,7 +7,14 @@ import FilterArchitecture from '@/components/admin/filters/FilterArchitecture';
 import { commandCentreGateway } from '@/services/gateway/commandCentreGateway';
 import { Network } from 'lucide-react';
 
+import { redirect } from 'next/navigation';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
+
 export default function GovernmentOperationsMap() {
+  if (!GOVERNMENT_PORTAL_ENABLED) {
+    redirect('/');
+  }
+
   useEffect(() => {
     commandCentreGateway.connect();
 

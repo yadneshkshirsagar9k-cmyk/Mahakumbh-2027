@@ -10,6 +10,7 @@
 
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export function Footer() {
   return (
@@ -22,10 +23,10 @@ export function Footer() {
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-semibold tracking-wide text-[#111827]">
-              Government of Maharashtra
+              {GOVERNMENT_PORTAL_ENABLED ? 'Government of Maharashtra' : 'Nashik Simhastha Committee'}
             </span>
             <span className="text-[10px] tracking-wider uppercase text-[#6B7280]">
-              Kumbh Mela Administration Division
+              {GOVERNMENT_PORTAL_ENABLED ? 'Kumbh Mela Administration Division' : 'Simhastha Crowd Management Board'}
             </span>
           </div>
         </div>
@@ -40,8 +41,12 @@ export function Footer() {
 
         {/* Right: Copyright */}
         <div className="text-right text-[11px] text-[#6B7280] md:max-w-xs">
-          <p>© 2025 Government of Maharashtra. All rights reserved.</p>
-          <p className="mt-0.5">Designed and developed for Smart Crowd Administration.</p>
+          <p>© 2025 {GOVERNMENT_PORTAL_ENABLED ? 'Government of Maharashtra' : 'Nashik Simhastha Committee'}. All rights reserved.</p>
+          <p className="mt-0.5">
+            {GOVERNMENT_PORTAL_ENABLED 
+              ? 'Designed and developed for Smart Crowd Administration.' 
+              : 'Designed and developed for Smart Pilgrim Services.'}
+          </p>
         </div>
       </div>
     </footer>

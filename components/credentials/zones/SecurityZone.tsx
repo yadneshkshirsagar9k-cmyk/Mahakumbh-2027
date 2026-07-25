@@ -4,6 +4,7 @@ import type { GovernmentCredential } from '@/types/credential.types';
 import { CredentialType } from '@/types/credential.types';
 import { useCredentialContext } from '../engine/CredentialContext';
 import { generateQrPayload, getOfficialRegistrationRecord } from '@/utils/credential-generator';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 interface Props {
   credential: GovernmentCredential;
@@ -36,7 +37,7 @@ export function SecurityZone({ credential }: Props) {
             OFFICIALLY VERIFIABLE DIGITAL CREDENTIAL (QR VERIFICATION)
           </h4>
           <p className="text-[10px] text-[#374151] leading-snug">
-            Scan using the official Government Checkpoint App to verify pass authenticity and biometric clearance instantly.
+            Scan using the official {GOVERNMENT_PORTAL_ENABLED ? 'Government ' : 'Simhastha '}Checkpoint App to verify pass authenticity and biometric clearance instantly.
           </p>
           <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[9.5px] font-mono text-[#111827] bg-white p-1.5 border border-[#E5E7EB] mt-1">
             <div><span className="font-bold">DOC ID:</span> {credential.documentNumber}</div>

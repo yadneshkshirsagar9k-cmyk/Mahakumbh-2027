@@ -23,6 +23,7 @@ import {
   Info,
   X
 } from 'lucide-react';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 import { cn } from '@/utils/cn';
 
 export interface RegistrationStep {
@@ -277,7 +278,7 @@ export function RegistrationOverview() {
             </div>
 
             <div className="pt-4 border-t border-[#E5E7EB] flex items-center justify-between text-[10px] text-[#6B7280] font-bold uppercase">
-              <span>Mahakumbh 2026 Admin</span>
+              <span>{GOVERNMENT_PORTAL_ENABLED ? 'Mahakumbh 2026 Admin' : 'Mahakumbh 2027 Committee'}</span>
               <span>Official Media compliant</span>
             </div>
           </div>

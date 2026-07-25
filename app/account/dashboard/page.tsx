@@ -25,6 +25,7 @@ import { ClipboardList, Calendar, BookOpen, Download, HelpCircle, X, Users, MapP
 import { useRouter, useSearchParams } from 'next/navigation';
 import { cn } from '@/utils/cn';
 import { CollapsibleSection } from '@/components/ui/collapsible-section';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -126,7 +127,9 @@ export default function DashboardPage() {
     },
     {
       title: 'Registration User Manual',
-      description: 'Official Government of Maharashtra guidelines, travel instructions, rules, and frequently asked questions.',
+      description: GOVERNMENT_PORTAL_ENABLED 
+        ? 'Official Government of Maharashtra guidelines, travel instructions, rules, and frequently asked questions.' 
+        : 'Official Simhastha Committee guidelines, travel instructions, rules, and frequently asked questions.',
       icon: BookOpen,
       color: 'text-[#374151] bg-[#F5F7FA] border border-[#E5E7EB]',
       action: () => {

@@ -1,10 +1,15 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AIChatbot } from '@/components/ai-chatbot';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export const metadata: Metadata = {
-  title: 'Nashik Mahakumbh Smart Crowd Management & Administration Portal',
-  description: 'Official Digital Platform of the Government of Maharashtra for the Nashik Mahakumbh. Advanced GIS tracking, pilgrim registration, emergency coordination, and real-time crowd planning.',
+  title: GOVERNMENT_PORTAL_ENABLED 
+    ? 'Nashik Mahakumbh Smart Crowd Management & Administration Portal' 
+    : 'Nashik Mahakumbh Smart Pilgrim Portal',
+  description: GOVERNMENT_PORTAL_ENABLED
+    ? 'Official Digital Platform of the Government of Maharashtra for the Nashik Mahakumbh. Advanced GIS tracking, pilgrim registration, emergency coordination, and real-time crowd planning.'
+    : 'Official Digital Platform for the Nashik Mahakumbh. Pilgrim registration, journey planning, and emergency coordination.',
   keywords: [
     'Nashik Mahakumbh',
     'Kumbh Mela 20XX',
@@ -13,8 +18,8 @@ export const metadata: Metadata = {
     'Darshan Booking Nashik',
     'Trimbakeshwar pilgrim services'
   ],
-  authors: [{ name: 'Government of Maharashtra' }],
-  creator: 'Nashik Smart City Development Corporation',
+  authors: [{ name: GOVERNMENT_PORTAL_ENABLED ? 'Government of Maharashtra' : 'Nashik Simhastha Committee' }],
+  creator: GOVERNMENT_PORTAL_ENABLED ? 'Nashik Smart City Development Corporation' : 'Nashik Simhastha Committee',
   icons: {
     icon: '/favicon.ico',
   },

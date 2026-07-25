@@ -4,6 +4,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ShieldCheck, CheckCircle2, ShieldAlert, BadgeCheck, FileText, User, Calendar, MapPin, Hash, Activity, Phone, Droplet } from 'lucide-react';
 import { useJourneyStore } from '@/store/journey-store';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 interface MinifiedPayload {
   id: string; // documentNumber
@@ -101,7 +102,7 @@ function VerifyScreen() {
           <div className="w-16 h-16 mx-auto bg-white rounded-full p-2 shadow-lg mb-4 flex items-center justify-center">
             <img src="/emblem.png" alt="Emblem" className="w-12 h-12" onError={(e) => e.currentTarget.style.display = 'none'} />
           </div>
-          <h1 className="text-xs sm:text-sm font-black tracking-widest uppercase text-blue-100">Government of Maharashtra</h1>
+          <h1 className="text-xs sm:text-sm font-black tracking-widest uppercase text-blue-100">{GOVERNMENT_PORTAL_ENABLED ? 'Government of Maharashtra' : 'Nashik Simhastha Committee'}</h1>
           <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-white drop-shadow-md">Mahakumbh Digital Clearance</h2>
           <p className="text-blue-200 text-[10px] sm:text-xs font-bold uppercase tracking-widest bg-[#0F4C81]/50 inline-block px-3 py-1 rounded-full border border-[#0F4C81]">Official Credential Verification Portal</p>
         </div>
@@ -144,12 +145,12 @@ function VerifyScreen() {
                 <div className="flex flex-col items-center justify-center text-center border-b-[3px] border-[#111827] pb-3 mb-4 relative z-10">
                   <div className="flex items-center justify-between w-full px-2 mb-2">
                     <div className="w-12 h-12 rounded-full border border-[#111827] flex items-center justify-center shrink-0">
-                      <span className="text-[10px] font-black text-[#111827] uppercase">GOVT</span>
+                      <span className="text-[10px] font-black text-[#111827] uppercase">{GOVERNMENT_PORTAL_ENABLED ? 'GOVT' : 'BOARD'}</span>
                     </div>
                     <div className="flex-1 flex flex-col items-center px-2">
-                      <div className="text-[9px] font-bold text-[#374151] uppercase tracking-[0.2em]">STATE GOVERNMENT OF MAHARASHTRA</div>
+                      <div className="text-[9px] font-bold text-[#374151] uppercase tracking-[0.2em]">{GOVERNMENT_PORTAL_ENABLED ? 'STATE GOVERNMENT OF MAHARASHTRA' : 'NASHIK SIMHASTHA COMMITTEE'}</div>
                       <h1 className="text-sm sm:text-base font-black text-[#111827] uppercase tracking-wider leading-tight py-0.5">NASHIK-TRIMBAKESHWAR MAHAKUMBH 2027</h1>
-                      <div className="text-[8px] sm:text-[9px] font-bold text-[#374151] uppercase tracking-widest">DEPARTMENT OF CROWD MANAGEMENT & POLICE SECURITY</div>
+                      <div className="text-[8px] sm:text-[9px] font-bold text-[#374151] uppercase tracking-widest">{GOVERNMENT_PORTAL_ENABLED ? 'DEPARTMENT OF CROWD MANAGEMENT & POLICE SECURITY' : 'CROWD MANAGEMENT DIVISION'}</div>
                     </div>
                     <div className="w-12 h-12 rounded-full border border-[#111827] flex items-center justify-center shrink-0">
                       <span className="text-[10px] font-black text-[#047857] uppercase">SEAL</span>
@@ -238,10 +239,10 @@ function VerifyScreen() {
                 {/* Top Banner Bar (34px) */}
                 <div className="w-full bg-gradient-to-r from-[#005BAC] via-[#0A3161] to-[#005BAC] text-white px-2 py-1 flex items-center justify-between border-b-2 border-[#EA580C] z-10 shrink-0 h-[34px]">
                   <div className="w-6 h-6 rounded-full bg-white border border-amber-400 flex items-center justify-center shrink-0 shadow-2xs">
-                    <span className="text-[9px] font-black text-[#005BAC] leading-none">GOV</span>
+                    <span className="text-[9px] font-black text-[#005BAC] leading-none">{GOVERNMENT_PORTAL_ENABLED ? 'GOV' : 'MHK27'}</span>
                   </div>
                   <div className="flex-1 text-center px-1">
-                    <div className="text-[7.5px] font-bold text-amber-300 uppercase tracking-widest leading-none">GOVERNMENT OF MAHARASHTRA • SIMHASTHA 2027</div>
+                    <div className="text-[7.5px] font-bold text-amber-300 uppercase tracking-widest leading-none">{GOVERNMENT_PORTAL_ENABLED ? 'GOVERNMENT OF MAHARASHTRA' : 'NASHIK SIMHASTHA COMMITTEE'} • SIMHASTHA 2027</div>
                     <h2 className="text-[10px] font-black uppercase tracking-wider text-white leading-tight">{payload.ct.replace(/_/g, ' ')}</h2>
                   </div>
                   <div className="w-6 h-6 rounded-full bg-[#047857] border border-white flex items-center justify-center shrink-0">

@@ -15,6 +15,7 @@ import { cn } from '@/utils/cn';
 import { CollapsibleSection } from '@/components/ui/collapsible-section';
 import { calculateProfileCompletion } from '@/utils/profile-completion';
 import { formatAddress } from '@/types/citizen.types';
+import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 
 export default function ProfilePage() {
   const { user, language, setLanguage } = useAuthStore();
@@ -344,10 +345,10 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <CollapsibleSection title="Government Identity & Address" icon={<ShieldCheck size={14} className="text-[#2E7D32]" />} defaultOpen={true}>
+          <CollapsibleSection title={GOVERNMENT_PORTAL_ENABLED ? "Government Identity & Address" : "Identity & Address"} icon={<ShieldCheck size={14} className="text-[#2E7D32]" />} defaultOpen={true}>
             <div className="grid grid-cols-1 gap-6 pt-2">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-[#6B7280] uppercase tracking-wide">Primary Government ID</label>
+                <label className="text-[10px] font-bold text-[#6B7280] uppercase tracking-wide">{GOVERNMENT_PORTAL_ENABLED ? 'Primary Government ID' : 'Primary Identity ID'}</label>
                 <div className="flex items-center gap-3 p-3 rounded-lg border border-[#E5E7EB] bg-[#FAFBFC] text-xs focus-within:border-[#2E7D32] focus-within:ring-1 focus-within:ring-[#2E7D32]/20 transition-all">
                   <ShieldCheck size={14} className="text-[#2E7D32]" />
                   <select 
