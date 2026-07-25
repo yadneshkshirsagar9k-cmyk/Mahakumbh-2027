@@ -1,0 +1,267 @@
+datasource db {
+  provider = "mongodb"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String            @unique // e.g., USR-2027-XXXXXX
+  fullName          String
+  mobile            String            @unique
+  alternateMobile   String?
+  email             String
+  password          String
+  category          String            // e.g., 'indian', 'nri', 'foreign', 'operator'
+  state             String?
+  district          String?
+  preferredLanguage String            @default("English")
+  bloodGroup        String?
+  citizenProfile    CitizenProfile?
+  journeys          Journey[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+model CitizenProfile {
+  id                String                     @id @default(auto()) @map("_id") @db.ObjectId
+  citizenId         String                     @unique // e.g., CID-MHK-2027-XXX
+  photo             String // Base64 data URI or image URL
+  fullName          String
+  gender            String
+  dateOfBirth       String
+  primaryMobile     String                     @unique
+  alternateMobile   String?
+  email             String
+  address           StructuredAddress
+  nationality       String
+  preferredLanguage String
+  bloodGroup        String
+  occupation        String
+  occupationOther   String
+  governmentIds     GovernmentIdMetadata[]
+  emergencyContacts EmergencyContacts
+  signature         String // Base64 signature
+  verification      CitizenVerificationStatus
+  medicalProfile    MedicalProfile?
+  audit             AuditMetadata
+  user              User                       @relation(fields: [userId], references: [id])
+  userId            String                     @unique @db.ObjectId
+}
+
+model Journey {
+  id                     String                     @id @default(auto()) @map("_id") @db.ObjectId
+  journeyId              String                     @unique // Generated once: JNY-2027-XXXXXX
+  registrationNumber     String                     @unique
+  permitNumber           String
+  vehiclePassId          String
+  emergencySheetId       String
+  qrCode                 String
+  registrationTimestamp  String
+  journeyName            String
+  journeyType            String
+  journeyStatus          String
+  startDate              String
+  endDate                String
+  arrivalMode            String
+  arrivalPoint           String
+  accommodation          AccommodationDetails?
+  vehicleInfo            VehicleInformation?
+  primaryRegistrantId    String
+  emergencyContacts      String
+  pilgrimCount           Int                        @default(1)
+  pilgrims               PilgrimProfile[]
+  selectedGhats          String[]
+  selectedTemples        String[]
+  snanBookings           SnanBooking[]
+  darshanBookings        DarshanBooking[]
+  journeyPlannerData     Json?
+  journeyProgress        Int                        @default(0)
+  journeyMetadata        JourneyMetadata
+  timelineEvents         TimelineEvent[]
+  user                   User                       @relation(fields: [userId], references: [id])
+  userId                 String                     @db.ObjectId
+  createdAt              DateTime                   @default(now())
+  updatedAt              DateTime                   @updatedAt
+}
+
+// ============================================================
+// EMBEDDED TYPES (MongoDB Sub-documents)
+// ============================================================
+
+type GovernmentIdMetadata {
+  type                  String
+  number                String
+  verificationStatus    String
+  verifiedBy            String
+  verificationMethod    String
+  verificationTimestamp String
+  maskedDisplay         String
+}
+
+type StructuredAddress {
+  houseFlatNumber  String
+  buildingSociety  String
+  streetRoad       String
+  areaLocality     String
+  villageTownCity  String
+  talukaTehsil     String
+  district         String
+  state            String
+  country          String
+  pinCode          String
+}
+
+type MedicalProfile {
+  chronicDiseases           String[]
+  disabilities              String[]
+  specialAssistanceRequired Boolean
+  diabetes                  Boolean
+  heartDisease              Boolean
+  hypertension              Boolean
+  asthma                    Boolean
+  epilepsy                  Boolean
+  physicalDisability        Boolean
+  visualImpairment          Boolean
+  hearingImpairment         Boolean
+  wheelchairRequired        Boolean
+  pregnant                  Boolean
+  regularMedication         Boolean
+  medicationDetails         String
+  knownAllergies            String
+  doctorName                String
+  doctorContact             String
+  otherNotes                String
+}
+
+type EmergencyContactDetail {
+  name         String
+  relationship String
+  phone        String
+  notes        String
+}
+
+type EmergencyContacts {
+  primary      EmergencyContactDetail
+  secondary    EmergencyContactDetail
+  doctor       EmergencyContactDetail
+  localContact EmergencyContactDetail
+}
+
+type CitizenVerificationStatus {
+  registrationStatus   String
+  identityVerification String
+  documentVerification String
+  journeyApproval      String
+  currentStage         String
+}
+
+type AuditMetadata {
+  createdAt String
+  updatedAt String
+  createdBy String
+  updatedBy String
+}
+
+type AccommodationDetails {
+  applicationId      String?
+  serviceType        String?
+  status             String?
+  referenceNumber    String?
+  applicationDate    String?
+  lastUpdated        String?
+  currentStage       String?
+  camp               String
+  type               String
+  name               String
+  address            String
+  sector             String
+  zone               String
+  contactNumber      String
+  checkIn            String
+  checkOut           String
+  audit              AuditMetadata
+}
+
+type VehicleInformation {
+  applicationId      String?
+  serviceType        String?
+  status             String?
+  referenceNumber    String?
+  applicationDate    String?
+  lastUpdated        String?
+  currentStage       String?
+  vehicleType        String
+  vehicleNumber      String
+  driverName         String
+  driverMobile       String
+  fuelType           String
+  fasTagId           String
+  vehiclePassId      String
+  audit              AuditMetadata
+}
+
+type PilgrimProfile {
+  pilgrimCategory   String
+  groupInformation  String
+  pilgrimId         String
+  photo             String
+  fullName          String
+  relationship      String
+  dateOfBirth       String
+  gender            String
+  bloodGroup        String
+  governmentId      GovernmentIdMetadata
+  medical           MedicalProfile
+  mobile            String
+  emergencyContact  EmergencyContactDetail
+  address           StructuredAddress
+  preferredLanguage String
+  nationality       String
+  audit             AuditMetadata
+}
+
+type SnanBooking {
+  ghatName    String
+  date        String
+  timeSlot    String
+  bookingCode String
+  isValid     Boolean @default(true)
+  invalidMsg  String?
+}
+
+type DarshanBooking {
+  templeName  String
+  date        String
+  timeSlot    String
+  bookingCode String
+  isValid     Boolean @default(true)
+  invalidMsg  String?
+}
+
+type JourneyMetadata {
+  exitZone             String
+  category             String
+  purpose              String[]
+  arrivalStation       String
+  departurePoint       String
+  sector               String
+  zone                 String
+  route                String
+  batch                String
+  expectedArrivalDate  String
+  expectedArrivalTime  String
+  expectedDepartureDate String
+  expectedDepartureTime String
+}
+
+type TimelineEvent {
+  eventId        String
+  timestamp      String
+  eventType      String
+  relatedAssetId String?
+  status         String
+  audit          AuditMetadata
+}
