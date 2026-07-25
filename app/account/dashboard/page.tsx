@@ -6,7 +6,7 @@
  * Organized into five clearly separated sections for visual hierarchy and readability.
  */
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/store/auth-store';
 import { useJourneyStore } from '@/store/journey-store';
 import { useCredentialStore } from '@/store/credential-store';
