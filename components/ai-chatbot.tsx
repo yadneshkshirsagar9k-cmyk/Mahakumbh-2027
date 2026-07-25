@@ -99,7 +99,7 @@ export function AIChatbot() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'fixed bottom-6 right-6 z-[450] w-14 h-14 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 active:scale-95 cursor-pointer',
+          'fixed bottom-20 right-4 lg:bottom-6 lg:right-6 z-[450] w-14 h-14 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 active:scale-95 cursor-pointer',
           isOpen 
             ? 'bg-red-500 hover:bg-red-600 rotate-90 text-white' 
             : 'bg-[#005BAC] hover:bg-[#0F4C81] text-white'
@@ -110,7 +110,7 @@ export function AIChatbot() {
 
       {/* Chat Window Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-[450] w-[380px] h-[520px] bg-white border border-[#E5E7EB] rounded-2xl shadow-sm flex flex-col overflow-hidden animate-fadeIn text-[#374151]">
+        <div className="fixed bottom-[144px] right-4 lg:bottom-24 lg:right-6 z-[450] w-[calc(100vw-32px)] sm:w-[380px] h-[520px] max-h-[65vh] sm:max-h-[80vh] bg-white border border-[#E5E7EB] rounded-2xl shadow-sm flex flex-col overflow-hidden animate-fadeIn text-[#374151]">
           {/* Header */}
           <div className="bg-[#F5F7FA] px-4 py-3.5 flex items-center justify-between text-[#111827] border-b border-[#E5E7EB]">
             <div className="flex items-center gap-2.5">
