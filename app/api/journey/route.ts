@@ -29,10 +29,55 @@ export async function GET(request: Request) {
     });
 
     // Fetch the most recent journey for this user
-    const journey = await prisma.journey.findFirst({
+    let journey = await prisma.journey.findFirst({
       where: { userId: user.id },
       orderBy: { updatedAt: 'desc' }
     });
+
+    // Server-side self-healing fallback for pending/under-review applications
+    if (journey) {
+      let needsUpdate = false;
+      const updatedData: any = {};
+
+      if (journey.vehicleInfo) {
+        const vehicleInfo = journey.vehicleInfo as any;
+        if (vehicleInfo.vehicleNumber && vehicleInfo.vehicleNumber.trim() !== '') {
+          // If vehicle plate is registered, auto-approve and generate vehiclePassId if missing
+          if (vehicleInfo.status !== 'Approved') {
+            vehicleInfo.status = 'Approved';
+            vehicleInfo.currentStage = 'Approved';
+            needsUpdate = true;
+          }
+          if (!vehicleInfo.vehiclePassId) {
+            vehicleInfo.vehiclePassId = journey.vehiclePassId || `VEH-${Math.floor(100000 + Math.random() * 900000)}`;
+            needsUpdate = true;
+          }
+          if (needsUpdate) {
+            updatedData.vehicleInfo = vehicleInfo;
+            updatedData.vehiclePassId = vehicleInfo.vehiclePassId;
+            updatedData.hasPrivateVehicle = true;
+          }
+        }
+      }
+
+      // Auto-approve accommodation applications if stuck under review
+      if (journey.accommodation) {
+        const accommodation = journey.accommodation as any;
+        if (accommodation.status === 'Submitted' || accommodation.status === 'Under Review') {
+          accommodation.status = 'Confirmed';
+          accommodation.currentStage = 'Confirmed';
+          updatedData.accommodation = accommodation;
+          needsUpdate = true;
+        }
+      }
+
+      if (needsUpdate) {
+        journey = await prisma.journey.update({
+          where: { id: journey.id },
+          data: updatedData
+        });
+      }
+    }
 
     return NextResponse.json({ 
       success: true, 

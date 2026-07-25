@@ -813,6 +813,13 @@ export const useJourneyStore = create<JourneyState>()(
           activityTimeline: [...(app.activityTimeline || []), newEvent]
         };
 
+        // Generate vehiclePassId if approved
+        if (serviceKey === 'vehicleInfo' && (status === 'Approved' || status === 'Confirmed')) {
+          if (!updatedApp.vehiclePassId) {
+            updatedApp.vehiclePassId = `VEH-${Math.floor(100000 + Math.random() * 900000)}`;
+          }
+        }
+
         // Generate documents if approved/confirmed
         if ((status === 'Approved' || status === 'Confirmed') && (!updatedApp.availableDocuments || updatedApp.availableDocuments.length === 0)) {
           updatedApp.availableDocuments = [
@@ -825,11 +832,17 @@ export const useJourneyStore = create<JourneyState>()(
           ];
         }
 
+        const updatedJourney = {
+          ...current,
+          [serviceKey]: updatedApp
+        } as any;
+
+        if (serviceKey === 'vehicleInfo' && updatedApp.vehiclePassId) {
+          updatedJourney.vehiclePassId = updatedApp.vehiclePassId;
+        }
+
         set({
-          journey: {
-            ...current,
-            [serviceKey]: updatedApp
-          }
+          journey: updatedJourney
         });
         
         get().addTimelineEvent({
