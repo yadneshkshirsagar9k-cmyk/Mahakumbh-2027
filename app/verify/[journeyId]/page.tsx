@@ -6,14 +6,9 @@ export const dynamic = 'force-dynamic';
 export default async function VerifyJourneyPage({ params }: { params: { journeyId: string } }) {
   const { journeyId } = params;
 
-  // Search by either internal ID or the visible Journey ID
-  const journey = await prisma.journey.findFirst({
-    where: {
-      OR: [
-        { id: journeyId },
-        { journeyId: journeyId }
-      ]
-    }
+  // Search by the unique Journey ID assigned to the user
+  const journey = await prisma.journey.findUnique({
+    where: { journeyId: journeyId }
   });
 
   if (!journey) {
