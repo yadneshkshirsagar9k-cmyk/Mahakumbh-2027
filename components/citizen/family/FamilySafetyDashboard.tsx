@@ -34,7 +34,16 @@ export default function FamilySafetyDashboard() {
   const [mapLayer, setMapLayer] = useState<'street' | 'satellite'>('street');
   const [mapAction, setMapAction] = useState<string | null>(null);
   const [navigationTarget, setNavigationTarget] = useState<string | null>(null);
-  const [meetingPoint, setMeetingPoint] = useState<[number, number] | null>(null);
+  const [meetingPointCoords, setMeetingPointCoords] = useState<[number, number] | null>(null);
+  
+  // Real functional states requested by user
+  const [activeMeetingPoint, setActiveMeetingPoint] = useState<string>('Not Set');
+  const [assignedGuardians, setAssignedGuardians] = useState<Record<string, { type: 'volunteer' | 'member', name?: string }>>({});
+  
+  // Modal form states
+  const [selectedMeetingPoint, setSelectedMeetingPoint] = useState('Safe Zone Alpha (Trimbakeshwar)');
+  const [selectedGuardianTarget, setSelectedGuardianTarget] = useState('');
+  const [isVolunteerGuardian, setIsVolunteerGuardian] = useState(false);
   const [isSosActive, setIsSosActive] = useState(false);
 
   // Helper to trigger map actions and reset them so they can be re-triggered
@@ -83,8 +92,8 @@ export default function FamilySafetyDashboard() {
           <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
             <Activity size={10} className="text-green-500 animate-pulse" /> Live Sync Active
           </span>
-          <span className="text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-1 rounded">
-            Meeting Point: Safe Zone Alpha
+          <span className={cn("text-[10px] font-bold border px-2 py-1 rounded transition-colors", activeMeetingPoint !== 'Not Set' ? "bg-indigo-50 text-indigo-700 border-indigo-200" : "bg-gray-50 text-gray-500 border-gray-200")}>
+            Meeting Point: {activeMeetingPoint}
           </span>
         </div>
       </div>
@@ -105,7 +114,7 @@ export default function FamilySafetyDashboard() {
             mapLayer={mapLayer}
             mapAction={mapAction}
             navigationTarget={navigationTarget}
-            meetingPoint={meetingPoint}
+            meetingPoint={meetingPointCoords}
           />
 
           {/* SMART MAP CONTROLS (Floating) */}
@@ -171,6 +180,14 @@ export default function FamilySafetyDashboard() {
                         )}>{member.status}</span>
                       </div>
                       <p className="text-[10px] text-gray-500 font-bold truncate">ID: {member.id}</p>
+                      
+                      {/* Guardian Badge */}
+                      {assignedGuardians[member.id] && (
+                        <div className="mt-1.5 flex items-center gap-1 w-fit bg-indigo-50 border border-indigo-100 px-1.5 py-0.5 rounded text-[9px] font-bold text-indigo-700">
+                          <ShieldCheck size={10} /> 
+                          {assignedGuardians[member.id].type === 'volunteer' ? 'Volunteer Guardian Assigned' : 'Family Guardian Assigned'}
+                        </div>
+                      )}
                       
                       <div className="flex items-center gap-3 mt-2 text-[10px] font-semibold text-gray-600">
                         <span className="flex items-center gap-1"><MapPin size={10}/> {distanceMeters}m away</span>
@@ -240,14 +257,19 @@ export default function FamilySafetyDashboard() {
               {activeModal === 'meeting' && (
                 <>
                   <p className="text-xs text-gray-500">Choose a common landmark to reunite your family.</p>
-                  <select className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-[#005BAC]">
+                  <select 
+                    value={selectedMeetingPoint}
+                    onChange={(e) => setSelectedMeetingPoint(e.target.value)}
+                    className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-[#005BAC]"
+                  >
                     <option>Safe Zone Alpha (Trimbakeshwar)</option>
                     <option>Medical Camp 12</option>
                     <option>Main Ghat Information Center</option>
                   </select>
                   <button 
                     onClick={() => { 
-                      setMeetingPoint([20.005, 73.785]); // Set dummy coordinates on map
+                      setActiveMeetingPoint(selectedMeetingPoint);
+                      setMeetingPointCoords([20.005, 73.785]); // Set dummy coordinates on map
                       triggerMapAction('fit_all'); // Zoom to show everyone + meeting point
                       setActiveModal('none'); 
                     }}
@@ -261,18 +283,39 @@ export default function FamilySafetyDashboard() {
               {activeModal === 'guardian' && (
                 <>
                   <p className="text-xs text-gray-500">Assign a temporary guardian for selected members.</p>
-                  <select className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-[#005BAC]">
+                  <select 
+                    value={selectedGuardianTarget}
+                    onChange={(e) => setSelectedGuardianTarget(e.target.value)}
+                    className="w-full border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-[#005BAC]"
+                  >
+                    <option value="" disabled>Select member...</option>
                     {members.filter((m, idx) => idx !== 0).map(m => (
-                      <option key={m.id}>{m.id}</option>
+                      <option key={m.id} value={m.id}>{m.id}</option>
                     ))}
                   </select>
                   <div className="flex items-center gap-2 mt-2">
-                    <input type="checkbox" id="temp" className="rounded text-[#005BAC] focus:ring-[#005BAC]" />
+                    <input 
+                      type="checkbox" 
+                      id="temp" 
+                      checked={isVolunteerGuardian}
+                      onChange={(e) => setIsVolunteerGuardian(e.target.checked)}
+                      className="rounded text-[#005BAC] focus:ring-[#005BAC]" 
+                    />
                     <label htmlFor="temp" className="text-xs text-gray-600">Assign to Mahakumbh Volunteer (Emergency)</label>
                   </div>
                   <button 
-                    onClick={() => { alert('Guardian successfully assigned!'); setActiveModal('none'); }}
-                    className="w-full bg-gray-900 hover:bg-black text-white font-bold py-2.5 rounded-lg text-sm transition-colors mt-2"
+                    onClick={() => {
+                      if (!selectedGuardianTarget) return;
+                      setAssignedGuardians(prev => ({
+                        ...prev,
+                        [selectedGuardianTarget]: { type: isVolunteerGuardian ? 'volunteer' : 'member' }
+                      }));
+                      setActiveModal('none'); 
+                      setSelectedGuardianTarget('');
+                      setIsVolunteerGuardian(false);
+                    }}
+                    disabled={!selectedGuardianTarget}
+                    className="w-full bg-gray-900 hover:bg-black disabled:bg-gray-400 text-white font-bold py-2.5 rounded-lg text-sm transition-colors mt-2"
                   >
                     Confirm Guardian
                   </button>
@@ -307,20 +350,30 @@ export default function FamilySafetyDashboard() {
         </div>
         
         <div className="flex items-center min-w-max ml-4">
-          <button 
-            onClick={() => {
-              if (window.confirm("Activate EMERGENCY SOS? This will alert authorities and your family.")) {
-                setIsSosActive(true);
-                alert("Emergency SOS Activated. Help is on the way.");
-              }
-            }}
-            className={cn(
-              "px-8 py-2.5 rounded-xl text-xs font-black uppercase flex items-center gap-2 transition-all shadow-sm hover:-translate-y-0.5 hover:shadow-md active:scale-95", 
-              isSosActive ? "bg-red-600 text-white animate-pulse shadow-red-500/50" : "bg-red-500 text-white hover:bg-red-600 border-2 border-red-600 shadow-red-500/20"
-            )}
-          >
-            <ShieldAlert size={16} className={isSosActive ? "" : "animate-pulse"}/> {isSosActive ? "SOS ACTIVE" : "Emergency SOS"}
-          </button>
+          {isSosActive ? (
+            <button 
+              onClick={() => {
+                if (window.confirm("Has the emergency been resolved? Click OK to deactivate SOS.")) {
+                  setIsSosActive(false);
+                }
+              }}
+              className="px-8 py-2.5 rounded-xl text-xs font-black uppercase flex items-center gap-2 transition-all shadow-sm shadow-red-500/50 hover:-translate-y-0.5 hover:shadow-md active:scale-95 bg-red-600 text-white animate-pulse"
+            >
+              <ShieldAlert size={16} /> RESOLVE SOS
+            </button>
+          ) : (
+            <button 
+              onClick={() => {
+                if (window.confirm("Activate EMERGENCY SOS? This will alert authorities and your family.")) {
+                  setIsSosActive(true);
+                  alert("Emergency SOS Activated. Help is on the way. Tap again to resolve once safe.");
+                }
+              }}
+              className="px-8 py-2.5 rounded-xl text-xs font-black uppercase flex items-center gap-2 transition-all shadow-sm shadow-red-500/20 hover:-translate-y-0.5 hover:shadow-md active:scale-95 bg-red-500 text-white hover:bg-red-600 border-2 border-red-600"
+            >
+              <ShieldAlert size={16} /> Emergency SOS
+            </button>
+          )}
         </div>
       </div>
       
