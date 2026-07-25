@@ -29,16 +29,16 @@ import {
   Info,
   Layers,
   PhoneCall,
-  Globe
+  Globe,
+  Calendar,
+  Route
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { useAuthStore } from '@/store/auth-store';
 import { cn } from '@/utils/cn';
 import { translate } from '@/utils/translate';
-
 import { useJourneyStore } from '@/store/journey-store';
-import { Calendar } from 'lucide-react';
 
 interface SidebarItem {
   labelKey: string;
@@ -57,6 +57,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
   { labelKey: 'ai_journey_planner', href: '/account/ai-journey-planner', icon: Compass, requiresJourney: true, requiresPipelineComplete: true },
   { labelKey: 'smart_darshan', href: '/account/smart-darshan', icon: MapPin, requiresJourney: true, requiresPipelineComplete: true },
   { labelKey: 'smart_snan', href: '/account/smart-snan', icon: Users, requiresJourney: true, requiresPipelineComplete: true },
+  { labelKey: 'smart_route_map', href: '/account/smart-route', icon: Route, requiresJourney: true, requiresPipelineComplete: true },
   { labelKey: 'discover_maharashtra', href: '/account/discover-maharashtra', icon: Globe, requiresJourney: false, requiresPipelineComplete: true },
   { labelKey: 'tourism_explorer', href: '/account/tourism-explorer', icon: Map, requiresJourney: false, requiresPipelineComplete: true },
   { labelKey: 'feedback_grievance', href: '/account/feedback', icon: MessageSquare, requiresJourney: false, requiresPipelineComplete: true },
