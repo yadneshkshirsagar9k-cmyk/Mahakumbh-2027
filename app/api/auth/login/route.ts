@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
     const trimmedIdentifier = identifier.trim();
 
-    // Find user by mobile, email, or userId
+    // Find user by mobile, email, or userId and load profile/journeys
     const user = await prisma.user.findFirst({
       where: {
         OR: [
@@ -23,6 +23,14 @@ export async function POST(request: Request) {
           { email: trimmedIdentifier },
           { userId: trimmedIdentifier }
         ]
+      },
+      include: {
+        citizenProfile: true,
+        journeys: {
+          orderBy: {
+            createdAt: 'desc'
+          }
+        }
       }
     });
 
@@ -51,7 +59,9 @@ export async function POST(request: Request) {
         role: user.category === 'operator' ? 'operator' : 'pilgrim',
         registrationType: user.category.charAt(0).toUpperCase() + user.category.slice(1),
         registrationId: 'MK-' + Math.floor(100000 + Math.random() * 900000), // Random placeholder or database registration ID
-      }
+      },
+      citizenProfile: user.citizenProfile,
+      journey: user.journeys?.[0] || null,
     });
   } catch (error: any) {
     console.error('Login API error:', error);

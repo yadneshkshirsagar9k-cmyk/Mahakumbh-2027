@@ -53,6 +53,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
   { labelKey: 'profile', href: '/account/profile', icon: User, requiresJourney: false, requiresPipelineComplete: true },
   { labelKey: 'manage_journey', href: '/account/manage-tour', icon: Calendar, requiresJourney: true, requiresPipelineComplete: true },
   { labelKey: 'manage_pilgrims', href: '/account/manage-pilgrims', icon: Users, requiresJourney: true, requiresPipelineComplete: true },
+  { labelKey: 'family_tracking', href: '/account/family', icon: Map, requiresJourney: true, requiresPipelineComplete: true },
   { labelKey: 'ai_journey_planner', href: '/account/ai-journey-planner', icon: Compass, requiresJourney: true, requiresPipelineComplete: true },
   { labelKey: 'smart_darshan', href: '/account/smart-darshan', icon: MapPin, requiresJourney: true, requiresPipelineComplete: true },
   { labelKey: 'smart_snan', href: '/account/smart-snan', icon: Users, requiresJourney: true, requiresPipelineComplete: true },
@@ -89,6 +90,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
         const pipelineSteps = [
           '/account/manage-tour',
           '/account/manage-pilgrims',
+          '/account/family',
           '/bookings/vehicle',
           '/account/smart-snan',
           '/account/smart-darshan'
@@ -154,6 +156,11 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
             const isActive = pathname === item.href;
             const isPipelineComplete = useJourneyStore.getState().isPipelineComplete();
             const isLocked = (item.requiresJourney && !journey) || (item.requiresPipelineComplete && !isPipelineComplete);
+
+            // Hide Family Tracking menu item if there is only 1 pilgrim or no active journey
+            if (item.href === '/account/family' && (!journey || !journey.pilgrims || journey.pilgrims.length <= 1)) {
+              return null;
+            }
 
             return (
               <button

@@ -299,142 +299,154 @@ export default function DashboardPage() {
             )}
           </section>
 
-          {/* ==========================================================
-              PRIORITY 3: Family Safety (Appears only if multiple pilgrims)
-              ========================================================== */}
-          {journey.pilgrims && journey.pilgrims.length > 1 && (
-            <div className="bg-[#FFF5EB] border border-[#FF9933]/30 rounded-xl p-4 shadow-sm flex items-center justify-between cursor-pointer hover:border-[#FF9933] transition-all" onClick={() => router.push('/account/family')}>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#FF9933]/15 flex items-center justify-center text-[#FF9933]">
-                  <Users size={24} />
+          {isPipelineComplete ? (
+            <>
+              {/* ==========================================================
+                  PRIORITY 3: Family Safety (Appears only if multiple pilgrims)
+                  ========================================================== */}
+              {journey.pilgrims && journey.pilgrims.length > 1 && (
+                <div className="bg-[#FFF5EB] border border-[#FF9933]/30 rounded-xl p-4 shadow-sm flex items-center justify-between cursor-pointer hover:border-[#FF9933] transition-all" onClick={() => router.push('/account/family')}>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-[#FF9933]/15 flex items-center justify-center text-[#FF9933]">
+                      <Users size={24} />
+                    </div>
+                    <div className="text-left">
+                      <h3 className="text-base font-extrabold text-[#111827]">Family Safety & Tracking</h3>
+                      <p className="text-xs text-[#6B7280] font-semibold mt-0.5">Live tracking enabled for {journey.pilgrims.length} members. Safe Radius active.</p>
+                    </div>
+                  </div>
+                  <div className="text-[#005BAC] text-xs font-bold flex items-center gap-1 bg-white px-3 py-1.5 rounded-md border border-[#E5E7EB]">
+                    Open Map <ArrowRight size={14} />
+                  </div>
                 </div>
-                <div className="text-left">
-                  <h3 className="text-base font-extrabold text-[#111827]">Family Safety & Tracking</h3>
-                  <p className="text-xs text-[#6B7280] font-semibold mt-0.5">Live tracking enabled for {journey.pilgrims.length} members. Safe Radius active.</p>
+              )}
+
+              {/* ==========================================================
+                  PRIORITY 4: Today's Bookings (Upcoming Schedule)
+                  ========================================================== */}
+              <section className="space-y-4 text-left">
+                <h2 className="text-base font-extrabold text-[#111827] border-l-4 border-[#005BAC] pl-2 mt-8">
+                  Upcoming Bookings & Schedule
+                </h2>
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Upcoming Snan Card */}
+                    <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 text-left space-y-2 shadow-sm">
+                      <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2">
+                        <span className="text-[10px] font-black uppercase text-[#6B7280] tracking-wider flex items-center gap-1.5">
+                          <Waves size={14} className="text-[#005BAC]" />
+                          <span>Next Holy Snan Bath</span>
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-250 text-[9px] font-bold uppercase">
+                          Reservation Status
+                        </span>
+                      </div>
+                      {upcomingSnan ? (
+                        <div className="space-y-1 text-xs">
+                          <h4 className="font-extrabold text-[#111827] text-sm">{upcomingSnan.ghatName}</h4>
+                          <p className="text-[#374151] font-semibold">Scheduled Date: {upcomingSnan.date}</p>
+                          <p className="text-[#374151] font-semibold">Allocated Slot: {upcomingSnan.timeSlot}</p>
+                          <span className="text-[9px] font-mono font-bold text-[#005BAC] bg-[#F5F7FA] px-2 py-0.5 rounded border border-[#E5E7EB] mt-1.5 inline-block">
+                            Token: {upcomingSnan.bookingCode}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="py-4 text-center text-[#6B7280] space-y-1 flex flex-col items-center">
+                          <p className="text-xs font-bold">No Snan Booking.</p>
+                          <button
+                            onClick={() => router.push('/account/smart-snan')}
+                            className="mt-2 text-[10px] font-bold text-[#005BAC] hover:underline bg-[#F5F7FA] px-3 py-1.5 rounded-md"
+                          >
+                            Book Snan Slot &rarr;
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Upcoming Darshan Card */}
+                    <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 text-left space-y-2 shadow-sm">
+                      <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2">
+                        <span className="text-[10px] font-black uppercase text-[#6B7280] tracking-wider flex items-center gap-1.5">
+                          <MapPin size={14} className="text-purple-600" />
+                          <span>Next Temple Darshan</span>
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-250 text-[9px] font-bold uppercase">
+                          Access Pass
+                        </span>
+                      </div>
+                      {upcomingDarshan ? (
+                        <div className="space-y-1 text-xs">
+                          <h4 className="font-extrabold text-[#111827] text-sm">{upcomingDarshan.templeName}</h4>
+                          <p className="text-[#374151] font-semibold">Scheduled Date: {upcomingDarshan.date}</p>
+                          <p className="text-[#374151] font-semibold">Allocated Slot: {upcomingDarshan.timeSlot}</p>
+                          <span className="text-[9px] font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 mt-1.5 inline-block">
+                            Permit: {upcomingDarshan.bookingCode}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="py-4 text-center text-[#6B7280] space-y-1 flex flex-col items-center">
+                          <p className="text-xs font-bold">No Darshan Pass.</p>
+                          <button
+                            onClick={() => router.push('/account/smart-darshan')}
+                            className="mt-2 text-[10px] font-bold text-purple-600 hover:underline bg-purple-50 px-3 py-1.5 rounded-md"
+                          >
+                            Book Darshan Slot &rarr;
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Read-Only Calendar widget */}
+                  <JourneyCalendarWidget />
                 </div>
+              </section>
+
+              {/* ==========================================================
+                  PRIORITY 5, 6, 7: Vehicle
+                  ========================================================== */}
+              <section className="space-y-4 text-left">
+                <h2 className="text-base font-extrabold text-[#111827] border-l-4 border-[#005BAC] pl-2 mt-8">
+                  Logistics & Travel
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+                  {/* Vehicle */}
+                  <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 text-left space-y-2 shadow-sm">
+                    <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2">
+                      <span className="text-[10px] font-black uppercase text-[#6B7280] tracking-wider flex items-center gap-1.5">
+                        <CarFront size={14} className="text-amber-600" />
+                        <span>Vehicle Details</span>
+                      </span>
+                    </div>
+                    {journey.vehicleInfo?.vehicleNumber ? (
+                      <div className="space-y-1 text-xs py-2">
+                        <h4 className="font-extrabold text-[#111827]">{journey.vehicleInfo.vehicleNumber}</h4>
+                        <p className="text-[#374151] font-semibold text-[10px]">{journey.vehicleInfo.vehicleType}</p>
+                      </div>
+                    ) : (
+                      <div className="py-4 text-center text-[#6B7280] space-y-1 flex flex-col items-center">
+                        <p className="text-xs font-bold">Not Registered.</p>
+                        <button onClick={() => router.push('/bookings/vehicle')} className="mt-2 text-[10px] font-bold text-amber-600 hover:underline bg-amber-50 px-3 py-1.5 rounded-md">
+                          Register &rarr;
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+            </>
+          ) : (
+            <div className="bg-white rounded-xl border border-dashed border-[#E5E7EB] p-8 text-center space-y-3 mt-8 shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-gray-100 mx-auto flex items-center justify-center text-gray-400">
+                <Lock size={20} />
               </div>
-              <div className="text-[#005BAC] text-xs font-bold flex items-center gap-1 bg-white px-3 py-1.5 rounded-md border border-[#E5E7EB]">
-                Open Map <ArrowRight size={14} />
-              </div>
+              <h3 className="text-sm font-extrabold text-[#111827]">Interactive Dashboard Features Locked</h3>
+              <p className="text-xs text-gray-500 font-semibold max-w-sm mx-auto leading-relaxed">
+                Complete all mandatory steps above (Add Pilgrims, Register Vehicle, and Book Holy Snan & Darshan Passes) to unlock your schedule, logistics details, and tracking maps.
+              </p>
             </div>
           )}
-
-          {/* ==========================================================
-              PRIORITY 4: Today's Bookings (Upcoming Schedule)
-              ========================================================== */}
-          <section className="space-y-4 text-left">
-            <h2 className="text-base font-extrabold text-[#111827] border-l-4 border-[#005BAC] pl-2 mt-8">
-              Upcoming Bookings & Schedule
-            </h2>
-
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Upcoming Snan Card */}
-                <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 text-left space-y-2 shadow-sm">
-                  <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2">
-                    <span className="text-[10px] font-black uppercase text-[#6B7280] tracking-wider flex items-center gap-1.5">
-                      <Waves size={14} className="text-[#005BAC]" />
-                      <span>Next Holy Snan Bath</span>
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-250 text-[9px] font-bold uppercase">
-                      Reservation Status
-                    </span>
-                  </div>
-                  {upcomingSnan ? (
-                    <div className="space-y-1 text-xs">
-                      <h4 className="font-extrabold text-[#111827] text-sm">{upcomingSnan.ghatName}</h4>
-                      <p className="text-[#374151] font-semibold">Scheduled Date: {upcomingSnan.date}</p>
-                      <p className="text-[#374151] font-semibold">Allocated Slot: {upcomingSnan.timeSlot}</p>
-                      <span className="text-[9px] font-mono font-bold text-[#005BAC] bg-[#F5F7FA] px-2 py-0.5 rounded border border-[#E5E7EB] mt-1.5 inline-block">
-                        Token: {upcomingSnan.bookingCode}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="py-4 text-center text-[#6B7280] space-y-1 flex flex-col items-center">
-                      <p className="text-xs font-bold">No Snan Booking.</p>
-                      <button
-                        onClick={() => router.push('/account/smart-snan')}
-                        className="mt-2 text-[10px] font-bold text-[#005BAC] hover:underline bg-[#F5F7FA] px-3 py-1.5 rounded-md"
-                      >
-                        Book Snan Slot &rarr;
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Upcoming Darshan Card */}
-                <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 text-left space-y-2 shadow-sm">
-                  <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2">
-                    <span className="text-[10px] font-black uppercase text-[#6B7280] tracking-wider flex items-center gap-1.5">
-                      <MapPin size={14} className="text-purple-600" />
-                      <span>Next Temple Darshan</span>
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-250 text-[9px] font-bold uppercase">
-                      Access Pass
-                    </span>
-                  </div>
-                  {upcomingDarshan ? (
-                    <div className="space-y-1 text-xs">
-                      <h4 className="font-extrabold text-[#111827] text-sm">{upcomingDarshan.templeName}</h4>
-                      <p className="text-[#374151] font-semibold">Scheduled Date: {upcomingDarshan.date}</p>
-                      <p className="text-[#374151] font-semibold">Allocated Slot: {upcomingDarshan.timeSlot}</p>
-                      <span className="text-[9px] font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 mt-1.5 inline-block">
-                        Permit: {upcomingDarshan.bookingCode}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="py-4 text-center text-[#6B7280] space-y-1 flex flex-col items-center">
-                      <p className="text-xs font-bold">No Darshan Pass.</p>
-                      <button
-                        onClick={() => router.push('/account/smart-darshan')}
-                        className="mt-2 text-[10px] font-bold text-purple-600 hover:underline bg-purple-50 px-3 py-1.5 rounded-md"
-                      >
-                        Book Darshan Slot &rarr;
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Read-Only Calendar widget */}
-              <JourneyCalendarWidget />
-            </div>
-          </section>
-
-          {/* ==========================================================
-              PRIORITY 5, 6, 7: Vehicle
-              ========================================================== */}
-          <section className="space-y-4 text-left">
-            <h2 className="text-base font-extrabold text-[#111827] border-l-4 border-[#005BAC] pl-2 mt-8">
-              Logistics & Travel
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-              
-              {/* Vehicle */}
-              <div className="bg-white rounded-xl border border-[#E5E7EB] p-4 text-left space-y-2 shadow-sm">
-                <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-2">
-                  <span className="text-[10px] font-black uppercase text-[#6B7280] tracking-wider flex items-center gap-1.5">
-                    <CarFront size={14} className="text-amber-600" />
-                    <span>Vehicle Details</span>
-                  </span>
-                </div>
-                {journey.vehicleInfo?.vehicleNumber ? (
-                  <div className="space-y-1 text-xs py-2">
-                    <h4 className="font-extrabold text-[#111827]">{journey.vehicleInfo.vehicleNumber}</h4>
-                    <p className="text-[#374151] font-semibold text-[10px]">{journey.vehicleInfo.vehicleType}</p>
-                  </div>
-                ) : (
-                  <div className="py-4 text-center text-[#6B7280] space-y-1 flex flex-col items-center">
-                    <p className="text-xs font-bold">Not Registered.</p>
-                    <button onClick={() => router.push('/bookings/vehicle')} className="mt-2 text-[10px] font-bold text-amber-600 hover:underline bg-amber-50 px-3 py-1.5 rounded-md">
-                      Register &rarr;
-                    </button>
-                  </div>
-                )}
-              </div>
-
-            </div>
-          </section>
 
           {/* ==========================================================
               PRIORITY 8: Documents

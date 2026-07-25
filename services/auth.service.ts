@@ -93,65 +93,108 @@ export class AuthService {
       throw new Error(result.error || 'Login failed. Please try again.');
     }
 
-    const { user } = result;
+    const { user, citizenProfile, journey } = result;
     const userId = user.id;
 
-    // Load their local data if it exists, or initialize a new store if logging in on a new device
-    let permanentData: any = null;
-    const dataStr = SafeStorage.getItem(`mahakumbh_user_data_${userId}`);
-    if (dataStr) {
-      permanentData = JSON.parse(dataStr);
-    }
+    // Reset store first to prepare for user session
+    const store = useJourneyStore.getState();
+    store.resetStore();
 
-    if (!permanentData) {
-      // Create fresh data structure for this user
-      const store = useJourneyStore.getState();
-      store.resetStore();
-      
+    // Hydrate profile from DB or create a fresh one if missing
+    if (citizenProfile) {
+      store.setCitizenProfile({
+        photo: citizenProfile.photo || '',
+        fullName: citizenProfile.fullName || '',
+        gender: citizenProfile.gender || '',
+        dateOfBirth: citizenProfile.dateOfBirth || '',
+        primaryMobile: citizenProfile.primaryMobile || '',
+        alternateMobile: citizenProfile.alternateMobile || '',
+        email: citizenProfile.email || '',
+        address: citizenProfile.address || {
+          houseFlatNumber: '',
+          buildingSociety: '',
+          streetRoad: '',
+          areaLocality: '',
+          villageTownCity: '',
+          talukaTehsil: '',
+          district: '',
+          state: '',
+          country: '',
+          pinCode: '',
+        },
+        nationality: citizenProfile.nationality || 'Indian Citizen',
+        preferredLanguage: citizenProfile.preferredLanguage || 'English',
+        bloodGroup: citizenProfile.bloodGroup || '',
+        occupation: citizenProfile.occupation || 'Other',
+        occupationOther: citizenProfile.occupationOther || '',
+        governmentIds: citizenProfile.governmentIds || [],
+        emergencyContacts: citizenProfile.emergencyContacts || {
+          primary: { name: '', relationship: '', phone: '', notes: '' },
+          secondary: { name: '', relationship: '', phone: '', notes: '' },
+          doctor: { name: '', relationship: '', phone: '', notes: '' },
+          localContact: { name: '', relationship: '', phone: '', notes: '' },
+        },
+        signature: citizenProfile.signature || '',
+        verification: citizenProfile.verification || {
+          registrationStatus: 'Not Started',
+          identityVerification: 'Pending',
+          documentVerification: 'Pending',
+          journeyApproval: 'Pending',
+          currentStage: 'Self Registration',
+        },
+        audit: citizenProfile.audit || {
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          createdBy: 'System',
+          updatedBy: 'System',
+        }
+      });
+    } else {
       store.updateCitizenProfile({
         fullName: user.name,
         primaryMobile: user.phone,
         email: user.email || '',
       });
-
-      store.setJourney({
-        id: `JNY-${Math.floor(100000 + Math.random() * 900000)}`,
-        registrationNumber: user.registrationId,
-        permitNumber: '',
-        vehiclePassId: '',
-        emergencySheetId: '',
-        qrCode: '',
-        registrationTimestamp: new Date().toISOString(),
-        journeyName: `${user.name}'s Journey`,
-        journeyType: user.registrationType as any,
-        journeyStatus: 'Journey Registered',
-        startDate: '',
-        endDate: '',
-        arrivalMode: '',
-        arrivalPoint: '',
-        accommodation: { type: '', name: '', address: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
-        vehicleInfo: { vehicleNumber: '', vehicleType: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
-        primaryRegistrantId: userId,
-        emergencyContacts: '',
-        pilgrimCount: 0,
-        pilgrims: [],
-        selectedGhats: [],
-        selectedTemples: [],
-        snanBookings: [],
-        darshanBookings: [],
-        journeyPlannerData: null,
-        journeyProgress: 25,
-        journeyMetadata: { ipAddress: '127.0.0.1', deviceId: 'REG-1', registrationOfficer: 'Self', verificationOfficer: 'Pending' },
-        audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'Self Registration', updatedBy: 'Self Registration' },
-      } as any);
-
-      permanentData = useJourneyStore.getState();
-      SafeStorage.setItem(`mahakumbh_user_data_${userId}`, JSON.stringify(permanentData));
-    } else {
-      // Hydrate the existing permanent data into the active JourneyStore
-      useJourneyStore.setState(permanentData);
-      useJourneyStore.getState().recalculateStatus(); // Ensure status is calculated post-hydration
     }
+
+    // Hydrate journey from DB if present (do not generate a dummy one!)
+    if (journey) {
+      store.setJourney({
+        id: journey.journeyId,
+        registrationNumber: journey.registrationNumber,
+        permitNumber: journey.permitNumber || '',
+        vehiclePassId: journey.vehiclePassId || '',
+        emergencySheetId: journey.emergencySheetId || '',
+        qrCode: journey.qrCode || '',
+        registrationTimestamp: journey.registrationTimestamp || new Date().toISOString(),
+        journeyName: journey.journeyName || '',
+        journeyType: journey.journeyType as any || 'Individual',
+        journeyStatus: journey.journeyStatus || 'Journey Registered',
+        startDate: journey.startDate || '',
+        endDate: journey.endDate || '',
+        arrivalMode: journey.arrivalMode || '',
+        arrivalPoint: journey.arrivalPoint || '',
+        accommodation: journey.accommodation || { type: '', name: '', address: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
+        vehicleInfo: journey.vehicleInfo || { vehicleNumber: '', vehicleType: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
+        primaryRegistrantId: journey.primaryRegistrantId || '',
+        emergencyContacts: journey.emergencyContacts || '',
+        pilgrimCount: journey.pilgrimCount || 1,
+        pilgrims: journey.pilgrims || [],
+        selectedGhats: journey.selectedGhats || [],
+        selectedTemples: journey.selectedTemples || [],
+        snanBookings: journey.snanBookings || [],
+        darshanBookings: journey.darshanBookings || [],
+        journeyPlannerData: journey.journeyPlannerData || null,
+        journeyProgress: journey.journeyProgress || 0,
+        journeyMetadata: journey.journeyMetadata || { exitZone: '', category: 'Individual', purpose: [], arrivalStation: '', departurePoint: '', sector: '', zone: '', route: '', batch: '', expectedArrivalDate: '', expectedArrivalTime: '', expectedDepartureDate: '', expectedDepartureTime: '' },
+        timelineEvents: journey.timelineEvents || [],
+        audit: journey.audit || { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' },
+      });
+    }
+
+    // Save initial state to safe storage
+    const permanentData = useJourneyStore.getState();
+    SafeStorage.setItem(`mahakumbh_user_data_${userId}`, JSON.stringify(permanentData));
 
     // Build Session Data
     const session: SessionData = {
@@ -163,7 +206,7 @@ export class AuthService {
         email: user.email,
         role: user.role,
         registrationType: user.registrationType,
-        registrationId: user.registrationId,
+        registrationId: journey?.registrationNumber || user.registrationId,
       },
     };
 
@@ -257,38 +300,6 @@ export class AuthService {
         localContact: { name: '', relationship: '', phone: '', notes: '' },
       },
     });
-
-    // Fully initialize journey instead of updating a null object
-    store.setJourney({
-      id: `JNY-${Math.floor(100000 + Math.random() * 900000)}`,
-      registrationNumber: regId,
-      permitNumber: '',
-      vehiclePassId: '',
-      emergencySheetId: '',
-      qrCode: '',
-      registrationTimestamp: new Date().toISOString(),
-      journeyName: `${params.fullName}'s Journey`,
-      journeyType: params.category.charAt(0).toUpperCase() + params.category.slice(1) as any,
-      journeyStatus: 'Journey Registered',
-      startDate: '',
-      endDate: '',
-      arrivalMode: '',
-      arrivalPoint: '',
-      accommodation: { type: '', name: '', address: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
-      vehicleInfo: { vehicleNumber: '', vehicleType: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
-      primaryRegistrantId: userId,
-      emergencyContacts: '',
-      pilgrimCount: 0,
-      pilgrims: [],
-      selectedGhats: [],
-      selectedTemples: [],
-      snanBookings: [],
-      darshanBookings: [],
-      journeyPlannerData: null,
-      journeyProgress: 25,
-      journeyMetadata: { ipAddress: '127.0.0.1', deviceId: 'REG-1', registrationOfficer: 'Self', verificationOfficer: 'Pending' },
-      audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'Self Registration', updatedBy: 'Self Registration' },
-    } as any);
 
     const permanentData = useJourneyStore.getState();
     SafeStorage.setItem(`mahakumbh_user_data_${userId}`, JSON.stringify(permanentData));

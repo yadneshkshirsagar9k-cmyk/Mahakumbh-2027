@@ -80,9 +80,23 @@ if (typeof window !== 'undefined') {
     const session = SessionService.getSession();
     if (session && session.user && session.user.id) {
       clearTimeout(syncTimer);
-      syncTimer = setTimeout(() => {
+      syncTimer = setTimeout(async () => {
         try {
           SafeStorage.setItem(`mahakumbh_user_data_${session.user.id}`, JSON.stringify(state));
+          
+          // Dynamically synchronize the active journey object with MongoDB Atlas database
+          if (state.journey) {
+            await fetch('/api/journey', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                userId: session.user.id,
+                journey: state.journey,
+              }),
+            });
+          }
         } catch (err) {
           // Handled safely without triggering console error overlays
         }
