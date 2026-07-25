@@ -60,8 +60,7 @@ export const useCredentialStore = create<CredentialState>()(
                             (journey.darshanBookings && journey.darshanBookings.length >= 1);
         const pilgrimPassCondition = hasPilgrims && hasBookings;
 
-        const hasVehicleDetails = journey.hasPrivateVehicle && 
-                                  journey.vehicleInfo && 
+        const hasVehicleDetails = journey.vehicleInfo && 
                                   journey.vehicleInfo.vehicleNumber && 
                                   journey.vehicleInfo.vehicleNumber.trim() !== '';
         const vehiclePassCondition = hasVehicleDetails;

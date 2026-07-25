@@ -45,8 +45,8 @@ export default function MyDocumentsPage() {
   
   const pilgrimPassUnlocked = hasJourney && hasPilgrims && hasBookings;
   
-  const isPublicTransit = journey && !journey.hasPrivateVehicle;
-  const hasVehicleDetails = journey && journey.hasPrivateVehicle && journey.vehicleInfo && journey.vehicleInfo.vehicleNumber && journey.vehicleInfo.vehicleNumber.trim() !== '';
+  const hasVehicleDetails = journey && journey.vehicleInfo && journey.vehicleInfo.vehicleNumber && journey.vehicleInfo.vehicleNumber.trim() !== '';
+  const isPublicTransit = journey && !journey.hasPrivateVehicle && !hasVehicleDetails;
   const vehiclePassUnlocked = hasJourney && (isPublicTransit || hasVehicleDetails);
   
   const hasEmergencyContact = citizenProfile && citizenProfile.emergencyContacts?.primary?.phone && citizenProfile.emergencyContacts.primary.phone.trim() !== '';
@@ -82,7 +82,7 @@ export default function MyDocumentsPage() {
       isUnlocked: vehiclePassUnlocked,
       isApplicable: !isPublicTransit,
       checklist: [
-        { label: 'Register Private Vehicle option', isDone: hasJourney && journey.hasPrivateVehicle, link: '/account/dashboard' },
+        { label: 'Register Private Vehicle option', isDone: hasJourney && (journey.hasPrivateVehicle || hasVehicleDetails), link: '/account/dashboard' },
         { label: 'Provide Vehicle Registration & Driver Details', isDone: !!hasVehicleDetails, link: '/bookings/vehicle' }
       ]
     },

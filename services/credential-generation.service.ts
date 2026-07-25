@@ -58,7 +58,24 @@ export class CredentialGenerationService {
   ): GovernmentCredential {
     
     const now = new Date().toISOString();
-    const documentNumber = generateDocumentNumber(type);
+    // Resolve document number from the authoritative journey record to align with database verification keys
+    let documentNumber = '';
+    switch (type) {
+      case CredentialType.REGISTRATION_CERTIFICATE:
+        documentNumber = journey.permitNumber || journey.registrationNumber || generateDocumentNumber(type);
+        break;
+      case CredentialType.PILGRIM_IDENTITY:
+        documentNumber = journey.registrationNumber || generateDocumentNumber(type);
+        break;
+      case CredentialType.VEHICLE_PASS:
+        documentNumber = journey.vehiclePassId || journey.vehicleInfo?.vehiclePassId || generateDocumentNumber(type);
+        break;
+      case CredentialType.EMERGENCY_CARD:
+        documentNumber = journey.emergencySheetId || generateDocumentNumber(type);
+        break;
+      default:
+        documentNumber = generateDocumentNumber(type);
+    }
     
     // 1. Generate the Official Record (Aggregation Layer)
     const officialRecord = getOfficialRegistrationRecord(journey, citizen);
