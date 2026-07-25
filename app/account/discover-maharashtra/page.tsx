@@ -137,6 +137,7 @@ export default function DiscoverMaharashtra() {
     const matchesWheelchair = !wheelchair || item.wheelchair;
     const matchesMedical = !medical || item.medical;
 
+    return matchesSearch && matchesCategory && matchesWheelchair && matchesMedical;
   });
 
   const selectedDest = DESTINATIONS.find(d => d.id === selectedDestId);
