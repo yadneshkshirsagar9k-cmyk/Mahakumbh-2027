@@ -48,8 +48,10 @@ function VerifyScreen() {
 
     const verifyDocument = async () => {
       try {
+        // Replace spaces back to plus signs to handle URL query decoding of "+" in Base64
+        const normalizedBase64 = dataParam.replace(/ /g, '+');
         // Decode Base64 and parse JSON
-        const decodedString = decodeURIComponent(atob(dataParam));
+        const decodedString = decodeURIComponent(atob(normalizedBase64));
         const parsedData = JSON.parse(decodedString) as MinifiedPayload;
         
         if (!parsedData.vs || !parsedData.ct || !parsedData.id) {

@@ -83,24 +83,25 @@ export const useCredentialStore = create<CredentialState>()(
 
           // 2. Generate missing credentials ONLY if respective conditions are satisfied
           const newCreds: GovernmentCredential[] = [];
+          const citizenId = citizen.citizenId || '';
           
           // REGISTRATION_CERTIFICATE: always generated once journey is active
-          if (!dedupedCredentials.some(c => c.credentialType === CredentialType.REGISTRATION_CERTIFICATE && c.linkedJourneyId === journey.id && c.isActive)) {
+          if (!dedupedCredentials.some(c => c.credentialType === CredentialType.REGISTRATION_CERTIFICATE && c.linkedJourneyId === journey.id && c.linkedCitizenId === citizenId && c.isActive)) {
             newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.REGISTRATION_CERTIFICATE, journey, citizen));
           }
 
           // PILGRIM_IDENTITY: requires pilgrims added & snan/darshan slots booked
-          if (pilgrimPassCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.PILGRIM_IDENTITY && c.linkedJourneyId === journey.id && c.isActive)) {
+          if (pilgrimPassCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.PILGRIM_IDENTITY && c.linkedJourneyId === journey.id && c.linkedCitizenId === citizenId && c.isActive)) {
             newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.PILGRIM_IDENTITY, journey, citizen));
           }
 
           // VEHICLE_PASS: requires private vehicle details completed
-          if (vehiclePassCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.VEHICLE_PASS && c.linkedJourneyId === journey.id && c.isActive)) {
+          if (vehiclePassCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.VEHICLE_PASS && c.linkedJourneyId === journey.id && c.linkedCitizenId === citizenId && c.isActive)) {
             newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.VEHICLE_PASS, journey, citizen));
           }
 
           // EMERGENCY_CARD: requires emergency contact numbers
-          if (emergencyCardCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.EMERGENCY_CARD && c.linkedJourneyId === journey.id && c.isActive)) {
+          if (emergencyCardCondition && !dedupedCredentials.some(c => c.credentialType === CredentialType.EMERGENCY_CARD && c.linkedJourneyId === journey.id && c.linkedCitizenId === citizenId && c.isActive)) {
             newCreds.push(CredentialGenerationService.generateNewCredential(CredentialType.EMERGENCY_CARD, journey, citizen));
           }
           

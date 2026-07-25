@@ -20,13 +20,17 @@ export default function MyDocumentsPage() {
   const citizenProfile = useJourneyStore(state => state.citizenProfile);
   const journey = useJourneyStore(state => state.journey);
   const getMyDocumentsSummary = useCredentialStore(state => state.getMyDocumentsSummary);
+  const syncJourneyCredentials = useCredentialStore(state => state.syncJourneyCredentials);
   const recordAction = useCredentialStore(state => state.recordAction);
   
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (journey && citizenProfile) {
+      syncJourneyCredentials(journey, citizenProfile);
+    }
+  }, [journey, citizenProfile, syncJourneyCredentials]);
 
   if (!mounted || !citizenProfile) {
     return <div className="p-8 text-center text-gray-500">Loading documents...</div>;
