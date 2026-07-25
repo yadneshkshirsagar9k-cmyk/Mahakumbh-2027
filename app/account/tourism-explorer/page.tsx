@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Search, MapPin, Clock, Navigation, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { CollapsibleSection } from '@/components/ui/collapsible-section';
@@ -18,6 +19,7 @@ interface Shrine {
   lat: number;
   lng: number;
   placeId?: string;
+  image: string;
 }
 
 const SHRINES: Shrine[] = [
@@ -32,7 +34,8 @@ const SHRINES: Shrine[] = [
     features: ['Prasadalaya', 'Dharamshala', 'VIP Darshan', 'Locker Rooms', 'Medical Center'],
     lat: 19.7668,
     lng: 74.4754,
-    placeId: 'ChIJP-o6-m5D2jsR1K37TmhP1W0'
+    placeId: 'ChIJP-o6-m5D2jsR1K37TmhP1W0',
+    image: '/assets/images/shirdi/shirdi-3_v2.jpg'
   },
   {
     id: '2',
@@ -45,7 +48,8 @@ const SHRINES: Shrine[] = [
     features: ['Inner Sanctum Access', 'Kushavarta Kund Snan', 'Vedic Puja Halls', 'Security Escort'],
     lat: 19.9324,
     lng: 73.5307,
-    placeId: 'ChIJV2d4wweD2DsRP-xveb2Z-2Q'
+    placeId: 'ChIJV2d4wweD2DsRP-xveb2Z-2Q',
+    image: '/assets/images/tourism/trimbakeshwar_2.jpg'
   },
   {
     id: '3',
@@ -58,7 +62,8 @@ const SHRINES: Shrine[] = [
     features: ['Monolithic Carvings', 'Free Queue Line', 'Security Desk', 'Prasad Counters'],
     lat: 20.0268,
     lng: 75.1771,
-    placeId: 'ChIJr2d4-m1D2jsRv2d4xweD2Ds'
+    placeId: 'ChIJr2d4-m1D2jsRv2d4xweD2Ds',
+    image: '/assets/images/tourism/grishneshwar_1_v3.jpg'
   },
   {
     id: '4',
@@ -71,7 +76,8 @@ const SHRINES: Shrine[] = [
     features: ['Open-air Platform', 'Oil Abhishek', 'Locker System', 'Security Control'],
     lat: 19.3833,
     lng: 74.8167,
-    placeId: 'ChIJP-o6-m5D2jsR-OilAbhishek'
+    placeId: 'ChIJP-o6-m5D2jsR-OilAbhishek',
+    image: '/assets/images/tourism/shani_shingnapur_1.jpg'
   }
 ];
 
@@ -184,6 +190,17 @@ export default function TourismExplorer() {
           </div>
 
           <CollapsibleSection title={selectedShrine.name} icon={<MapPin size={14} className="text-[#005BAC]" />} defaultOpen={true} badge={selectedShrine.waitTime + ' wait'}>
+            <div className="relative w-full h-[180px] rounded-xl overflow-hidden mb-3">
+              <Image
+                src={selectedShrine.image}
+                alt={selectedShrine.name}
+                fill
+                className="object-cover animate-fadeIn"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            </div>
+
             <p className="text-[11px] text-[#374151] leading-relaxed font-medium mb-3">
               {selectedShrine.desc}
             </p>
