@@ -114,20 +114,27 @@ export default function SmartRoutePage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[700px]">
         {/* Sidebar Panel */}
         <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col h-full">
-          <div className="mb-6 space-y-4">
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-start space-x-3">
-              <MapPin className="w-5 h-5 text-blue-600 mt-0.5" />
+          <div className="mb-6 relative space-y-3">
+            {/* Connecting line */}
+            <div className="absolute left-6 top-8 bottom-8 w-0.5 border-l-2 border-dashed border-slate-200 z-0"></div>
+            
+            <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3 relative z-10">
+              <div className="bg-blue-50 p-1.5 rounded-lg">
+                <MapPin className="w-5 h-5 text-blue-600" />
+              </div>
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">From</span>
-                <p className="text-sm font-bold text-slate-900 line-clamp-2 leading-tight">{origin.label}</p>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Starting Point</span>
+                <p className="text-sm font-bold text-slate-900 line-clamp-2 leading-tight mt-0.5">{origin.label}</p>
               </div>
             </div>
             
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-start space-x-3">
-              <MapPin className="w-5 h-5 text-orange-500 mt-0.5" />
+            <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3 relative z-10">
+              <div className="bg-orange-50 p-1.5 rounded-lg">
+                <MapPin className="w-5 h-5 text-orange-500" />
+              </div>
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">To</span>
-                <p className="text-sm font-bold text-slate-900 line-clamp-2 leading-tight">{destination.label}</p>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Destination</span>
+                <p className="text-sm font-bold text-slate-900 line-clamp-2 leading-tight mt-0.5">{destination.label}</p>
               </div>
             </div>
           </div>
@@ -177,10 +184,15 @@ export default function SmartRoutePage() {
               );
             })}
           </div>
+          <div className="mt-4 pt-4 border-t border-slate-100">
+            <button className="w-full bg-[#005BAC] hover:bg-[#004a8c] text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center transition-colors shadow-sm shadow-blue-600/20 active:scale-[0.98]">
+              <Navigation className="w-4 h-4 mr-2" /> Start Navigation
+            </button>
+          </div>
         </div>
 
         {/* Map View */}
-        <div className="lg:col-span-3 bg-white border border-slate-200 rounded-2xl shadow-sm p-1.5 h-[500px] lg:h-auto">
+        <div className="lg:col-span-3 bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden h-[500px] lg:h-auto relative z-0">
           <SmartRouteMap
             origin={origin}
             destination={destination}
