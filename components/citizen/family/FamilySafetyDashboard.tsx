@@ -206,9 +206,9 @@ export default function FamilySafetyDashboard() {
 
       {/* MODALS */}
       {activeModal !== 'none' && (
-        <div className="absolute inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative">
-            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50/50">
               <h3 className="font-bold text-gray-900">
                 {activeModal === 'broadcast' && 'Broadcast Message'}
                 {activeModal === 'meeting' && 'Set Meeting Point'}
@@ -284,16 +284,25 @@ export default function FamilySafetyDashboard() {
       )}
 
       {/* 3. QUICK ACTIONS (Bottom) */}
-      <div className="bg-white border-t border-gray-200 p-3 shrink-0 z-10 shadow-sm flex items-center justify-between overflow-x-auto relative">
-        <div className="flex items-center gap-2 min-w-max">
-          <button onClick={() => setActiveModal('broadcast')} className="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-lg text-xs font-bold uppercase flex items-center gap-1.5 transition-colors">
-            <Radio size={14}/> Broadcast
+      <div className="bg-white border-t border-gray-200 p-4 shrink-0 z-10 shadow-lg flex items-center justify-between overflow-x-auto relative">
+        <div className="flex items-center gap-3 min-w-max">
+          <button 
+            onClick={() => setActiveModal('broadcast')} 
+            className="bg-white text-[#005BAC] border-2 border-[#005BAC] hover:bg-blue-50 px-5 py-2.5 rounded-xl text-xs font-black uppercase flex items-center gap-2 transition-all shadow-sm hover:-translate-y-0.5 hover:shadow-md active:scale-95"
+          >
+            <Radio size={16}/> Broadcast
           </button>
-          <button onClick={() => setActiveModal('meeting')} className="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 px-4 py-2 rounded-lg text-xs font-bold uppercase flex items-center gap-1.5 transition-colors">
-            <MapPin size={14}/> Meeting Point
+          <button 
+            onClick={() => setActiveModal('meeting')} 
+            className="bg-[#005BAC] text-white hover:bg-[#004a8c] border-2 border-[#005BAC] px-5 py-2.5 rounded-xl text-xs font-black uppercase flex items-center gap-2 transition-all shadow-sm shadow-blue-500/20 hover:-translate-y-0.5 hover:shadow-md active:scale-95"
+          >
+            <MapPin size={16}/> Meeting Point
           </button>
-          <button onClick={() => setActiveModal('guardian')} className="bg-gray-100 text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-lg text-xs font-bold uppercase flex items-center gap-1.5 transition-colors">
-            <ShieldCheck size={14}/> Assign Guardian
+          <button 
+            onClick={() => setActiveModal('guardian')} 
+            className="bg-white text-gray-700 border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 px-5 py-2.5 rounded-xl text-xs font-black uppercase flex items-center gap-2 transition-all shadow-sm hover:-translate-y-0.5 hover:shadow-md active:scale-95"
+          >
+            <ShieldCheck size={16}/> Assign Guardian
           </button>
         </div>
         
@@ -305,9 +314,12 @@ export default function FamilySafetyDashboard() {
                 alert("Emergency SOS Activated. Help is on the way.");
               }
             }}
-            className={cn("px-6 py-2 rounded-lg text-xs font-bold uppercase flex items-center gap-2 transition-all", isSosActive ? "bg-red-600 text-white animate-pulse" : "bg-red-50 text-red-600 hover:bg-red-100 border border-red-200")}
+            className={cn(
+              "px-8 py-2.5 rounded-xl text-xs font-black uppercase flex items-center gap-2 transition-all shadow-sm hover:-translate-y-0.5 hover:shadow-md active:scale-95", 
+              isSosActive ? "bg-red-600 text-white animate-pulse shadow-red-500/50" : "bg-red-500 text-white hover:bg-red-600 border-2 border-red-600 shadow-red-500/20"
+            )}
           >
-            <ShieldAlert size={14} className={isSosActive ? "" : "animate-pulse"}/> {isSosActive ? "SOS ACTIVE" : "Emergency SOS"}
+            <ShieldAlert size={16} className={isSosActive ? "" : "animate-pulse"}/> {isSosActive ? "SOS ACTIVE" : "Emergency SOS"}
           </button>
         </div>
       </div>
