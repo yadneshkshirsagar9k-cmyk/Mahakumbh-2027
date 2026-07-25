@@ -52,8 +52,8 @@ const DESTINATIONS: Destination[] = [
     detailedInfo: 'Shri Saibaba Sansthan Temple is the governing body of the world-famous shrine of Saint Saibaba of Shirdi. Saibaba is revered as one of the greatest saints ever born in India, who preached "Shraddha" (faith) and "Saburi" (patience) as key paths to spiritual liberation. The temple complex spans across a massive campus hosting the main Samadhi Mandir, Dwarkamai (the mosque where Baba lived), Chavadi, Gurusthan, and Lendi Baug. The Sansthan runs one of the largest community kitchens in Asia, serving free Prasad meals to over 100,000 devotees daily.',
     images: [
       '/assets/images/shirdi/shirdi-1.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Sri_Sai_Baba_Temple_,_Shirdi.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Shirdi_Sai_Baba_Samadhi.jpg'
+      '/assets/images/tourism/Sri_Sai_Baba_Temple___Shirdi.jpg',
+      '/assets/images/tourism/Shirdi_Sai_Baba_Samadhi.jpg'
     ]
   },
   {
@@ -73,9 +73,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Rudrabhishek Puja', 'Kaal Sarp Dosh Nivaran Puja', 'Tripindi Shradha', 'Mahamrityunjay Mantra Jaap', 'Panchamrut Snan'],
     detailedInfo: 'Trimbakeshwar Shiva Temple houses one of the 12 sacred Jyotirlingas. The unique feature of the Jyotirlinga here is its three faces representing Lord Brahma, Lord Vishnu, and Lord Rudra (Shiva). The temple is built of black stone in the classic Nagara architectural style and sits at the foothills of the Brahmagiri Mountain range. The holy Godavari River originates from the Brahmagiri hills at Kushavarta Kund, the sacred pond where millions of pilgrims bathe during the Simhastha Mahakumbh Mela to wash away their sins.',
     images: [
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Trimbakeshwar_Shiva_Temple.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Trimbakeshwar_Temple,_Nashik.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Trimbakeshwar_Shiva_Temple_2005.jpg'
+      '/assets/images/tourism/Trimbakeshwar_Shiva_Temple.jpg',
+      '/assets/images/tourism/Trimbakeshwar_Temple__Nashik.jpg',
+      '/assets/images/tourism/Trimbakeshwar_Shiva_Temple_2005.jpg'
     ]
   },
   {
@@ -95,9 +95,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Asthi Visarjan (Ashes immersion)', 'Pitri Shradha & Tarpan', 'Ganga Aarti (Every Evening)', 'Holy Dip (Snan)'],
     detailedInfo: 'Ram Kund is the holiest spot on the Godavari River ghats in Nashik. According to the Ramayana, Lord Rama spent a significant part of his 14-year exile here and regularly bathed here. Lord Rama also performed the funeral rites and ash immersion of his father King Dasharatha at this pool. It is believed that the water of Ram Kund possesses unique properties that dissolve bone ashes instantly, making it a key national center for ancestral rites.',
     images: [
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Ram_Kund,_Nashik.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Ramkund_Nashik.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Panchavati-Ramkund.jpg'
+      '/assets/images/tourism/Ram_Kund__Nashik.jpg',
+      '/assets/images/tourism/Ramkund_Nashik.jpg',
+      '/assets/images/tourism/Panchavati-Ramkund.jpg'
     ]
   },
 
@@ -118,9 +118,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Historical exploration', 'Cave meditation sessions', 'Photography'],
     detailedInfo: 'Ellora is a UNESCO World Heritage site representing the pinnacle of ancient Indian rock-cut architecture. Spanning Cave 1 to 34, it houses Buddhist, Hindu, and Jain temples carved side-by-side between the 6th and 10th centuries, demonstrating religious harmony. The crown jewel is Cave 16 (The Kailash Temple), the largest monolithic rock excavation in the world. Carved from top to bottom out of a single volcanic basalt cliff, ancient sculptors removed over 200,000 tons of rock to carve this complex structure.',
     images: [
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Ellora_Caves_Aurangabad_Maharashtra.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/The_Beautiful_Ellora_Caves.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Ellora_caves!.jpg'
+      '/assets/images/tourism/Ellora_Caves_Aurangabad_Maharashtra.jpg',
+      '/assets/images/tourism/The_Beautiful_Ellora_Caves.jpg',
+      '/assets/images/tourism/Ellora_caves_.jpg'
     ]
   },
   {
@@ -140,9 +140,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Art Appreciation Tours', 'Buddhist Vihara Meditation', 'Scenic Viewpoint Hiking'],
     detailedInfo: 'The Ajanta Caves are 30 rock-cut Buddhist cave monuments dating from the 2nd century BCE to about 480 CE. Nestled in a horse-shoe shaped gorge along the Waghora River, the caves served as monsoon retreats for Buddhist monks. Ajanta is universally renowned for its classic frescoes and wall paintings, which represent the finest surviving examples of ancient Indian art. The murals depict stories from Jataka tales, illustrating the life events and past births of Gautama Buddha.',
     images: [
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta_Caves,_India,_Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta_Padmapani.jpg',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Ajanta_(63).jpg'
+      '/assets/images/tourism/Ajanta_Caves__India__Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg',
+      '/assets/images/tourism/Ajanta_Padmapani.jpg',
+      '/assets/images/tourism/Ajanta__63_.jpg'
     ]
   }
 ];
