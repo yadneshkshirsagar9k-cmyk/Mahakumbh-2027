@@ -74,7 +74,7 @@ const DESTINATIONS: Destination[] = [
     detailedInfo: 'Trimbakeshwar Shiva Temple houses one of the 12 sacred Jyotirlingas. The unique feature of the Jyotirlinga here is its three faces representing Lord Brahma, Lord Vishnu, and Lord Rudra (Shiva). The temple is built of black stone in the classic Nagara architectural style and sits at the foothills of the Brahmagiri Mountain range. The holy Godavari River originates from the Brahmagiri hills at Kushavarta Kund, the sacred pond where millions of pilgrims bathe during the Simhastha Mahakumbh Mela to wash away their sins.',
     images: [
       '/assets/images/tourism/trimbakeshwar_1.jpg',
-      '/assets/images/tourism/Trimbakeshwar_Shiva_Temple.jpg',
+      '/assets/images/tourism/trimbakeshwar_2.jpg',
       '/assets/images/tourism/trimbakeshwar_3.jpg'
     ]
   },
@@ -95,9 +95,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Asthi Visarjan (Ashes immersion)', 'Pitri Shradha & Tarpan', 'Ganga Aarti (Every Evening)', 'Holy Dip (Snan)'],
     detailedInfo: 'Ram Kund is the holiest spot on the Godavari River ghats in Nashik. According to the Ramayana, Lord Rama spent a significant part of his 14-year exile here and regularly bathed here. Lord Rama also performed the funeral rites and ash immersion of his father King Dasharatha at this pool. It is believed that the water of Ram Kund possesses unique properties that dissolve bone ashes instantly, making it a key national center for ancestral rites.',
     images: [
-      '/assets/images/tourism/Panchavati-Ramkund.jpg',
-      '/assets/images/tourism/ramkund_3.jpg',
-      '/assets/images/tourism/Panchavati-Ramkund.jpg'
+      '/assets/images/tourism/ramkund_1.jpg',
+      '/assets/images/tourism/ramkund_2.jpg',
+      '/assets/images/tourism/ramkund_3.jpg'
     ]
   },
 
@@ -118,8 +118,8 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Historical exploration', 'Cave meditation sessions', 'Photography'],
     detailedInfo: 'Ellora is a UNESCO World Heritage site representing the pinnacle of ancient Indian rock-cut architecture. Spanning Cave 1 to 34, it houses Buddhist, Hindu, and Jain temples carved side-by-side between the 6th and 10th centuries, demonstrating religious harmony. The crown jewel is Cave 16 (The Kailash Temple), the largest monolithic rock excavation in the world. Carved from top to bottom out of a single volcanic basalt cliff, ancient sculptors removed over 200,000 tons of rock to carve this complex structure.',
     images: [
-      '/assets/images/tourism/ellora_3.jpg',
-      'https://images.unsplash.com/photo-1548013146-72479768bada?w=800',
+      '/assets/images/tourism/ellora_1.jpg',
+      '/assets/images/tourism/ellora_2.jpg',
       '/assets/images/tourism/ellora_3.jpg'
     ]
   },
@@ -140,7 +140,7 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Art Appreciation Tours', 'Buddhist Vihara Meditation', 'Scenic Viewpoint Hiking'],
     detailedInfo: 'The Ajanta Caves are 30 rock-cut Buddhist cave monuments dating from the 2nd century BCE to about 480 CE. Nestled in a horse-shoe shaped gorge along the Waghora River, the caves served as monsoon retreats for Buddhist monks. Ajanta is universally renowned for its classic frescoes and wall paintings, which represent the finest surviving examples of ancient Indian art. The murals depict stories from Jataka tales, illustrating the life events and past births of Gautama Buddha.',
     images: [
-      '/assets/images/tourism/Ajanta_Padmapani.jpg',
+      '/assets/images/tourism/ajanta_1.jpg',
       '/assets/images/tourism/ajanta_2.jpg',
       '/assets/images/tourism/ajanta_3.jpg'
     ]
