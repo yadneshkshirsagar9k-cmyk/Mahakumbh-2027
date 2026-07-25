@@ -9,6 +9,7 @@
 
 import { useState } from 'react';
 import { Search, MapPin, Clock, Check, ExternalLink, ArrowLeft, Accessibility, ShieldAlert, Award, Footprints, Landmark } from 'lucide-react';
+import Image from 'next/image';
 import { cn } from '@/utils/cn';
 import { CollapsibleSection } from '@/components/ui/collapsible-section';
 import { navigateToCoordinates } from '@/constants/location-config';
@@ -231,7 +232,9 @@ export default function DiscoverMaharashtra() {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {selectedDest.images.map((img, idx) => (
-                    <img key={idx} src={img} alt={`${selectedDest.name} Gallery Image ${idx + 1}`} className={`w-full h-48 object-cover rounded-xl border border-gray-200 shadow-sm transition-transform hover:scale-[1.02] duration-300 ${idx === 2 ? 'md:col-span-2 md:h-72' : ''}`} />
+                    <div key={idx} className={`relative overflow-hidden w-full h-48 rounded-xl border border-gray-200 shadow-sm transition-transform hover:scale-[1.02] duration-300 ${idx === 2 ? 'md:col-span-2 md:h-72' : ''}`}>
+                      <Image src={img} alt={`${selectedDest.name} Gallery Image ${idx + 1}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -432,7 +435,7 @@ export default function DiscoverMaharashtra() {
               {/* Optional Image Header */}
               {item.images && item.images.length > 0 && (
                 <div className="w-full h-36 border-b border-[#E5E7EB] relative">
-                  <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
+                  <Image src={item.images[0]} alt={item.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                 </div>
               )}
