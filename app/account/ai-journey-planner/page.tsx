@@ -136,6 +136,45 @@ export default function AIJourneyPlanner() {
         }
       }
 
+      // Pad the itinerary with rich recommendations if it's empty or finishes early
+      const lastEventStart = events.length > 0 ? events[events.length - 1].start : transitStart;
+      
+      if (events.length === 0) {
+        // No bookings - generate a full synthetic day
+        dynamicSteps.push({
+          time: `${formatTime(transitStart + 90)} - ${formatTime(transitStart + 150)}`,
+          title: 'Local Temple & Heritage Walk',
+          desc: `Visit ancient heritage sites around the main temple complex. Recommended to hire a certified local guide.`
+        });
+        dynamicSteps.push({
+          time: `01:00 PM - 02:30 PM`,
+          title: 'Traditional Lunch',
+          desc: `Enjoy an authentic Sattvik meal at a certified ${dietary} facility.`
+        });
+      }
+
+      if (lastEventStart < parseTime("04:00 PM")) {
+        // If the day ends early, add evening activities
+        const eveningStart = Math.max(lastEventStart + 120, parseTime("04:30 PM"));
+        dynamicSteps.push({
+          time: `${formatTime(eveningStart)} - ${formatTime(eveningStart + 90)}`,
+          title: 'Spiritual Discourse / Rest',
+          desc: `Take some time to rest at your accommodation or attend an open spiritual discourse at a nearby Ashram.`
+        });
+        dynamicSteps.push({
+          time: `07:00 PM - 08:30 PM`,
+          title: 'Evening Sandhya Aarti',
+          desc: `Experience the divine atmosphere of the evening Aarti. Arrive early to secure a good viewing spot.`
+        });
+      }
+      
+      // Always end with Dinner
+      dynamicSteps.push({
+        time: `08:30 PM - 09:30 PM`,
+        title: 'Dinner & Return to Base',
+        desc: `Return to your accommodation (${journey.accommodation.name}) and conclude the day with a light dinner.`
+      });
+
       let summaryText = `Optimized context-aware AI itinerary generated for ${journey.pilgrimCount} pilgrim(s) for ${selectedDay}.`;
       if (customPrompt) {
         summaryText += ` Adjusted for custom preference: "${customPrompt}".`;
