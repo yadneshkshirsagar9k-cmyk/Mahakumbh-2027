@@ -78,6 +78,7 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
   // New Step 1 Fields
   const [journeySector, setJourneySector] = useState('Sector A');
   const [journeyZone, setJourneyZone] = useState('Zone 1');
+  const [hasPrivateVehicle, setHasPrivateVehicle] = useState(false);
   const [vehicleNum, setVehicleNum] = useState('');
   const [vehicleCat, setVehicleCat] = useState('Car');
   const [driverName, setDriverName] = useState('');
@@ -294,7 +295,7 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
         zone: journeyZone,
         audit: createAuditMetadata(),
       },
-      vehicleInfo: {
+      vehicleInfo: hasPrivateVehicle ? {
         ...createDefaultVehicleInfo(),
         vehicleNumber: vehicleNum,
         vehicleType: vehicleCat as any,
@@ -302,7 +303,11 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
         driverMobile: driverPhone,
         vehiclePassId: vPassId,
         audit: createAuditMetadata(),
+      } : {
+        ...createDefaultVehicleInfo(),
+        audit: createAuditMetadata(),
       },
+      hasPrivateVehicle,
       journeyMetadata: {
         ...createDefaultJourneyMetadata(),
         category: journeyType as any,
@@ -418,19 +423,39 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
                 <label className="font-bold text-[#374151] block">Journey Zone</label>
                 <input type="text" value={journeyZone} onChange={(e) => setJourneyZone(e.target.value)} placeholder="e.g. Zone 1" className="w-full p-2.5 border border-[#E5E7EB] rounded text-[#111827] bg-white outline-none focus:border-[#005BAC]" />
               </div>
-              <div className="space-y-1">
-                <label className="font-bold text-[#374151] block">Vehicle Registration Number</label>
-                <input type="text" value={vehicleNum} onChange={(e) => setVehicleNum(e.target.value)} placeholder="e.g. MH-15-BD-4422" className="w-full p-2.5 border border-[#E5E7EB] rounded text-[#111827] bg-white outline-none focus:border-[#005BAC]" />
+
+              {/* Private Vehicle Toggle */}
+              <div className="space-y-2 md:col-span-2">
+                <label className="font-bold text-[#374151] block">Will you be arriving by private vehicle?</label>
+                <div className="flex gap-3">
+                  <button type="button" onClick={() => setHasPrivateVehicle(true)} className={cn('flex-1 py-2.5 rounded-lg border-2 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer', hasPrivateVehicle ? 'border-[#005BAC] bg-[#F5F7FA] text-[#005BAC]' : 'border-[#E5E7EB] bg-white text-[#374151]')}>
+                    Yes, I have a vehicle
+                  </button>
+                  <button type="button" onClick={() => { setHasPrivateVehicle(false); setVehicleNum(''); setDriverName(''); setDriverPhone(''); }} className={cn('flex-1 py-2.5 rounded-lg border-2 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer', !hasPrivateVehicle ? 'border-[#005BAC] bg-[#F5F7FA] text-[#005BAC]' : 'border-[#E5E7EB] bg-white text-[#374151]')}>
+                    No, using public transport
+                  </button>
+                </div>
               </div>
-              <div className="space-y-1">
-                <label className="font-bold text-[#374151] block">Vehicle Category</label>
-                <select value={vehicleCat} onChange={(e) => setVehicleCat(e.target.value)} className="w-full p-2.5 border border-[#E5E7EB] rounded text-[#111827] bg-white outline-none focus:border-[#005BAC]">
-                  <option>Car</option>
-                  <option>SUV</option>
-                  <option>Two Wheeler</option>
-                  <option>Bus</option>
-                </select>
-              </div>
+
+              {/* Conditional Vehicle Fields */}
+              {hasPrivateVehicle && (
+                <>
+                  <div className="space-y-1">
+                    <label className="font-bold text-[#374151] block">Vehicle Registration Number *</label>
+                    <input type="text" value={vehicleNum} onChange={(e) => setVehicleNum(e.target.value)} placeholder="e.g. MH-15-BD-4422" className="w-full p-2.5 border border-[#E5E7EB] rounded text-[#111827] bg-white outline-none focus:border-[#005BAC]" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-[#374151] block">Vehicle Category</label>
+                    <select value={vehicleCat} onChange={(e) => setVehicleCat(e.target.value)} className="w-full p-2.5 border border-[#E5E7EB] rounded text-[#111827] bg-white outline-none focus:border-[#005BAC]">
+                      <option>Car</option>
+                      <option>SUV</option>
+                      <option>Two Wheeler</option>
+                      <option>Bus</option>
+                    </select>
+                  </div>
+                </>
+              )}
+
               <div className="space-y-1 md:col-span-2">
                 <label className="font-bold text-[#374151] block">Number of Pilgrims *</label>
                 <input type="number" min={1} max={50} value={numPilgrims} onChange={(e) => setNumPilgrims(parseInt(e.target.value) || 1)} className="w-full p-2.5 border border-[#E5E7EB] rounded text-[#111827] bg-white outline-none focus:border-[#005BAC]" />

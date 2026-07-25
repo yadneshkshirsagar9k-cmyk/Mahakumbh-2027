@@ -69,6 +69,7 @@ model Journey {
   arrivalMode            String
   arrivalPoint           String
   accommodation          AccommodationDetails?
+  hasPrivateVehicle      Boolean?                   @default(false)
   vehicleInfo            VehicleInformation?
   primaryRegistrantId    String
   emergencyContacts      String

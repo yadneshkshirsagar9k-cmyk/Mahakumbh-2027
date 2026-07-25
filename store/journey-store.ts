@@ -119,6 +119,9 @@ export interface Journey {
   // --- Expanded Vehicle Info ---
   vehicleInfo: VehicleInformation;
 
+  // --- Vehicle Flag ---
+  hasPrivateVehicle?: boolean;
+
   // --- Primary Registrant Reference ---
   primaryRegistrantId: string;
 
@@ -635,9 +638,15 @@ export const useJourneyStore = create<JourneyState>()(
           progress += 20;
         }
 
-        // 3. Vehicle Registered
+        // 3. Vehicle Registered (only if user declared they have a private vehicle)
+        const vehicleRequired = j.hasPrivateVehicle === true;
         const hasVehicle = j.vehicleInfo && !!j.vehicleInfo.vehicleNumber;
-        if (hasVehicle) {
+        if (vehicleRequired) {
+          if (hasVehicle) {
+            progress += 20;
+          }
+        } else {
+          // Not using vehicle — auto-grant this 20%
           progress += 20;
         }
 
@@ -698,7 +707,7 @@ export const useJourneyStore = create<JourneyState>()(
         if (!j.pilgrims || j.pilgrims.length === 0) {
           return { stepNumber: 2, title: 'Step 2: Add Pilgrims', desc: 'Add family members or accompanying pilgrims to your journey.', link: '/account/manage-pilgrims', btnText: 'Next: Add Pilgrims', isComplete: false };
         }
-        if (!j.vehicleInfo || !j.vehicleInfo.vehicleNumber) {
+        if (j.hasPrivateVehicle && (!j.vehicleInfo || !j.vehicleInfo.vehicleNumber)) {
           return { stepNumber: 3, title: 'Step 3: Vehicle Registration', desc: 'Register your vehicle details for tracking and entry permits.', link: '/bookings/vehicle', btnText: 'Next: Register Vehicle', isComplete: false };
         }
         if (!j.snanBookings || j.snanBookings.length === 0) {
