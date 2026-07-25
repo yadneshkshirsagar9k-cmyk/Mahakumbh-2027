@@ -52,8 +52,8 @@ const DESTINATIONS: Destination[] = [
     detailedInfo: 'Shri Saibaba Sansthan Temple is the governing body of the world-famous shrine of Saint Saibaba of Shirdi. Saibaba is revered as one of the greatest saints ever born in India, who preached "Shraddha" (faith) and "Saburi" (patience) as key paths to spiritual liberation. The temple complex spans across a massive campus hosting the main Samadhi Mandir, Dwarkamai (the mosque where Baba lived), Chavadi, Gurusthan, and Lendi Baug. The Sansthan runs one of the largest community kitchens in Asia, serving free Prasad meals to over 100,000 devotees daily.',
     images: [
       '/assets/images/shirdi/shirdi-1.jpg',
-      '/assets/images/tourism/Sri_Sai_Baba_Temple___Shirdi.jpg',
-      '/assets/images/tourism/Shirdi_Sai_Baba_Samadhi.jpg'
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Sri_Sai_Baba_Temple_%2C_Shirdi.jpg/800px-Sri_Sai_Baba_Temple_%2C_Shirdi.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Shirdi_Sai_Baba_Samadhi.jpg/800px-Shirdi_Sai_Baba_Samadhi.jpg'
     ]
   },
   {
@@ -73,9 +73,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Rudrabhishek Puja', 'Kaal Sarp Dosh Nivaran Puja', 'Tripindi Shradha', 'Mahamrityunjay Mantra Jaap', 'Panchamrut Snan'],
     detailedInfo: 'Trimbakeshwar Shiva Temple houses one of the 12 sacred Jyotirlingas. The unique feature of the Jyotirlinga here is its three faces representing Lord Brahma, Lord Vishnu, and Lord Rudra (Shiva). The temple is built of black stone in the classic Nagara architectural style and sits at the foothills of the Brahmagiri Mountain range. The holy Godavari River originates from the Brahmagiri hills at Kushavarta Kund, the sacred pond where millions of pilgrims bathe during the Simhastha Mahakumbh Mela to wash away their sins.',
     images: [
-      '/assets/images/tourism/Trimbakeshwar_Shiva_Temple.jpg',
-      '/assets/images/tourism/Trimbakeshwar_Temple__Nashik.jpg',
-      '/assets/images/tourism/Trimbakeshwar_Shiva_Temple_2005.jpg'
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Trimbakeshwar_Shiva_Temple.jpg/800px-Trimbakeshwar_Shiva_Temple.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Trimbakeshwar_Temple%2C_Nashik.jpg/800px-Trimbakeshwar_Temple%2C_Nashik.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Trimbakeshwar_Shiva_Temple_2005.jpg/800px-Trimbakeshwar_Shiva_Temple_2005.jpg'
     ]
   },
   {
@@ -95,9 +95,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Asthi Visarjan (Ashes immersion)', 'Pitri Shradha & Tarpan', 'Ganga Aarti (Every Evening)', 'Holy Dip (Snan)'],
     detailedInfo: 'Ram Kund is the holiest spot on the Godavari River ghats in Nashik. According to the Ramayana, Lord Rama spent a significant part of his 14-year exile here and regularly bathed here. Lord Rama also performed the funeral rites and ash immersion of his father King Dasharatha at this pool. It is believed that the water of Ram Kund possesses unique properties that dissolve bone ashes instantly, making it a key national center for ancestral rites.',
     images: [
-      '/assets/images/tourism/Ram_Kund__Nashik.jpg',
-      '/assets/images/tourism/Ramkund_Nashik.jpg',
-      '/assets/images/tourism/Panchavati-Ramkund.jpg'
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ram_Kund%2C_Nashik.jpg/800px-Ram_Kund%2C_Nashik.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Ramkund_Nashik.jpg/800px-Ramkund_Nashik.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Panchavati-Ramkund.jpg/800px-Panchavati-Ramkund.jpg'
     ]
   },
 
@@ -118,9 +118,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Historical exploration', 'Cave meditation sessions', 'Photography'],
     detailedInfo: 'Ellora is a UNESCO World Heritage site representing the pinnacle of ancient Indian rock-cut architecture. Spanning Cave 1 to 34, it houses Buddhist, Hindu, and Jain temples carved side-by-side between the 6th and 10th centuries, demonstrating religious harmony. The crown jewel is Cave 16 (The Kailash Temple), the largest monolithic rock excavation in the world. Carved from top to bottom out of a single volcanic basalt cliff, ancient sculptors removed over 200,000 tons of rock to carve this complex structure.',
     images: [
-      '/assets/images/tourism/Ellora_Caves_Aurangabad_Maharashtra.jpg',
-      '/assets/images/tourism/The_Beautiful_Ellora_Caves.jpg',
-      '/assets/images/tourism/Ellora_caves_.jpg'
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Ellora_Caves_Aurangabad_Maharashtra.jpg/800px-Ellora_Caves_Aurangabad_Maharashtra.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/The_Beautiful_Ellora_Caves.jpg/800px-The_Beautiful_Ellora_Caves.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ellora_caves!.jpg/800px-Ellora_caves!.jpg'
     ]
   },
   {
@@ -140,9 +140,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Art Appreciation Tours', 'Buddhist Vihara Meditation', 'Scenic Viewpoint Hiking'],
     detailedInfo: 'The Ajanta Caves are 30 rock-cut Buddhist cave monuments dating from the 2nd century BCE to about 480 CE. Nestled in a horse-shoe shaped gorge along the Waghora River, the caves served as monsoon retreats for Buddhist monks. Ajanta is universally renowned for its classic frescoes and wall paintings, which represent the finest surviving examples of ancient Indian art. The murals depict stories from Jataka tales, illustrating the life events and past births of Gautama Buddha.',
     images: [
-      '/assets/images/tourism/Ajanta_Caves__India__Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg',
-      '/assets/images/tourism/Ajanta_Padmapani.jpg',
-      '/assets/images/tourism/Ajanta__63_.jpg'
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Ajanta_Caves%2C_India%2C_Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg/800px-Ajanta_Caves%2C_India%2C_Panoramic_view_of_Ajanta_basalt_cliffs_and_caves.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ajanta_Padmapani.jpg/800px-Ajanta_Padmapani.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Ajanta_(63).jpg/800px-Ajanta_(63).jpg'
     ]
   }
 ];
