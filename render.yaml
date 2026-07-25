@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: mahakumbh-2027
+    env: node
+    buildCommand: npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOSTNAME
+        value: 0.0.0.0
