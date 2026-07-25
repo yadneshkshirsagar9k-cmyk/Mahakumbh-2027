@@ -141,7 +141,7 @@ export interface Journey {
   darshanBookings: DarshanBooking[];
 
   // --- AI Planner ---
-  journeyPlannerData: any | null;
+  journeyPlannerData: Record<string, any>;
 
   // --- Progress ---
   journeyProgress: number; // percentage 0 - 100
