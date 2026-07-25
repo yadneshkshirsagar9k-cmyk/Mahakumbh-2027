@@ -69,72 +69,84 @@ export class AuthService {
    * Login using credentials to find the permanent user record.
    */
   static async login(params: LoginParams): Promise<SessionData> {
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
     // Properly extract identifier based on type to prevent fallback bug
     let identifier = (params.mobile || params.identifier || params.passportNumber || params.operatorId || '').trim();
     if (!identifier) {
       identifier = '9876543210'; // Extreme fallback if completely missing
     }
-    
-    const index = this.getUserIndex();
-    
-    let userId = index[identifier];
+
+    // Authenticate via MongoDB API
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        identifier,
+        password: params.password,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || 'Login failed. Please try again.');
+    }
+
+    const { user } = result;
+    const userId = user.id;
+
+    // Load their local data if it exists, or initialize a new store if logging in on a new device
     let permanentData: any = null;
+    const dataStr = SafeStorage.getItem(`mahakumbh_user_data_${userId}`);
+    if (dataStr) {
+      permanentData = JSON.parse(dataStr);
+    }
 
-    if (userId) {
-      // Check password first
-      const auth = this.getUserAuth(userId);
+    if (!permanentData) {
+      // Create fresh data structure for this user
+      const store = useJourneyStore.getState();
+      store.resetStore();
       
-      if (!auth || !auth.password) {
-        throw new Error('Authentication configuration error. Please register again.');
-      }
-      if (params.password !== auth.password) {
-        throw new Error('Incorrect password. Please try again.');
-      }
+      store.updateCitizenProfile({
+        fullName: user.name,
+        primaryMobile: user.phone,
+        email: user.email || '',
+      });
 
-      // User exists in index, load their data
-      const dataStr = SafeStorage.getItem(`mahakumbh_user_data_${userId}`);
-      if (dataStr) {
-        permanentData = JSON.parse(dataStr);
-      }
-    }
+      store.setJourney({
+        id: `JNY-${Math.floor(100000 + Math.random() * 900000)}`,
+        registrationNumber: user.registrationId,
+        permitNumber: '',
+        vehiclePassId: '',
+        emergencySheetId: '',
+        qrCode: '',
+        registrationTimestamp: new Date().toISOString(),
+        journeyName: `${user.name}'s Journey`,
+        journeyType: user.registrationType as any,
+        journeyStatus: 'Journey Registered',
+        startDate: '',
+        endDate: '',
+        arrivalMode: '',
+        arrivalPoint: '',
+        accommodation: { type: '', name: '', address: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
+        vehicleInfo: { vehicleNumber: '', vehicleType: '', audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'System', updatedBy: 'System' } },
+        primaryRegistrantId: userId,
+        emergencyContacts: '',
+        pilgrimCount: 0,
+        pilgrims: [],
+        selectedGhats: [],
+        selectedTemples: [],
+        snanBookings: [],
+        darshanBookings: [],
+        journeyPlannerData: null,
+        journeyProgress: 25,
+        journeyMetadata: { ipAddress: '127.0.0.1', deviceId: 'REG-1', registrationOfficer: 'Self', verificationOfficer: 'Pending' },
+        audit: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(), createdBy: 'Self Registration', updatedBy: 'Self Registration' },
+      } as any);
 
-    if (!permanentData) {
-      // Attempt to migrate legacy data or fallback to active store if the user has no permanent record yet
-      if (typeof window !== 'undefined') {
-        const legacyStr = SafeStorage.getItem('mahakumbh_journey_store');
-        if (legacyStr) {
-          try {
-            const legacyParsed = JSON.parse(legacyStr);
-            const legacyState = legacyParsed.state || legacyParsed; // handle persist wrapper
-            
-            // Check if the current store state belongs to this identifier
-            const isMatch = legacyState.citizenProfile && (
-              legacyState.citizenProfile.primaryMobile === identifier || 
-              legacyState.citizenProfile.email === identifier ||
-              (legacyState.journey && legacyState.journey.registrationNumber === identifier)
-            );
-            
-            if (isMatch) {
-              // Valid legacy match! Migrate it.
-              userId = userId || this.generateUserId();
-              permanentData = legacyState;
-              index[identifier] = userId;
-              this.saveUserIndex(index);
-              this.saveUserAuth(userId, { password: params.password }); // Save auth for migrated user
-              SafeStorage.setItem(`mahakumbh_user_data_${userId}`, JSON.stringify(permanentData));
-            }
-          } catch (e) {
-            // Silently ignore legacy migration failures
-          }
-        }
-      }
-    }
-
-    if (!permanentData) {
-      // Reject login if account does not exist
-      throw new Error('No account found with this identifier. Please register first.');
+      permanentData = useJourneyStore.getState();
+      SafeStorage.setItem(`mahakumbh_user_data_${userId}`, JSON.stringify(permanentData));
     } else {
       // Hydrate the existing permanent data into the active JourneyStore
       useJourneyStore.setState(permanentData);
@@ -146,12 +158,12 @@ export class AuthService {
       token: 'jwt-' + Math.random().toString(36).substring(2),
       user: {
         id: userId,
-        name: permanentData.citizenProfile?.fullName || 'User',
-        phone: permanentData.citizenProfile?.primaryMobile || identifier,
-        email: permanentData.citizenProfile?.email || '',
-        role: params.type === 'operator' ? 'operator' : 'pilgrim',
-        registrationType: permanentData.journey?.journeyType || 'Individual',
-        registrationId: permanentData.journey?.registrationNumber || '',
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        role: user.role,
+        registrationType: user.registrationType,
+        registrationId: user.registrationId,
       },
     };
 
@@ -163,48 +175,50 @@ export class AuthService {
    * Registration generates a fresh permanent account.
    */
   static async register(params: RegisterParams): Promise<SessionData> {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     const identifier = (params.mobile || params.nriMobile || params.passportNumber || params.operatorId || params.email || '').trim();
-    const index = this.getUserIndex();
-    
-    // Bug 1 fix: Prevent overwriting existing user
-    if (identifier && index[identifier]) {
-      throw new Error('An account is already registered with this identifier.');
+
+    // Register via MongoDB API
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fullName: params.fullName,
+        mobile: params.mobile || params.nriMobile || identifier,
+        alternateMobile: params.alternateMobile || '',
+        email: params.email || '',
+        password: params.password,
+        category: params.category,
+        state: params.state || '',
+        district: params.district || '',
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || 'Registration failed. Please try again.');
     }
 
-    // Bug 1 fix: Safely clear previous session before resetting the store, 
+    const { userId } = result;
+
+    // Safely clear previous session before resetting the store, 
     // to prevent WIPE sync to a previously active user's permanent data.
     SessionService.clearSession();
     useJourneyStore.getState().resetStore();
 
-    // Create new immutable user
-    const userId = this.generateUserId();
-    
-    // Map all potential identifiers to the new userId
-    if (params.mobile) index[params.mobile.trim()] = userId;
-    if (params.nriMobile) index[params.nriMobile.trim()] = userId;
-    if (params.passportNumber) index[params.passportNumber.trim()] = userId;
-    if (params.operatorId) index[params.operatorId.trim()] = userId;
-    if (params.email) index[params.email.trim()] = userId;
-    if (identifier && !index[identifier]) index[identifier] = userId;
-    
-    this.saveUserIndex(index);
-    this.saveUserAuth(userId, { password: params.password });
-
     const regId = 'MK-' + Math.floor(100000 + Math.random() * 900000);
-    
     const store = useJourneyStore.getState();
 
     // Fully initialize profile
     store.updateCitizenProfile({
       fullName: params.fullName,
-      primaryMobile: identifier, // Ensure primaryMobile has the core identifier
+      primaryMobile: identifier,
       email: params.email || '',
     });
 
     // Fully initialize journey instead of updating a null object
-    // This fixes Profile Completion score drop issues by providing the base structure.
     store.setJourney({
       id: `JNY-${Math.floor(100000 + Math.random() * 900000)}`,
       registrationNumber: regId,
