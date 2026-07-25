@@ -144,6 +144,402 @@ const DESTINATIONS: Destination[] = [
       '/assets/images/tourism/ajanta_2.jpg',
       '/assets/images/tourism/ajanta_3.jpg'
     ]
+  },
+  {
+    id: 'bhimashankar',
+    name: 'Bhimashankar Temple',
+    category: 'Jyotirlinga',
+    district: 'Pune District',
+    desc: 'One of the five sacred Jyotirlingas of Maharashtra, situated in the ghat region of the Sahyadri hills.',
+    waitTime: '180m',
+    wheelchair: false,
+    medical: true,
+    coords: { lat: 19.0720, lng: 73.5358 },
+    placeId: 'ChIJVy66-m5D2jsR1K37TmhP1W0',
+    bestTimeToVisit: 'September to February (Fully operational and open to pilgrims during the Mahakumbh season)',
+    dressCode: 'Traditional Indian clothing. Gents must remove shirts/vests for inner sanctum entry.',
+    howToReach: 'Located 110 km from Pune and 250 km from Mumbai. State transport buses run regularly from Pune (Shivajinagar) and Kalyan.',
+    rituals: ['Rudrabhishek', 'Laghurudra', 'Aarti (Morning, Afternoon, Evening)', 'Maha Pooja'],
+    detailedInfo: 'Bhimashankar Temple is an ancient shrine housing one of the 12 Jyotirlingas of Lord Shiva. The temple architecture is a beautiful blend of old and new Nagara styles. It is also the source of the Bhima River. The surrounding forest area is a protected wildlife sanctuary, famous for the Indian Giant Squirrel (Shekru). During the Simhastha Mahakumbh, thousands of pilgrims complete the Maharashtra Jyotirlinga circuit by visiting Bhimashankar.',
+    images: [
+      '/assets/images/tourism/bhimashankar_1.jpg',
+      '/assets/images/tourism/bhimashankar_1.jpg',
+      '/assets/images/tourism/bhimashankar_1.jpg'
+    ]
+  },
+  {
+    id: 'grishneshwar',
+    name: 'Grishneshwar Shiva Temple',
+    category: 'Jyotirlinga',
+    district: 'Aurangabad District',
+    desc: 'The pre-eminent Jyotirlinga temple located near the Ellora Caves, rebuilt by Queen Ahilyabai Holkar.',
+    waitTime: '120m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 20.0249, lng: 75.1685 },
+    placeId: 'ChIJVerul-Ellora-Grishneshwar',
+    bestTimeToVisit: 'October to March (Fully open and hosting special poojas during Kumbh Mela)',
+    dressCode: 'Traditional attire. Gents must enter the inner sanctum bare-chested wearing a dhoti/sovale.',
+    howToReach: 'Located 30 km from Aurangabad city and just 1 km from Ellora Caves. Easily reachable by local buses and cabs.',
+    rituals: ['Jal Abhishek', 'Dudha Abhishek', 'Maha Pooja', 'Evening Aarti'],
+    detailedInfo: 'Grishneshwar (also known as Ghushneshwar) is believed to be the last or 12th Jyotirlinga temple on Earth. Built of red stones, the temple architecture features a five-tier shikhara and beautiful carvings of Hindu deities. The temple was restored in the 18th century by the noble queen Ahilyabai Holkar. It is highly visited by devotees during the Mahakumbh pilgrimage as part of the regional holy tour.',
+    images: [
+      '/assets/images/tourism/grishneshwar_1.jpg',
+      '/assets/images/tourism/grishneshwar_1.jpg',
+      '/assets/images/tourism/grishneshwar_1.jpg'
+    ]
+  },
+  {
+    id: 'aundha-nagnath',
+    name: 'Aundha Nagnath Temple',
+    category: 'Jyotirlinga',
+    district: 'Hingoli District',
+    desc: 'An ancient Jyotirlinga temple believed to have been built by Yudhisthira, eldest of the Pandavas.',
+    waitTime: '60m',
+    wheelchair: false,
+    medical: true,
+    coords: { lat: 19.5369, lng: 77.0425 },
+    placeId: 'ChIJAundha-Nagnath-Temple',
+    bestTimeToVisit: 'Winter season (Fully open and accessible during the Mahakumbh mela)',
+    dressCode: 'Modest traditional wear. Avoid shorts or western outfits inside the inner sanctum.',
+    howToReach: 'Located in Aundha Nagnath town. Well-connected by road to Nanded (65 km) and Hingoli. Nearest railway station is Hingoli or Chordi.',
+    rituals: ['Ekadasni', 'Rudrabhishek', 'Daily Aarti', 'Shringar Pooja'],
+    detailedInfo: 'Aundha Nagnath is highly revered as the eighth Jyotirlinga. The temple features exquisite ancient Hemadpanthi style carvings. An interesting legend states that the saint Namdev was singing bhajans here when the temple rotates to face him. The sanctum sanctorum is located below ground level. It remains open and active throughout the Mahakumbh period for pilgrims.',
+    images: [
+      '/assets/images/tourism/aundha_nagnath_1.jpg',
+      '/assets/images/tourism/aundha_nagnath_1.jpg',
+      '/assets/images/tourism/aundha_nagnath_1.jpg'
+    ]
+  },
+  {
+    id: 'parli-vaijnath',
+    name: 'Parli Vaijnath Temple',
+    category: 'Jyotirlinga',
+    district: 'Beed District',
+    desc: 'A historical hilltop Jyotirlinga temple associated with Lord Vishnu and the nectar of immortality.',
+    waitTime: '90m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 18.8475, lng: 76.5372 },
+    placeId: 'ChIJParli-Vaijnath-Temple',
+    bestTimeToVisit: 'Throughout the year (Fully operational during the Mahakumbh)',
+    dressCode: 'Traditional clothing is preferred.',
+    howToReach: 'Parli Vaijnath has its own railway station (PRLI) with direct trains. Well connected by state transport buses from Beed and Latur.',
+    rituals: ['Abhishek', 'Maha Aarti', 'Bhasma Aarti', 'Bilvapatra Archana'],
+    detailedInfo: 'Parli Vaijnath Temple sits on a small hill and is built of strong stone masonry. The temple is associated with the legend of Amrit (nectar) and is believed to have medicinal spiritual powers. It was rebuilt in the 18th century by Ahilyabai Holkar. It is a major pilgrimage hub during the Kumbh Mela circuit in Maharashtra.',
+    images: [
+      '/assets/images/tourism/parli_vaijnath_1.jpg',
+      '/assets/images/tourism/parli_vaijnath_1.jpg',
+      '/assets/images/tourism/parli_vaijnath_1.jpg'
+    ]
+  },
+  {
+    id: 'pandharpur',
+    name: 'Vithoba Temple (Pandharpur)',
+    category: 'Saint Circuit',
+    district: 'Solapur District',
+    desc: 'The spiritual heart of Maharashtra, hosting the beloved deity Lord Vitthal and Rukmini on the banks of Chandrabhaga.',
+    waitTime: '300m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 17.6749, lng: 75.3306 },
+    placeId: 'ChIJPandharpur-Vithoba-Temple',
+    bestTimeToVisit: 'Ashadhi Ekadashi and Kartiki Ekadashi (Fully open during Mahakumbh pilgrim transits)',
+    dressCode: 'Strictly traditional/modest Indian wear. Western clothes are discouraged.',
+    howToReach: 'Located in Pandharpur. Well connected by rail (Kurduvadi railway junction is 50 km away) and state buses from Solapur and Pune.',
+    rituals: ['Charan Sparsh (Touching the feet of Lord Vitthal)', 'Kakad Aarti', 'Mahapooja', 'Shej Aarti'],
+    detailedInfo: 'The Vithoba Temple (Shri Vitthal-Rukmini Mandir) is the premier center of the Varkari sampradaya. Millions of pilgrims march on foot (Wari) to this temple every year. The deity Vitthal is worshipped as a form of Lord Krishna. The temple remains completely open and runs 24/7 during major festivals and the Mahakumbh transits to accommodate the sea of devotees.',
+    images: [
+      '/assets/images/tourism/pandharpur_1.jpg',
+      '/assets/images/tourism/pandharpur_1.jpg',
+      '/assets/images/tourism/pandharpur_1.jpg'
+    ]
+  },
+  {
+    id: 'dagadusheth',
+    name: 'Dagadusheth Halwai Ganapati Temple',
+    category: 'Temple',
+    district: 'Pune District',
+    desc: 'One of the most famous and beloved Ganapati temples in India, renowned for its golden deity and grand festivals.',
+    waitTime: '45m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 18.5164, lng: 73.8561 },
+    placeId: 'ChIJDagadusheth-Halwai-Ganapati',
+    bestTimeToVisit: 'Ganeshotsav (August/September) and throughout the year (Open daily during Mahakumbh)',
+    dressCode: 'Modest clothing.',
+    howToReach: 'Located in the heart of Pune city (Budhwar Peth). Easily accessible by auto-rickshaws, local cabs, and Pune Metro.',
+    rituals: ['Abhishek Pooja', 'Atharvashirsha Avartan', 'Maha Aarti', 'Prasad distribution'],
+    detailedInfo: 'Founded by the sweetmaker Dagadusheth Halwai in the late 19th century, this temple houses a magnificent 7.5-foot Ganapati idol adorned with over 40 kilos of gold. The temple is managed by a trust that runs extensive charitable activities. It is a key spiritual stop for pilgrims traversing through Pune during the Kumbh Mela.',
+    images: [
+      '/assets/images/tourism/dagadusheth_1.jpg',
+      '/assets/images/tourism/dagadusheth_1.jpg',
+      '/assets/images/tourism/dagadusheth_1.jpg'
+    ]
+  },
+  {
+    id: 'siddhivinayak',
+    name: 'Shree Siddhivinayak Temple',
+    category: 'Temple',
+    district: 'Mumbai City District',
+    desc: 'The iconic Ganapati temple of Mumbai, visited by millions of devotees, celebrities, and global leaders.',
+    waitTime: '120m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 19.0169, lng: 72.8302 },
+    placeId: 'ChIJSiddhivinayak-Temple-Mumbai',
+    bestTimeToVisit: 'Tuesdays and Angarki Sankashti Chaturthi (Fully operational during the Mahakumbh years)',
+    dressCode: 'Decent, respectful clothing. No shorts or revealing clothes allowed.',
+    howToReach: 'Located in Prabhadevi, Mumbai. Nearest railway stations are Dadar (Central/Western) and Prabhadevi. Taxis and buses are readily available.',
+    rituals: ['Shree Darshan', 'Aarti (5:00 AM)', 'Abhishek', 'Kakad Aarti'],
+    detailedInfo: 'Shree Siddhivinayak Temple, dedicated to Lord Ganesha (the remover of obstacles), was constructed in 1801. The inner dome of the sanctum is plated with gold, and the Ganesha idol is carved out of a single black stone with the trunk turned to the right. The temple runs advanced crowd management systems and is fully open to pilgrims traveling via Mumbai for the Kumbh Mela.',
+    images: [
+      '/assets/images/tourism/siddhivinayak_1.jpg',
+      '/assets/images/tourism/siddhivinayak_1.jpg',
+      '/assets/images/tourism/siddhivinayak_1.jpg'
+    ]
+  },
+  {
+    id: 'kolhapur-mahalakshmi',
+    name: 'Shree Mahalakshmi Temple (Kolhapur)',
+    category: 'Temple',
+    district: 'Kolhapur District',
+    desc: 'An ancient Shakti Peetha temple of Goddess Ambabai, built in the architectural style of the Chalukya dynasty.',
+    waitTime: '150m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 16.6961, lng: 74.2235 },
+    placeId: 'ChIJKolhapur-Mahalakshmi-Temple',
+    bestTimeToVisit: 'Navratri Festival (October) and Kiranotsav (when sun rays fall on the deity) (Open throughout Kumbh Mela)',
+    dressCode: 'Traditional Indian clothing is highly recommended.',
+    howToReach: 'Located in Kolhapur city. Well connected by trains to Kolhapur Railway Station (CSMT) and national highway NH-48. Daily buses from Pune and Mumbai.',
+    rituals: ['Kumkumarchana', 'Abhishek', 'Mahapuja', 'Alankar Pooja', 'Lalita Panchami procession'],
+    detailedInfo: 'The Mahalakshmi Temple of Kolhapur is one of the six major Shakti Peethas in India. Built in the 7th century by Chalukya rulers, the temple features intricate stone carvings and houses the deity carved in gemstone. During the unique Kiranotsav festival, the rays of the setting sun fall directly on the feet, chest, and face of the goddess. It is a highly active spiritual center open to pilgrims during the Mahakumbh.',
+    images: [
+      '/assets/images/tourism/kolhapur_mahalakshmi_1.jpg',
+      '/assets/images/tourism/kolhapur_mahalakshmi_1.jpg',
+      '/assets/images/tourism/kolhapur_mahalakshmi_1.jpg'
+    ]
+  },
+  {
+    id: 'tuljapur',
+    name: 'Tulja Bhavani Temple',
+    category: 'Temple',
+    district: 'Dharashiv District',
+    desc: 'The historic family deity temple of Chhatrapati Shivaji Maharaj, one of the three complete Shakti Peethas of Maharashtra.',
+    waitTime: '180m',
+    wheelchair: false,
+    medical: true,
+    coords: { lat: 18.0125, lng: 76.1264 },
+    placeId: 'ChIJTuljapur-Bhavani-Temple',
+    bestTimeToVisit: 'Navratri festival (September/October) and winter months (Fully open during Mahakumbh)',
+    dressCode: 'Strictly traditional Indian clothing. Gents in dhotis/kurta-pyjamas, ladies in sarees/salwar-kameez.',
+    howToReach: 'Located in Tuljapur town, 45 km from Solapur. Solapur is the nearest major railway junction. Frequent buses operate between Solapur and Tuljapur.',
+    rituals: ['Chhabina (Deity procession)', 'Abhishek Puja', 'Gondhal (Spiritual folk song)', 'Simhasan Puja'],
+    detailedInfo: 'Tulja Bhavani Temple is dedicated to Goddess Bhavani (a form of Durga). Chhatrapati Shivaji Maharaj was a staunch devotee and is said to have received the divine sword "Bhavani Talwar" from the goddess here. The temple contains the holy Kallol Kund and Gomukh Tirtha. The temple is fully active and serves as a major station on the Mahakumbh spiritual trail.',
+    images: [
+      '/assets/images/tourism/tuljapur_1.jpg',
+      '/assets/images/tourism/tuljapur_1.jpg',
+      '/assets/images/tourism/tuljapur_1.jpg'
+    ]
+  },
+  {
+    id: 'saptashrungi',
+    name: 'Saptashrungi Devi Temple',
+    category: 'Temple',
+    district: 'Nashik District',
+    desc: 'A spectacular Shakti Peetha temple carved into a mountain of seven peaks, adjacent to the Kumbh Mela zone.',
+    waitTime: '120m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 20.3831, lng: 73.8964 },
+    placeId: 'ChIJSaptashrungi-Devi-Temple',
+    bestTimeToVisit: 'Navratri and monsoon (Fully open with high security and ropeway during Kumbh Mela)',
+    dressCode: 'Modest traditional wear.',
+    howToReach: 'Located in Vani, 60 km north of Nashik. State transport buses run frequently from Nashik Central Bus Stand. A funicular trolley/ropeway is available to ascend the hill.',
+    rituals: ['Mahapuja', 'Saree offering to Devi', 'Kumkumarchana', 'Chaitra Otsav'],
+    detailedInfo: 'Saptashrungi Devi Temple is situated on a steep cliff surrounded by seven high mountain peaks (Saptashrunga). The idol of Goddess Saptashrungi Nivasini is 8 feet tall, carved in stone with 18 arms holding different weapons. This temple is a crucial part of the Nashik-Trimbakeshwar Kumbh Mela pilgrimage, and advanced ropeway transport is kept open 24/7 during peak days.',
+    images: [
+      '/assets/images/tourism/saptashrungi_1.jpg',
+      '/assets/images/tourism/saptashrungi_1.jpg',
+      '/assets/images/tourism/saptashrungi_1.jpg'
+    ]
+  },
+  {
+    id: 'shegaon',
+    name: 'Gajanan Maharaj Mandir (Shegaon)',
+    category: 'Ashram',
+    district: 'Buldhana District',
+    desc: 'The immaculate, highly organized spiritual ashram and samadhi temple of Saint Gajanan Maharaj.',
+    waitTime: '90m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 20.7936, lng: 76.6853 },
+    placeId: 'ChIJShegaon-Gajanan-Maharaj-Temple',
+    bestTimeToVisit: 'August to February (Fully open and hosting thousands of pilgrims during Kumbh Mela season)',
+    dressCode: 'Traditional, simple clothing.',
+    howToReach: 'Situated in Shegaon city. Shegaon has its own railway station (SEG) with excellent train connectivity on the Mumbai-Howrah line. Directly connected by road.',
+    rituals: ['Pooja & Aarti (Daily)', 'Bhajan & Kirtan', 'Mahaprasad (Free community kitchen)', 'Samadhi Sparsh'],
+    detailedInfo: 'Shri Gajanan Maharaj Sansthan in Shegaon is universally famous for its exceptional cleanliness, order, and social services. Devotees visit the Samadhi of the great 19th-century saint Gajanan Maharaj. The ashram runs vast dining halls, clean lodging, and spiritual gardens. It remains fully open during the Kumbh Mela, serving as a peaceful retreat for passing pilgrims.',
+    images: [
+      '/assets/images/tourism/shegaon_1.jpg',
+      '/assets/images/tourism/shegaon_1.jpg',
+      '/assets/images/tourism/shegaon_1.jpg'
+    ]
+  },
+  {
+    id: 'hazur-sahib',
+    name: 'Hazur Sahib Nanded',
+    category: 'Spiritual Trail',
+    district: 'Nanded District',
+    desc: 'One of the five Takhts of Sikhism, the final resting place of Guru Gobind Singh Ji.',
+    waitTime: '30m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 19.1539, lng: 77.3181 },
+    placeId: 'ChIJHazur-Sahib-Nanded',
+    bestTimeToVisit: 'October to March (Fully open and welcoming all devotees during the Mahakumbh period)',
+    dressCode: 'Respectful, fully covered clothing. Head must be covered with a scarf or bandana before entering.',
+    howToReach: 'Located in Nanded city. Directly connected via Nanded Railway Station (NED) and Nanded Airport. Regular buses and trains from Hyderabad, Mumbai, and Pune.',
+    rituals: ['Langar (Free 24/7 community kitchen)', 'Nitnem (Daily prayers)', 'Shastar Darshan (Viewing of holy weapons)', 'Rehras Sahib & Aarti'],
+    detailedInfo: 'Takht Sachkhand Sri Hazur Abchalnagar Sahib is a world-renowned Sikh shrine built at the site where the tenth Guru, Guru Gobind Singh Ji, breathed his last in 1708. The inner room of the temple houses the holy Guru Granth Sahib and the Guru\'s personal weapons. The complex runs massive pilgrim guest houses and serves free food to all. It is fully open and active, welcoming spiritual travelers during the Mahakumbh.',
+    images: [
+      '/assets/images/tourism/nanded_hazur_sahib_1.jpg',
+      '/assets/images/tourism/nanded_hazur_sahib_1.jpg',
+      '/assets/images/tourism/nanded_hazur_sahib_1.jpg'
+    ]
+  },
+  {
+    id: 'kalaram-temple',
+    name: 'Kalaram Temple (Panchavati)',
+    category: 'Temple',
+    district: 'Nashik District',
+    desc: 'The historic temple of Lord Rama in Panchavati, featuring a unique black stone deity and architecture.',
+    waitTime: '60m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 20.0076, lng: 73.7958 },
+    placeId: 'ChIJKalaram-Temple-Nashik',
+    bestTimeToVisit: 'Ram Navami and throughout the Kumbh Mela (Centrally open in the heart of the Kumbh zone)',
+    dressCode: 'Respectful traditional attire.',
+    howToReach: 'Located in Panchavati, Nashik. Easily reachable by local auto-rickshaws, cabs, or walking from Ramkund (just 500 meters away).',
+    rituals: ['Rama Pooja', 'Hanuman Chalisa Path', 'Evening Aarti', 'Special Kumbh Mela Pujas'],
+    detailedInfo: 'Kalaram Temple is a key mythological site built in 1782 by Sardar Rangrao Odhekar. The temple gets its name from the statue of Lord Rama, which is carved from a single piece of black stone. According to legend, Lord Rama lived in Panchavati during his exile. The temple plays an active, pivotal role during the Kumbh Mela, hosting key religious discourses and remaining open for 24-hour darshan during Shahi Snan days.',
+    images: [
+      '/assets/images/tourism/kalaram_temple_1.jpg',
+      '/assets/images/tourism/kalaram_temple_1.jpg',
+      '/assets/images/tourism/kalaram_temple_1.jpg'
+    ]
+  },
+  {
+    id: 'kushavarta-kund',
+    name: 'Kushavarta Kund',
+    category: 'Spiritual Trail',
+    district: 'Nashik District',
+    desc: 'The sacred reservoir in Trimbakeshwar representing the origin of the Godavari River and the center of Kumbh Mela Shahi Snan.',
+    waitTime: '30m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 19.9318, lng: 73.5323 },
+    placeId: 'ChIJKushavarta-Kund-Trimbak',
+    bestTimeToVisit: 'Simhastha Kumbh Mela and weekly holy dips (Fully open, heavily fortified and managed for bathing during Kumbh)',
+    dressCode: 'Appropriate bathing clothes. Clean towels and changing rooms are constructed around the pool.',
+    howToReach: 'Located in Trimbakeshwar town center, walking distance from the Trimbakeshwar Shiva Temple.',
+    rituals: ['Shahi Snan (Royal Bath for Akhada Sadhus)', 'Pitri Tarpan', 'Godavari Aarti', 'Holy Dip (Snan)'],
+    detailedInfo: 'Kushavarta Kund is a fortified stone tank where the Godavari River emerges after flowing underground from the Brahmagiri Hills. It is the sanctum sanctorum for holy bathing in Trimbakeshwar. During the Simhastha Mahakumbh, the Shaiva Sadhus and Akhadas take their first royal dip here. The government ensures high-tech safety nets, filtration, and continuous water flow to keep it open and safe for millions.',
+    images: [
+      '/assets/images/tourism/kushavarta_1.jpg',
+      '/assets/images/tourism/kushavarta_1.jpg',
+      '/assets/images/tourism/kushavarta_1.jpg'
+    ]
+  },
+  {
+    id: 'anjaneri-hills',
+    name: 'Anjaneri Hills',
+    category: 'Spiritual Trail',
+    district: 'Nashik District',
+    desc: 'The sacred birthplace of Lord Hanuman, offering a scenic spiritual trek in the Western Ghats.',
+    waitTime: '15m',
+    wheelchair: false,
+    medical: false,
+    coords: { lat: 19.9198, lng: 73.5794 },
+    placeId: 'ChIJAnjaneri-Hills-Nashik',
+    bestTimeToVisit: 'Monsoons (July-Sept) for scenic waterfalls, and winters (Oct-Feb) (Fully open and popular for trekking during Kumbh)',
+    dressCode: 'Comfortable trekking clothes and sturdy hiking shoes.',
+    howToReach: 'Located on the Nashik-Trimbakeshwar highway, about 20 km from Nashik and 7 km from Trimbak. Base village is Anjaneri, followed by a 2-hour hike.',
+    rituals: ['Hanuman Temple worship at the peak', 'Eco-trail hiking', 'Photography of volcanic formations'],
+    detailedInfo: 'Anjaneri Hills is named after Anjana, the mother of Lord Hanuman. The hill is believed to be Hanuman\'s birthplace. The trek passes through forests, rock-cut steps, and beautiful plateau formations, leading to a temple dedicated to Anjana Mata and Lord Hanuman at the summit. It remains open daily during the Kumbh Mela, attracting adventure-loving pilgrims.',
+    images: [
+      '/assets/images/tourism/anjaneri_1.jpg',
+      '/assets/images/tourism/anjaneri_1.jpg',
+      '/assets/images/tourism/anjaneri_1.jpg'
+    ]
+  },
+  {
+    id: 'pandavleni-caves',
+    name: 'Pandavleni Caves',
+    category: 'UNESCO',
+    district: 'Nashik District',
+    desc: 'A cluster of 24 ancient rock-cut Buddhist caves dating from the 1st century BCE to the 3rd century CE.',
+    waitTime: '15m',
+    wheelchair: false,
+    medical: false,
+    coords: { lat: 19.9619, lng: 73.7485 },
+    placeId: 'ChIJPandavleni-Caves-Nashik',
+    bestTimeToVisit: 'October to March (Fully open and maintained by ASI during the Kumbh Mela)',
+    dressCode: 'Comfortable walking shoes. Modest attire suitable for historical monastic caves.',
+    howToReach: 'Located on the outskirts of Nashik on the Mumbai-Nashik highway (NH-3). Direct local buses and cabs drop at the base. Visitors must climb around 200 stone steps to reach the caves.',
+    rituals: ['Historical Cave Exploration', 'Buddhist Vihara Meditation', 'Scenic Valley Views'],
+    detailedInfo: 'Pandavleni Caves (also known as Trirashmi Leni) are a group of 24 Hinayana Buddhist caves. The caves contain ornate stone carvings, pillars, water tanks, and large assembly halls (viharas). These caves served as residences for Buddhist monks. They are managed by the Archaeological Survey of India (ASI) and remain fully open for history and art enthusiasts during the Kumbh Mela.',
+    images: [
+      '/assets/images/tourism/pandavleni_1.jpg',
+      '/assets/images/tourism/pandavleni_1.jpg',
+      '/assets/images/tourism/pandavleni_1.jpg'
+    ]
+  },
+  {
+    id: 'kapaleshwar-temple',
+    name: 'Kapaleshwar Temple',
+    category: 'Temple',
+    district: 'Nashik District',
+    desc: 'A unique Shiva temple near Ramkund where Nandi is absent, holding deep significance during Kumbh Snan.',
+    waitTime: '45m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 20.0048, lng: 73.7919 },
+    placeId: 'ChIJKapaleshwar-Temple-Nashik',
+    bestTimeToVisit: 'Pradosh days, Mahashivratri, and Kumbh Mela (Centrally open and directly adjacent to Ramkund ghat)',
+    dressCode: 'Respectful traditional attire.',
+    howToReach: 'Located in Panchavati, Nashik, right next to the sacred Ramkund bathing ghat. Easily reachable on foot.',
+    rituals: ['Shiva Linga Pooja', 'Evening Aarti', 'Maha Pooja', 'Pradosha Vrat prayers'],
+    detailedInfo: 'Kapaleshwar Mahadev Temple is one of the oldest Shiva temples in Nashik. Uniquely, there is no statue of Nandi (the bull) at the entrance. Lord Shiva is believed to have taken Nandi as his spiritual guru here to wash away his sin of killing a cow, hence Nandi is respected as a guru and sits on a higher plane. The temple is directly connected to the Ramkund Kumbh Mela zone and is open 24/7 during Shahi Snan.',
+    images: [
+      '/assets/images/tourism/kapaleshwar_1.jpg',
+      '/assets/images/tourism/kapaleshwar_1.jpg',
+      '/assets/images/tourism/kapaleshwar_1.jpg'
+    ]
+  },
+  {
+    id: 'muktidham-temple',
+    name: 'Muktidham Temple',
+    category: 'Temple',
+    district: 'Nashik District',
+    desc: 'A magnificent marble temple complex housing replicas of the twelve Jyotirlingas and major Indian deities.',
+    waitTime: '30m',
+    wheelchair: true,
+    medical: true,
+    coords: { lat: 19.9576, lng: 73.8268 },
+    placeId: 'ChIJMuktidham-Temple-Nashik',
+    bestTimeToVisit: 'Throughout the year, especially during festivals (Fully open and serving as a key pilgrim transit hub during Kumbh)',
+    dressCode: 'Modest traditional or casual clothing.',
+    howToReach: 'Located in Nashik Road area, about 2 km from Nashik Road Railway Station. Direct auto-rickshaws and cabs run constantly.',
+    rituals: ['Jyotirlinga Darshan', 'Bhagavad Gita wall reading', 'Aarti', 'Bhajan assemblies'],
+    detailedInfo: 'Muktidham is a unique temple built in 1971 using high-quality pure white Makrana marble from Rajasthan. The temple is famous for housing life-size replicas of the 12 Jyotirlingas, allowing pilgrims to worship them all under one roof. The entire 18 chapters of the Bhagavad Gita are beautifully inscribed on the marble walls. The temple is fully active and serves as an important tourist destination during the Kumbh Mela.',
+    images: [
+      '/assets/images/tourism/muktidham_1.jpg',
+      '/assets/images/tourism/muktidham_1.jpg',
+      '/assets/images/tourism/muktidham_1.jpg'
+    ]
   }
 ];
 
@@ -350,7 +746,7 @@ export default function DiscoverMaharashtra() {
     <div className="space-y-6 text-[#111827]">
       <div>
         <h1 className="text-2xl font-black text-[#111827] tracking-tight">Discover Maharashtra</h1>
-        <p className="text-xs text-[#6B7280]">Official repository of all 17 national-grade spiritual, heritage, and ashram destinations</p>
+        <p className="text-xs text-[#6B7280]">Official repository of all national-grade spiritual, heritage, and ashram destinations open during Mahakumbh</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
