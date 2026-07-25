@@ -32,6 +32,11 @@ export async function GET(request: Request) {
       }, { status: 200 });
     }
 
+    // Fetch the citizen profile associated with this journey to obtain their secure photograph
+    const citizenProfile = await prisma.citizenProfile.findUnique({
+      where: { userId: journey.userId }
+    });
+
     // Determine validity based on journey status
     const isRevoked = journey.journeyStatus === 'Revoked' || journey.journeyStatus === 'Cancelled';
     const isActive = journey.journeyStatus !== 'Draft';
@@ -48,7 +53,8 @@ export async function GET(request: Request) {
       success: true,
       valid: isActive,
       status: journey.journeyStatus,
-      journey
+      journey,
+      citizenProfile
     }, { status: 200 });
   } catch (error: any) {
     console.error('Verify document API error:', error);

@@ -79,6 +79,8 @@ function VerifyScreen() {
         const dbPhoto = dbResult.journey?.pilgrims?.find((p: any) => p.relationship === 'Self' || p.relationship === 'self')?.photo;
         if (dbPhoto) {
           setPhotoUrl(dbPhoto);
+        } else if (dbResult.citizenProfile?.photo) {
+          setPhotoUrl(dbResult.citizenProfile.photo);
         } else if (parsedData.ph) {
           setPhotoUrl(parsedData.ph);
         } else if ((citizenProfile as any)?.photo) {
