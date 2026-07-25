@@ -26,18 +26,22 @@ const createCustomMarker = (color: string, emoji: string) => {
 };
 
 // ============================================================
-// MAP CONTROLLER (BOUNDS AUTO-FIT)
+// MAP CONTROLLER (BOUNDS AUTO-FIT & NAVIGATION VIEW)
 // ============================================================
-function MapBoundsController({ origin, destination, path }: { origin: [number, number], destination: [number, number], path: [number, number][] }) {
+function MapBoundsController({ origin, destination, path, isNavigating }: { origin: [number, number], destination: [number, number], path: [number, number][], isNavigating?: boolean }) {
   const map = useMap();
   
   useEffect(() => {
-    if (origin && destination) {
+    if (isNavigating && origin) {
+      // In navigation mode, zoom closely on the origin to simulate turn-by-turn perspective
+      map.setView(origin, 16, { animate: true, duration: 1.5 });
+    } else if (origin && destination) {
+      // Standard overview mode
       const bounds = L.latLngBounds([origin, destination]);
       path.forEach(coord => bounds.extend(coord));
       map.fitBounds(bounds, { padding: [50, 50], animate: true, duration: 1.5 });
     }
-  }, [origin, destination, path, map]);
+  }, [origin, destination, path, isNavigating, map]);
 
   return null;
 }
@@ -62,6 +66,7 @@ export interface SmartRouteMapProps {
   routes: RouteOption[];
   activeRouteId: string;
   onSelectRoute: (routeId: string) => void;
+  isNavigating?: boolean;
   className?: string;
 }
 
@@ -74,6 +79,7 @@ export function SmartRouteMap({
   routes,
   activeRouteId,
   onSelectRoute,
+  isNavigating = false,
   className
 }: SmartRouteMapProps) {
   
@@ -103,6 +109,7 @@ export function SmartRouteMap({
             origin={[origin.lat, origin.lng]} 
             destination={[destination.lat, destination.lng]} 
             path={activeRoute.path} 
+            isNavigating={isNavigating}
           />
         )}
 

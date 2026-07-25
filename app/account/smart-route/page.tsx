@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useJourneyStore } from '@/store/journey-store';
 import dynamic from 'next/dynamic';
-import { MapPin, Route, Navigation, AlertTriangle, Lock } from 'lucide-react';
+import { MapPin, Route, Navigation, AlertTriangle, Lock, X } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 // Dynamically import map component to prevent SSR issues
@@ -19,6 +19,7 @@ export default function SmartRoutePage() {
   const { journey, isPipelineComplete } = useJourneyStore();
   
   const [activeRouteId, setActiveRouteId] = useState('alt-1');
+  const [isNavigating, setIsNavigating] = useState(false);
 
   // Compute Origin from Journey Data
   const origin = useMemo(() => {
@@ -111,9 +112,10 @@ export default function SmartRoutePage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[700px]">
-        {/* Sidebar Panel */}
-        <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col h-full">
+      <div className={cn("grid grid-cols-1 gap-6", isNavigating ? "h-[85vh]" : "lg:grid-cols-4 h-[700px]")}>
+        {/* Sidebar Panel - Hidden in Navigation Mode */}
+        {!isNavigating && (
+          <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col h-full">
           <div className="mb-6 relative space-y-3">
             {/* Connecting line */}
             <div className="absolute left-6 top-8 bottom-8 w-0.5 border-l-2 border-dashed border-slate-200 z-0"></div>
@@ -185,20 +187,59 @@ export default function SmartRoutePage() {
             })}
           </div>
           <div className="mt-4 pt-4 border-t border-slate-100">
-            <button className="w-full bg-[#005BAC] hover:bg-[#004a8c] text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center transition-colors shadow-sm shadow-blue-600/20 active:scale-[0.98]">
+            <button 
+              onClick={() => setIsNavigating(true)}
+              className="w-full bg-[#005BAC] hover:bg-[#004a8c] text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center transition-colors shadow-sm shadow-blue-600/20 active:scale-[0.98]"
+            >
               <Navigation className="w-4 h-4 mr-2" /> Start Navigation
             </button>
           </div>
         </div>
+        )}
 
         {/* Map View */}
-        <div className="lg:col-span-3 bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden h-[500px] lg:h-auto relative z-0">
+        <div className={cn(
+          "bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden relative z-0",
+          isNavigating ? "lg:col-span-1 h-full" : "lg:col-span-3 h-[500px] lg:h-auto"
+        )}>
+          {/* Navigation Overlay */}
+          {isNavigating && (
+            <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-start pointer-events-none">
+              <div className="bg-[#005BAC] text-white p-4 rounded-xl shadow-lg pointer-events-auto max-w-sm">
+                <div className="flex items-center gap-3 border-b border-blue-500/50 pb-3 mb-3">
+                  <div className="bg-white/20 p-2 rounded-lg">
+                    <Navigation className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <span className="block text-xs font-bold text-blue-200 uppercase tracking-wider">In 200m</span>
+                    <h3 className="text-lg font-black leading-tight">Turn Left onto Gangapur Rd</h3>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between font-bold text-sm">
+                  <span>{routes.find(r => r.id === activeRouteId)?.duration}</span>
+                  <span className="text-blue-200">•</span>
+                  <span>{routes.find(r => r.id === activeRouteId)?.distance}</span>
+                  <span className="text-blue-200">•</span>
+                  <span className="text-emerald-400">ETA 12:45 PM</span>
+                </div>
+              </div>
+              
+              <button 
+                onClick={() => setIsNavigating(false)}
+                className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-xl shadow-lg pointer-events-auto transition-colors flex items-center gap-2 active:scale-95 border-2 border-red-600"
+              >
+                <X className="w-4 h-4" /> Exit
+              </button>
+            </div>
+          )}
+          
           <SmartRouteMap
             origin={origin}
             destination={destination}
             routes={routes}
             activeRouteId={activeRouteId}
             onSelectRoute={setActiveRouteId}
+            isNavigating={isNavigating}
           />
         </div>
       </div>
