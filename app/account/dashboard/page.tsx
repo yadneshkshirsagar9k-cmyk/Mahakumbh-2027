@@ -33,6 +33,7 @@ export default function DashboardPage() {
   const syncJourneyCredentials = useCredentialStore(state => state.syncJourneyCredentials);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [showQrModal, setShowQrModal] = useState(false);
 
   // Hydrate journey from MongoDB on mount (authoritative source)
   useEffect(() => {
@@ -156,6 +157,10 @@ export default function DashboardPage() {
   };
 
   const handleActionClick = (link: string) => {
+    if (link === '#downloads') {
+      setShowQrModal(true);
+      return;
+    }
     if (link.startsWith('#')) {
       const el = document.getElementById(link.slice(1));
       if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -598,6 +603,34 @@ export default function DashboardPage() {
           ))}
         </div>
       </CollapsibleSection>
+
+      {/* Official QR Pass Modal */}
+      {showQrModal && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
+          <div className="bg-white rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl relative">
+            <div className="p-4 bg-[#005BAC] text-white flex justify-between items-center">
+              <h3 className="font-bold text-sm flex items-center gap-2"><QrCode size={16} /> Official QR Gatepass</h3>
+              <button onClick={() => setShowQrModal(false)} className="text-white hover:text-gray-200 transition-colors border-none outline-none cursor-pointer">
+                <X size={20} />
+              </button>
+            </div>
+            <div className="p-8 flex flex-col items-center justify-center bg-gray-50">
+              <div className="w-48 h-48 bg-white rounded-xl shadow-sm border border-gray-200 p-2 flex items-center justify-center mb-4">
+                <QrCode size={160} className="text-[#111827]" />
+              </div>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase tracking-wider border border-emerald-200 mb-2">
+                Active & Verified
+              </span>
+              <p className="text-xs font-black text-[#111827] text-center">
+                Journey ID: {journey?.id}
+              </p>
+              <p className="mt-2 text-[10px] text-[#6B7280] font-semibold text-center max-w-[200px]">
+                Present this secure biometric code at Mahakumbh checkpoints for rapid verification.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
