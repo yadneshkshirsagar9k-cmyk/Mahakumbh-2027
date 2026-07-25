@@ -7,6 +7,7 @@
  */
 
 import { useEffect, useState } from 'react';
+import QRCode from 'qrcode';
 import { useAuthStore } from '@/store/auth-store';
 import { useJourneyStore } from '@/store/journey-store';
 import { useCredentialStore } from '@/store/credential-store';
@@ -34,6 +35,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [showQrModal, setShowQrModal] = useState(false);
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>('');
 
   // Hydrate journey from MongoDB on mount (authoritative source)
   useEffect(() => {
@@ -47,6 +49,20 @@ export default function DashboardPage() {
       syncJourneyCredentials(journey, citizenProfile);
     }
   }, [journey, citizenProfile, syncJourneyCredentials]);
+
+  // Generate QR Code when modal opens
+  useEffect(() => {
+    if (showQrModal && journey?.id) {
+      const verifyUrl = `${window.location.origin}/verify/${journey.id}`;
+      QRCode.toDataURL(verifyUrl, {
+        width: 250,
+        margin: 1,
+        color: { dark: '#111827', light: '#FFFFFF' }
+      })
+      .then(url => setQrCodeDataUrl(url))
+      .catch(err => console.error('Error generating QR', err));
+    }
+  }, [showQrModal, journey?.id]);
 
   const isRegistering = searchParams.get('action') === 'new';
   const editId = searchParams.get('id');
@@ -616,7 +632,11 @@ export default function DashboardPage() {
             </div>
             <div className="p-8 flex flex-col items-center justify-center bg-gray-50">
               <div className="w-48 h-48 bg-white rounded-xl shadow-sm border border-gray-200 p-2 flex items-center justify-center mb-4">
-                <QrCode size={160} className="text-[#111827]" />
+                {qrCodeDataUrl ? (
+                  <img src={qrCodeDataUrl} alt="Journey QR Gatepass" className="w-full h-full object-contain rounded-lg" />
+                ) : (
+                  <QrCode size={160} className="text-gray-300 animate-pulse" />
+                )}
               </div>
               <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase tracking-wider border border-emerald-200 mb-2">
                 Active & Verified
