@@ -162,9 +162,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Rudrabhishek', 'Laghurudra', 'Aarti (Morning, Afternoon, Evening)', 'Maha Pooja'],
     detailedInfo: 'Bhimashankar Temple is an ancient shrine housing one of the 12 Jyotirlingas of Lord Shiva. The temple architecture is a beautiful blend of old and new Nagara styles. It is also the source of the Bhima River. The surrounding forest area is a protected wildlife sanctuary, famous for the Indian Giant Squirrel (Shekru). During the Simhastha Mahakumbh, thousands of pilgrims complete the Maharashtra Jyotirlinga circuit by visiting Bhimashankar.',
     images: [
-      '/assets/images/tourism/bhimashankar_1.jpg',
-      '/assets/images/tourism/bhimashankar_2.jpg',
-      '/assets/images/tourism/bhimashankar_3.jpg'
+      '/assets/images/tourism/bhimashankar_1_v3.jpg',
+      '/assets/images/tourism/bhimashankar_2_v3.jpg',
+      '/assets/images/tourism/bhimashankar_3_v3.jpg'
     ]
   },
   {
@@ -184,9 +184,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Jal Abhishek', 'Dudha Abhishek', 'Maha Pooja', 'Evening Aarti'],
     detailedInfo: 'Grishneshwar (also known as Ghushneshwar) is believed to be the last or 12th Jyotirlinga temple on Earth. Built of red stones, the temple architecture features a five-tier shikhara and beautiful carvings of Hindu deities. The temple was restored in the 18th century by the noble queen Ahilyabai Holkar. It is highly visited by devotees during the Mahakumbh pilgrimage as part of the regional holy tour.',
     images: [
-      '/assets/images/tourism/grishneshwar_1.jpg',
-      '/assets/images/tourism/grishneshwar_2.jpg',
-      '/assets/images/tourism/grishneshwar_3.jpg'
+      '/assets/images/tourism/grishneshwar_1_v3.jpg',
+      '/assets/images/tourism/grishneshwar_2_v3.jpg',
+      '/assets/images/tourism/grishneshwar_3_v3.jpg'
     ]
   },
   {
@@ -206,9 +206,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Ekadasni', 'Rudrabhishek', 'Daily Aarti', 'Shringar Pooja'],
     detailedInfo: 'Aundha Nagnath is highly revered as the eighth Jyotirlinga. The temple features exquisite ancient Hemadpanthi style carvings. An interesting legend states that the saint Namdev was singing bhajans here when the temple rotates to face him. The sanctum sanctorum is located below ground level. It remains open and active throughout the Mahakumbh period for pilgrims.',
     images: [
-      '/assets/images/tourism/aundha-nagnath_1.jpg',
-      '/assets/images/tourism/aundha-nagnath_2.jpg',
-      '/assets/images/tourism/aundha-nagnath_3.jpg'
+      '/assets/images/tourism/aundha-nagnath_1_v3.jpg',
+      '/assets/images/tourism/aundha-nagnath_2_v3.jpg',
+      '/assets/images/tourism/aundha-nagnath_3_v3.jpg'
     ]
   },
   {
@@ -228,9 +228,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Abhishek', 'Maha Aarti', 'Bhasma Aarti', 'Bilvapatra Archana'],
     detailedInfo: 'Parli Vaijnath Temple sits on a small hill and is built of strong stone masonry. The temple is associated with the legend of Amrit (nectar) and is believed to have medicinal spiritual powers. It was rebuilt in the 18th century by Ahilyabai Holkar. It is a major pilgrimage hub during the Kumbh Mela circuit in Maharashtra.',
     images: [
-      '/assets/images/tourism/parli-vaijnath_1.jpg',
-      '/assets/images/tourism/parli-vaijnath_2.jpg',
-      '/assets/images/tourism/parli-vaijnath_3.jpg'
+      '/assets/images/tourism/parli-vaijnath_1_v3.jpg',
+      '/assets/images/tourism/parli-vaijnath_2_v3.jpg',
+      '/assets/images/tourism/parli-vaijnath_3_v3.jpg'
     ]
   },
   {
@@ -250,9 +250,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Charan Sparsh (Touching the feet of Lord Vitthal)', 'Kakad Aarti', 'Mahapooja', 'Shej Aarti'],
     detailedInfo: 'The Vithoba Temple (Shri Vitthal-Rukmini Mandir) is the premier center of the Varkari sampradaya. Millions of pilgrims march on foot (Wari) to this temple every year. The deity Vitthal is worshipped as a form of Lord Krishna. The temple remains completely open and runs 24/7 during major festivals and the Mahakumbh transits to accommodate the sea of devotees.',
     images: [
-      '/assets/images/tourism/pandharpur_1.jpg',
-      '/assets/images/tourism/pandharpur_2.jpg',
-      '/assets/images/tourism/pandharpur_3.jpg'
+      '/assets/images/tourism/pandharpur_1_v3.jpg',
+      '/assets/images/tourism/pandharpur_2_v3.jpg',
+      '/assets/images/tourism/pandharpur_3_v3.jpg'
     ]
   },
   {
@@ -272,9 +272,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Abhishek Pooja', 'Atharvashirsha Avartan', 'Maha Aarti', 'Prasad distribution'],
     detailedInfo: 'Founded by the sweetmaker Dagadusheth Halwai in the late 19th century, this temple houses a magnificent 7.5-foot Ganapati idol adorned with over 40 kilos of gold. The temple is managed by a trust that runs extensive charitable activities. It is a key spiritual stop for pilgrims traversing through Pune during the Kumbh Mela.',
     images: [
-      '/assets/images/tourism/dagadusheth_1.jpg',
-      '/assets/images/tourism/dagadusheth_2.jpg',
-      '/assets/images/tourism/dagadusheth_3.jpg'
+      '/assets/images/tourism/dagadusheth_1_v3.jpg',
+      '/assets/images/tourism/dagadusheth_2_v3.jpg',
+      '/assets/images/tourism/dagadusheth_3_v3.jpg'
     ]
   },
   {
@@ -294,9 +294,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Shree Darshan', 'Aarti (5:00 AM)', 'Abhishek', 'Kakad Aarti'],
     detailedInfo: 'Shree Siddhivinayak Temple, dedicated to Lord Ganesha (the remover of obstacles), was constructed in 1801. The inner dome of the sanctum is plated with gold, and the Ganesha idol is carved out of a single black stone with the trunk turned to the right. The temple runs advanced crowd management systems and is fully open to pilgrims traveling via Mumbai for the Kumbh Mela.',
     images: [
-      '/assets/images/tourism/siddhivinayak_1.jpg',
-      '/assets/images/tourism/siddhivinayak_2.jpg',
-      '/assets/images/tourism/siddhivinayak_3.jpg'
+      '/assets/images/tourism/siddhivinayak_1_v3.jpg',
+      '/assets/images/tourism/siddhivinayak_2_v3.jpg',
+      '/assets/images/tourism/siddhivinayak_3_v3.jpg'
     ]
   },
   {
@@ -316,9 +316,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Kumkumarchana', 'Abhishek', 'Mahapuja', 'Alankar Pooja', 'Lalita Panchami procession'],
     detailedInfo: 'The Mahalakshmi Temple of Kolhapur is one of the six major Shakti Peethas in India. Built in the 7th century by Chalukya rulers, the temple features intricate stone carvings and houses the deity carved in gemstone. During the unique Kiranotsav festival, the rays of the setting sun fall directly on the feet, chest, and face of the goddess. It is a highly active spiritual center open to pilgrims during the Mahakumbh.',
     images: [
-      '/assets/images/tourism/kolhapur-mahalakshmi_1.jpg',
-      '/assets/images/tourism/kolhapur-mahalakshmi_2.jpg',
-      '/assets/images/tourism/kolhapur-mahalakshmi_3.jpg'
+      '/assets/images/tourism/kolhapur-mahalakshmi_1_v3.jpg',
+      '/assets/images/tourism/kolhapur-mahalakshmi_2_v3.jpg',
+      '/assets/images/tourism/kolhapur-mahalakshmi_3_v3.jpg'
     ]
   },
   {
@@ -338,9 +338,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Chhabina (Deity procession)', 'Abhishek Puja', 'Gondhal (Spiritual folk song)', 'Simhasan Puja'],
     detailedInfo: 'Tulja Bhavani Temple is dedicated to Goddess Bhavani (a form of Durga). Chhatrapati Shivaji Maharaj was a staunch devotee and is said to have received the divine sword "Bhavani Talwar" from the goddess here. The temple contains the holy Kallol Kund and Gomukh Tirtha. The temple is fully active and serves as a major station on the Mahakumbh spiritual trail.',
     images: [
-      '/assets/images/tourism/tuljapur_1.jpg',
-      '/assets/images/tourism/tuljapur_2.jpg',
-      '/assets/images/tourism/tuljapur_3.jpg'
+      '/assets/images/tourism/tuljapur_1_v3.jpg',
+      '/assets/images/tourism/tuljapur_2_v3.jpg',
+      '/assets/images/tourism/tuljapur_3_v3.jpg'
     ]
   },
   {
@@ -360,9 +360,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Mahapuja', 'Saree offering to Devi', 'Kumkumarchana', 'Chaitra Otsav'],
     detailedInfo: 'Saptashrungi Devi Temple is situated on a steep cliff surrounded by seven high mountain peaks (Saptashrunga). The idol of Goddess Saptashrungi Nivasini is 8 feet tall, carved in stone with 18 arms holding different weapons. This temple is a crucial part of the Nashik-Trimbakeshwar Kumbh Mela pilgrimage, and advanced ropeway transport is kept open 24/7 during peak days.',
     images: [
-      '/assets/images/tourism/saptashrungi_1.jpg',
-      '/assets/images/tourism/saptashrungi_2.jpg',
-      '/assets/images/tourism/saptashrungi_3.jpg'
+      '/assets/images/tourism/saptashrungi_1_v3.jpg',
+      '/assets/images/tourism/saptashrungi_2_v3.jpg',
+      '/assets/images/tourism/saptashrungi_3_v3.jpg'
     ]
   },
   {
@@ -382,9 +382,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Pooja & Aarti (Daily)', 'Bhajan & Kirtan', 'Mahaprasad (Free community kitchen)', 'Samadhi Sparsh'],
     detailedInfo: 'Shri Gajanan Maharaj Sansthan in Shegaon is universally famous for its exceptional cleanliness, order, and social services. Devotees visit the Samadhi of the great 19th-century saint Gajanan Maharaj. The ashram runs vast dining halls, clean lodging, and spiritual gardens. It remains fully open during the Kumbh Mela, serving as a peaceful retreat for passing pilgrims.',
     images: [
-      '/assets/images/tourism/shegaon_1.jpg',
-      '/assets/images/tourism/shegaon_2.jpg',
-      '/assets/images/tourism/shegaon_3.jpg'
+      '/assets/images/tourism/shegaon_1_v3.jpg',
+      '/assets/images/tourism/shegaon_2_v3.jpg',
+      '/assets/images/tourism/shegaon_3_v3.jpg'
     ]
   },
   {
@@ -404,9 +404,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Langar (Free 24/7 community kitchen)', 'Nitnem (Daily prayers)', 'Shastar Darshan (Viewing of holy weapons)', 'Rehras Sahib & Aarti'],
     detailedInfo: 'Takht Sachkhand Sri Hazur Abchalnagar Sahib is a world-renowned Sikh shrine built at the site where the tenth Guru, Guru Gobind Singh Ji, breathed his last in 1708. The inner room of the temple houses the holy Guru Granth Sahib and the Guru\'s personal weapons. The complex runs massive pilgrim guest houses and serves free food to all. It is fully open and active, welcoming spiritual travelers during the Mahakumbh.',
     images: [
-      '/assets/images/tourism/hazur-sahib_1.jpg',
-      '/assets/images/tourism/hazur-sahib_2.jpg',
-      '/assets/images/tourism/hazur-sahib_3.jpg'
+      '/assets/images/tourism/hazur-sahib_1_v3.jpg',
+      '/assets/images/tourism/hazur-sahib_2_v3.jpg',
+      '/assets/images/tourism/hazur-sahib_3_v3.jpg'
     ]
   },
   {
@@ -426,9 +426,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Rama Pooja', 'Hanuman Chalisa Path', 'Evening Aarti', 'Special Kumbh Mela Pujas'],
     detailedInfo: 'Kalaram Temple is a key mythological site built in 1782 by Sardar Rangrao Odhekar. The temple gets its name from the statue of Lord Rama, which is carved from a single piece of black stone. According to legend, Lord Rama lived in Panchavati during his exile. The temple plays an active, pivotal role during the Kumbh Mela, hosting key religious discourses and remaining open for 24-hour darshan during Shahi Snan days.',
     images: [
-      '/assets/images/tourism/kalaram-temple_1.jpg',
-      '/assets/images/tourism/kalaram-temple_2.jpg',
-      '/assets/images/tourism/kalaram-temple_3.jpg'
+      '/assets/images/tourism/kalaram-temple_1_v3.jpg',
+      '/assets/images/tourism/kalaram-temple_2_v3.jpg',
+      '/assets/images/tourism/kalaram-temple_3_v3.jpg'
     ]
   },
   {
@@ -448,9 +448,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Shahi Snan (Royal Bath for Akhada Sadhus)', 'Pitri Tarpan', 'Godavari Aarti', 'Holy Dip (Snan)'],
     detailedInfo: 'Kushavarta Kund is a fortified stone tank where the Godavari River emerges after flowing underground from the Brahmagiri Hills. It is the sanctum sanctorum for holy bathing in Trimbakeshwar. During the Simhastha Mahakumbh, the Shaiva Sadhus and Akhadas take their first royal dip here. The government ensures high-tech safety nets, filtration, and continuous water flow to keep it open and safe for millions.',
     images: [
-      '/assets/images/tourism/kushavarta-kund_1.jpg',
-      '/assets/images/tourism/kushavarta-kund_2.jpg',
-      '/assets/images/tourism/kushavarta-kund_1.jpg'
+      '/assets/images/tourism/kushavarta-kund_1_v3.jpg',
+      '/assets/images/tourism/kushavarta-kund_2_v3.jpg',
+      '/assets/images/tourism/kushavarta-kund_1_v3.jpg'
     ]
   },
   {
@@ -470,9 +470,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Hanuman Temple worship at the peak', 'Eco-trail hiking', 'Photography of volcanic formations'],
     detailedInfo: 'Anjaneri Hills is named after Anjana, the mother of Lord Hanuman. The hill is believed to be Hanuman\'s birthplace. The trek passes through forests, rock-cut steps, and beautiful plateau formations, leading to a temple dedicated to Anjana Mata and Lord Hanuman at the summit. It remains open daily during the Kumbh Mela, attracting adventure-loving pilgrims.',
     images: [
-      '/assets/images/tourism/anjaneri-hills_1.jpg',
-      '/assets/images/tourism/anjaneri-hills_2.jpg',
-      '/assets/images/tourism/anjaneri-hills_3.jpg'
+      '/assets/images/tourism/anjaneri-hills_1_v3.jpg',
+      '/assets/images/tourism/anjaneri-hills_2_v3.jpg',
+      '/assets/images/tourism/anjaneri-hills_3_v3.jpg'
     ]
   },
   {
@@ -492,9 +492,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Historical Cave Exploration', 'Buddhist Vihara Meditation', 'Scenic Valley Views'],
     detailedInfo: 'Pandavleni Caves (also known as Trirashmi Leni) are a group of 24 Hinayana Buddhist caves. The caves contain ornate stone carvings, pillars, water tanks, and large assembly halls (viharas). These caves served as residences for Buddhist monks. They are managed by the Archaeological Survey of India (ASI) and remain fully open for history and art enthusiasts during the Kumbh Mela.',
     images: [
-      '/assets/images/tourism/pandavleni-caves_1.jpg',
-      '/assets/images/tourism/pandavleni-caves_2.jpg',
-      '/assets/images/tourism/pandavleni-caves_3.jpg'
+      '/assets/images/tourism/pandavleni-caves_1_v3.jpg',
+      '/assets/images/tourism/pandavleni-caves_2_v3.jpg',
+      '/assets/images/tourism/pandavleni-caves_3_v3.jpg'
     ]
   },
   {
@@ -514,9 +514,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Shiva Linga Pooja', 'Evening Aarti', 'Maha Pooja', 'Pradosha Vrat prayers'],
     detailedInfo: 'Kapaleshwar Mahadev Temple is one of the oldest Shiva temples in Nashik. Uniquely, there is no statue of Nandi (the bull) at the entrance. Lord Shiva is believed to have taken Nandi as his spiritual guru here to wash away his sin of killing a cow, hence Nandi is respected as a guru and sits on a higher plane. The temple is directly connected to the Ramkund Kumbh Mela zone and is open 24/7 during Shahi Snan.',
     images: [
-      '/assets/images/tourism/kapaleshwar-temple_1.jpg',
-      '/assets/images/tourism/kapaleshwar-temple_2.jpg',
-      '/assets/images/tourism/kapaleshwar-temple_3.jpg'
+      '/assets/images/tourism/kapaleshwar-temple_1_v3.jpg',
+      '/assets/images/tourism/kapaleshwar-temple_2_v3.jpg',
+      '/assets/images/tourism/kapaleshwar-temple_3_v3.jpg'
     ]
   },
   {
@@ -536,9 +536,9 @@ const DESTINATIONS: Destination[] = [
     rituals: ['Jyotirlinga Darshan', 'Baghavad Gita wall reading', 'Aarti', 'Bhajan assemblies'],
     detailedInfo: 'Muktidham is a unique temple built in 1971 using high-quality pure white Makrana marble from Rajasthan. The temple is famous for housing life-size replicas of the 12 Jyotirlingas, allowing pilgrims to worship them all under one roof. The entire 18 chapters of the Bhagavad Gita are beautifully inscribed on the marble walls. The temple is fully active and serves as an important tourist destination during the Kumbh Mela.',
     images: [
-      '/assets/images/tourism/muktidham-temple_1.jpg',
-      '/assets/images/tourism/muktidham-temple_2.jpg',
-      '/assets/images/tourism/muktidham-temple_3.jpg'
+      '/assets/images/tourism/muktidham-temple_1_v3.jpg',
+      '/assets/images/tourism/muktidham-temple_2_v3.jpg',
+      '/assets/images/tourism/muktidham-temple_3_v3.jpg'
     ]
   }
 ];
