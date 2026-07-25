@@ -70,9 +70,33 @@ export const useCredentialStore = create<CredentialState>()(
         const emergencyCardCondition = hasEmergencyContact;
         
         set((state) => {
-          // 1. Deduplicate existing credentials (keep the latest one)
+          // 1. Deduplicate existing credentials (keep the latest one) and filter out legacy/outdated serial numbers
           const uniqueCredentials = new Map<string, GovernmentCredential>();
           state.credentials.forEach(cred => {
+            let isOutdated = false;
+            if (cred.linkedJourneyId === journey.id) {
+              const expectedRegCertNo = journey.permitNumber || journey.registrationNumber;
+              if (cred.credentialType === CredentialType.REGISTRATION_CERTIFICATE && expectedRegCertNo && cred.documentNumber !== expectedRegCertNo) {
+                isOutdated = true;
+              }
+              const expectedPilgrimIdNo = journey.registrationNumber;
+              if (cred.credentialType === CredentialType.PILGRIM_IDENTITY && expectedPilgrimIdNo && cred.documentNumber !== expectedPilgrimIdNo) {
+                isOutdated = true;
+              }
+              const expectedVehiclePassNo = journey.vehiclePassId || journey.vehicleInfo?.vehiclePassId;
+              if (cred.credentialType === CredentialType.VEHICLE_PASS && expectedVehiclePassNo && cred.documentNumber !== expectedVehiclePassNo) {
+                isOutdated = true;
+              }
+              const expectedEmergencyCardNo = journey.emergencySheetId;
+              if (cred.credentialType === CredentialType.EMERGENCY_CARD && expectedEmergencyCardNo && cred.documentNumber !== expectedEmergencyCardNo) {
+                isOutdated = true;
+              }
+            }
+
+            if (isOutdated) {
+              return; // Skip/delete outdated legacy cached credentials from active store registry
+            }
+
             const key = `${cred.credentialType}-${cred.linkedJourneyId}-${cred.linkedCitizenId}`;
             if (!uniqueCredentials.has(key) || new Date(cred.issueDate) > new Date(uniqueCredentials.get(key)!.issueDate)) {
               uniqueCredentials.set(key, cred);
