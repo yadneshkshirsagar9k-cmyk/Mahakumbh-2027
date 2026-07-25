@@ -29,6 +29,7 @@ interface Destination {
   dressCode: string;
   howToReach: string;
   rituals: string[];
+  images?: string[];
 }
 
 const DESTINATIONS: Destination[] = [
@@ -47,7 +48,8 @@ const DESTINATIONS: Destination[] = [
     dressCode: 'Decent, traditional clothing is highly recommended. Avoid shorts or revealing clothing.',
     howToReach: 'Located in Shirdi city center. Connected via Shirdi Railway Station (SNSI) and Shirdi Airport (15 km away). Regular bus connectivity from Mumbai, Pune, and Nashik.',
     rituals: ['Kakad Aarti (4:30 AM)', 'Madhyan Aarti (12:00 PM)', 'Dhoop Aarti (Sunset)', 'Shej Aarti (10:30 PM)', 'Satyanarayan Pooja'],
-    detailedInfo: 'Shri Saibaba Sansthan Temple is the governing body of the world-famous shrine of Saint Saibaba of Shirdi. Saibaba is revered as one of the greatest saints ever born in India, who preached "Shraddha" (faith) and "Saburi" (patience) as key paths to spiritual liberation. The temple complex spans across a massive campus hosting the main Samadhi Mandir, Dwarkamai (the mosque where Baba lived), Chavadi, Gurusthan, and Lendi Baug. The Sansthan runs one of the largest community kitchens in Asia, serving free Prasad meals to over 100,000 devotees daily.'
+    detailedInfo: 'Shri Saibaba Sansthan Temple is the governing body of the world-famous shrine of Saint Saibaba of Shirdi. Saibaba is revered as one of the greatest saints ever born in India, who preached "Shraddha" (faith) and "Saburi" (patience) as key paths to spiritual liberation. The temple complex spans across a massive campus hosting the main Samadhi Mandir, Dwarkamai (the mosque where Baba lived), Chavadi, Gurusthan, and Lendi Baug. The Sansthan runs one of the largest community kitchens in Asia, serving free Prasad meals to over 100,000 devotees daily.',
+    images: ['/assets/images/shirdi/shirdi-1.jpg', '/assets/images/shirdi/shirdi-2.jpg', '/assets/images/shirdi/shirdi-3.jpg']
   },
   {
     id: 'trimbakeshwar',
@@ -195,6 +197,21 @@ export default function DiscoverMaharashtra() {
                 {selectedDest.detailedInfo}
               </p>
             </div>
+
+            {/* Image Gallery */}
+            {selectedDest.images && selectedDest.images.length > 0 && (
+              <div className="bg-white border border-[#E5E7EB] p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+                <h3 className="text-sm font-extrabold text-[#005BAC] uppercase tracking-wider flex items-center gap-2 border-b border-[#E5E7EB] pb-2">
+                  <span className="text-[#F26F21] text-lg leading-none">📷</span>
+                  <span>Temple Gallery</span>
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {selectedDest.images.map((img, idx) => (
+                    <img key={idx} src={img} alt={`${selectedDest.name} Gallery Image ${idx + 1}`} className={`w-full h-48 object-cover rounded-xl border border-gray-200 shadow-sm transition-transform hover:scale-[1.02] duration-300 ${idx === 2 ? 'md:col-span-2 md:h-72' : ''}`} />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Travel Directions and accessibility */}
             <div className="bg-white border border-[#E5E7EB] p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
