@@ -52,8 +52,8 @@ const DESTINATIONS: Destination[] = [
     detailedInfo: 'Shri Saibaba Sansthan Temple is the governing body of the world-famous shrine of Saint Saibaba of Shirdi. Saibaba is revered as one of the greatest saints ever born in India, who preached "Shraddha" (faith) and "Saburi" (patience) as key paths to spiritual liberation. The temple complex spans across a massive campus hosting the main Samadhi Mandir, Dwarkamai (the mosque where Baba lived), Chavadi, Gurusthan, and Lendi Baug. The Sansthan runs one of the largest community kitchens in Asia, serving free Prasad meals to over 100,000 devotees daily.',
     images: [
       '/assets/images/shirdi/shirdi-1.jpg',
-      '/assets/images/shirdi/shirdi-2.jpg',
-      '/assets/images/shirdi/shirdi-3.jpg'
+      '/assets/images/shirdi/shirdi-2_v2.jpg',
+      '/assets/images/shirdi/shirdi-3_v2.jpg'
     ]
   },
   {
@@ -75,7 +75,7 @@ const DESTINATIONS: Destination[] = [
     images: [
       '/assets/images/tourism/trimbakeshwar_1.jpg',
       '/assets/images/tourism/trimbakeshwar_2.jpg',
-      '/assets/images/tourism/trimbakeshwar_3.jpg'
+      '/assets/images/tourism/trimbakeshwar_3_v2.jpg'
     ]
   },
   {
@@ -120,7 +120,7 @@ const DESTINATIONS: Destination[] = [
     images: [
       '/assets/images/tourism/ellora_1.jpg',
       '/assets/images/tourism/ellora_2.jpg',
-      '/assets/images/tourism/ellora_3.jpg'
+      '/assets/images/tourism/ellora_3_v2.jpg'
     ]
   },
   {
