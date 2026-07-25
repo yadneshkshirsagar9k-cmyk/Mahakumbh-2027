@@ -9,3 +9,5 @@ services:
         value: production
       - key: HOSTNAME
         value: 0.0.0.0
+      - key: DATABASE_URL
+        value: mongodb+srv://souhardyagayen99_db_user:59Q8yNXamsy9CSfH@cluster0.horbg0d.mongodb.net/mahakumbh?retryWrites=true&w=majority
