@@ -405,6 +405,14 @@ export default function DiscoverMaharashtra() {
               key={item.id}
               className="bg-white border border-[#E5E7EB] rounded-2xl shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow"
             >
+              {/* Optional Image Header */}
+              {item.images && item.images.length > 0 && (
+                <div className="w-full h-36 border-b border-[#E5E7EB] relative">
+                  <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                </div>
+              )}
+
               {/* Category Header */}
               <div className="p-4 space-y-2.5 flex-grow">
                 <div className="flex items-center justify-between">
