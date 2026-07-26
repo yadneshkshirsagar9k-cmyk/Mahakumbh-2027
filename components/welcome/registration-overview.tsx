@@ -256,23 +256,36 @@ export function RegistrationOverview() {
                 <span>Onboarding Video Guide</span>
               </h3>
 
-              <div 
-                className="relative w-full aspect-video rounded-lg overflow-hidden flex flex-col justify-end p-5 cursor-pointer group bg-[#F5F7FA] border border-[#E5E7EB]"
+               <div 
+                className="relative w-full aspect-video rounded-lg overflow-hidden flex flex-col justify-end p-5 cursor-pointer group bg-stone-900 border border-[#E5E7EB]"
                 onClick={() => {
                   setVideoError(false);
                   setVideoModalOpen(true);
                 }}
               >
+                {/* YouTube Thumbnail Background */}
+                <img 
+                  src="https://img.youtube.com/vi/c_QMcLKFPjY/maxresdefault.jpg" 
+                  alt="Onboarding walkthrough guide video thumbnail"
+                  className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:scale-105 transition-all duration-300 z-0"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://img.youtube.com/vi/c_QMcLKFPjY/hqdefault.jpg";
+                  }}
+                />
+
+                {/* Dark Gradient Overlay to ensure text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-900/30 to-transparent z-10"></div>
+
                 {/* Play Icon */}
-                <div className="absolute inset-0 flex items-center justify-center z-10">
-                  <div className="w-12 h-12 rounded-full bg-[#005BAC] hover:bg-[#0F4C81] flex items-center justify-center transition-all duration-200 transform group-hover:scale-110 text-white shadow-sm">
+                <div className="absolute inset-0 flex items-center justify-center z-20">
+                  <div className="w-12 h-12 rounded-full bg-[#005BAC] hover:bg-[#0F4C81] flex items-center justify-center transition-all duration-200 transform group-hover:scale-110 text-white shadow-lg border-2 border-white/20">
                     <Play size={20} className="ml-0.5 fill-current" />
                   </div>
                 </div>
                 
-                <div className="relative z-10 text-[#111827] space-y-0.5">
-                  <span className="block text-[9px] text-[#005BAC] font-bold uppercase tracking-widest">Walkthrough</span>
-                  <span className="block text-xs font-bold text-[#111827] truncate">How to register and log in</span>
+                <div className="relative z-20 text-white space-y-0.5">
+                  <span className="block text-[9px] text-[#FF9933] font-bold uppercase tracking-widest">Walkthrough</span>
+                  <span className="block text-xs font-black text-white truncate drop-shadow-sm">How to register and log in</span>
                 </div>
               </div>
               
