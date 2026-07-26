@@ -113,6 +113,7 @@ const REGISTRATION_STEPS: RegistrationStep[] = [
 export function RegistrationOverview() {
   const [activeStep, setActiveStep] = useState<number>(1);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   const currentStepData = REGISTRATION_STEPS.find(s => s.step === activeStep) || REGISTRATION_STEPS[0];
 
@@ -255,10 +256,12 @@ export function RegistrationOverview() {
                 <span>Onboarding Video Guide</span>
               </h3>
 
-              {/* Video Altar Box */}
               <div 
                 className="relative w-full aspect-video rounded-lg overflow-hidden flex flex-col justify-end p-5 cursor-pointer group bg-[#F5F7FA] border border-[#E5E7EB]"
-                onClick={() => setVideoModalOpen(true)}
+                onClick={() => {
+                  setVideoError(false);
+                  setVideoModalOpen(true);
+                }}
               >
                 {/* Play Icon */}
                 <div className="absolute inset-0 flex items-center justify-center z-10">
@@ -314,17 +317,37 @@ export function RegistrationOverview() {
               </button>
 
               <h4 className="text-base font-bold text-[#111827] mb-4">
-                Video Guide Playback Placeholder
+                Mahakumbh Onboarding Walkthrough Guide
               </h4>
               
-              <div className="w-full aspect-video rounded bg-[#F5F7FA] flex flex-col items-center justify-center gap-2 border border-dashed border-[#E5E7EB] p-6">
-                <Play size={36} className="text-[#005BAC] opacity-60" />
-                <p className="text-xs text-[#111827] font-semibold mt-2">
-                  Official Walkthrough Player Loading...
-                </p>
-                <p className="text-[10px] text-[#6B7280] max-w-sm leading-normal mt-1">
-                  Biometric guides, parking slots registration walkthroughs, and QR verification rules feeds will connect dynamically in the next implementation sprint.
-                </p>
+              <div className="w-full aspect-video rounded-lg overflow-hidden bg-stone-950 flex items-center justify-center border border-[#E5E7EB] relative">
+                {!videoError ? (
+                  <video 
+                    controls 
+                    autoPlay
+                    src="/videos/onboarding-guide.mp4" 
+                    className="w-full h-full object-contain"
+                    onError={() => setVideoError(true)}
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-stone-900 text-stone-300 gap-2">
+                    <Info size={32} className="text-amber-500 animate-pulse" />
+                    <p className="text-xs font-bold text-white">Walkthrough Video Ready to Load</p>
+                    <p className="text-[10px] text-stone-400 max-w-xs leading-normal">
+                      To activate custom video playback, please copy your walkthrough video file to:
+                      <br />
+                      <code className="font-mono bg-stone-850 text-emerald-400 px-1.5 py-0.5 rounded block mt-1.5 break-all">
+                        public/videos/onboarding-guide.mp4
+                      </code>
+                    </p>
+                    <button
+                      onClick={() => setVideoError(false)}
+                      className="mt-3 px-3 py-1.5 bg-[#005BAC] text-white rounded text-[10px] font-bold uppercase tracking-wider hover:bg-[#004a8c] cursor-pointer"
+                    >
+                      Retry Loading Video
+                    </button>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
