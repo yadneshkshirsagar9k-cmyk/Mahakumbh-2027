@@ -54,7 +54,7 @@ export const DISTRICTS_DATA: DistrictData[] = [
     name: 'Nashik District',
     image: '/assets/images/districts/nashik.jpg',
     introduction: 'Nashik is an ancient holy city in Maharashtra, situated on the banks of the Godavari River, renowned for its association with the Ramayana and hosting the Simhastha Mahakumbh Mela.',
-    historicalImportance: 'Known as the Wine Capital of India, Nashik has rich historical roots dating to the Mauryan and Peshwa dynasties. It served as a major trading hub and mint town under Peshwa rule.',
+    historicalImportance: 'An ancient city dating back to the Mauryan and Peshwa dynasties, Nashik is historically significant as the place where the epic Ramayana events took place. It also served as a major trading hub and mint town under Peshwa rule.',
     religiousImportance: 'According to epic scriptures, Lord Rama spent major parts of his 14-year exile here. It houses the sacred Trimbakeshwar Jyotirlinga and Ram Kund.',
     culture: 'A rich mixture of traditional Vedic culture, classical musical traditions, and modern industrialization. Celebrates the circular Kumbh Mela once every 12 years.',
     festivals: ['Simhastha Mahakumbh Mela', 'Ram Navami', 'Maha Shivratri', 'Tripuri Poornima'],
@@ -63,7 +63,7 @@ export const DISTRICTS_DATA: DistrictData[] = [
     facts: {
       population: '6.1 Million (Approx)',
       area: '15,530 sq km',
-      famousFor: 'Mahakumbh, Jyotirlinga, Grapes, and Vineyards',
+      famousFor: 'Mahakumbh, Jyotirlinga, Panchavati, and Holy Snan',
       language: 'Marathi, Hindi, English',
       unescoSites: 'None ( Brahmagiri Hills under heritage review )',
       rivers: 'Godavari, Girna, Darna',
