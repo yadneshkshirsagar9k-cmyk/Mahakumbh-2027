@@ -55,7 +55,7 @@ export const LOCATION_CONFIG: Record<string, LocationDetails> = {
     lat: 20.0268,
     lng: 75.1771,
     placeId: 'ChIJVerul-Ellora-Caves',
-    address: 'Ellora, Aurangabad, Maharashtra 431102'
+    address: 'Ellora, Chhatrapati Sambhajinagar, Maharashtra 431102'
   },
   AJANTA_CAVES: {
     name: 'Ajanta Caves',
@@ -69,14 +69,14 @@ export const LOCATION_CONFIG: Record<string, LocationDetails> = {
     lat: 20.0101,
     lng: 75.1873,
     placeId: 'ChIJBhadra-Maruti-Khuldabad',
-    address: 'Khuldabad, Aurangabad, Maharashtra 431101'
+    address: 'Khuldabad, Chhatrapati Sambhajinagar, Maharashtra 431101'
   },
   MOHINIRAJ_TEMPLE: {
     name: 'Mohiniraj Temple',
     lat: 19.5434,
     lng: 74.9126,
     placeId: 'ChIJMohiniraj-Nevasa',
-    address: 'Nevasa, Ahmednagar, Maharashtra 414603'
+    address: 'Nevasa, Ahilyanagar, Maharashtra 414603'
   },
 
   // --- TRANSIT & STATIONS ---
@@ -127,7 +127,7 @@ export const LOCATION_CONFIG: Record<string, LocationDetails> = {
     lat: 19.7712,
     lng: 74.4912,
     placeId: 'ChIJShirdi-Station-Sainagar',
-    address: 'Shirdi, Ahmednagar, Maharashtra 423109'
+    address: 'Shirdi, Ahilyanagar, Maharashtra 423109'
   },
 
   // --- MEDICAL CENTRES ---

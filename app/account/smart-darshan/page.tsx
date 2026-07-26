@@ -114,7 +114,7 @@ export default function SmartDarshanBooking() {
                 className="w-full px-3 py-2.5 text-xs rounded border border-[#E5E7EB] bg-white text-[#111827] font-semibold outline-none"
               >
                 <option value="Trimbakeshwar Shiva Temple">Trimbakeshwar Shiva Temple</option>
-                <option value="Shree Saibaba Sansthan Temple (Ahmednagar)">Shree Saibaba Sansthan Temple (Ahmednagar)</option>
+                <option value="Shree Saibaba Sansthan Temple (Ahilyanagar)">Shree Saibaba Sansthan Temple (Ahilyanagar)</option>
                 <option value="Bhadra Maruti Temple">Bhadra Maruti Temple</option>
                 <option value="Grishneshwar Jyotirlinga">Grishneshwar Jyotirlinga</option>
                 <option value="Mohiniraj Temple">Mohiniraj Temple</option>

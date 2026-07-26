@@ -74,6 +74,8 @@ export function DistrictMap({
       case 'nashik':
         return '#1e3a8a'; // Deep Navy Blue
       case 'aurangabad':
+      case 'chh. sambhajinagar':
+      case 'chhatrapati sambhajinagar':
       case 'marathwada':
         return '#0f766e'; // Teal/Muted Sea Blue
       case 'amravati':
@@ -168,7 +170,7 @@ export function DistrictMap({
           { label: 'Konkan', color: '#0284c7' },
           { label: 'Pune', color: '#1d4ed8' },
           { label: 'Nashik', color: '#1e3a8a' },
-          { label: 'Aurangabad', color: '#0f766e' },
+          { label: 'Chh. Sambhajinagar', color: '#0f766e' },
           { label: 'Amravati', color: '#0369a1' },
           { label: 'Nagpur', color: '#4338ca' }
         ].map((item) => (

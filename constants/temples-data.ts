@@ -258,9 +258,9 @@ export const TEMPLES_DATA: TempleData[] = [
     helpCentreInfo: 'Devalaya Devasthan Trust Information Counter',
     howToReach: {
       road: 'Well connected by roads. 65 km from Shirdi and 115 km from Nashik city.',
-      rail: 'Rahuri Railway Station is 32 km away. Ahmednagar railway station is 35 km away.',
+      rail: 'Rahuri Railway Station is 32 km away. Ahilyanagar railway station is 35 km away.',
       air: 'Shirdi Airport is approximately 75 km away.',
-      publicTransport: 'Shared taxis and state transport buses run frequently from Ahmednagar and Shirdi.',
+      publicTransport: 'Shared taxis and state transport buses run frequently from Ahilyanagar and Shirdi.',
       walkingRoute: 'Easy walk from village entrance.'
     },
     facts: [
