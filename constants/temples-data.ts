@@ -307,7 +307,7 @@ export const TEMPLES_DATA: TempleData[] = [
     description: 'A sacred temple carved into a hill of seven peaks, dedicated to Goddess Saptashrungi.',
     longDescription: 'Saptashrungi Devi Temple is located in Vani, Nashik district, perched on a steep cliff surrounded by seven high mountain peaks (Saptashrunga). The temple is recognized as one of the three and a half Shakti Peethas of Maharashtra. The presiding deity, Saptashrungi Nivasini, is an 8-feet-tall, eighteen-armed idol of the goddess holding various weapons. Pilgrims can ascend the hill using the steps or the state-of-the-art funicular trolley system.',
     religiousSignificance: 'As a major Shakti Peetha, it is a key spiritual destination. Thousands of pilgrims visit during Navratri and the Chaitra Otsav festivals.',
-    timings: '5:00 AM to 9:00 PM daily',
+    timings: '6:00 AM to 8:00 PM daily',
     weatherPlaceholder: 'Windy and cool, 22°C',
     medicalInfo: 'Vani Rural Hospital (near the base of the hill)',
     policeInfo: 'Vani Police Station (near the entrance)',

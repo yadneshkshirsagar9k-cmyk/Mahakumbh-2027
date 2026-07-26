@@ -504,7 +504,7 @@ const DESTINATIONS: Destination[] = [
     district: 'Nashik District',
     desc: 'A unique Shiva temple near Ramkund where Nandi is absent, holding deep significance during Kumbh Snan.',
     waitTime: '45m',
-    wheelchair: true,
+    wheelchair: false,
     medical: true,
     coords: { lat: 20.0048, lng: 73.7919 },
     placeId: 'ChIJKapaleshwar-Temple-Nashik',
@@ -512,7 +512,7 @@ const DESTINATIONS: Destination[] = [
     dressCode: 'Respectful traditional attire.',
     howToReach: 'Located in Panchavati, Nashik, right next to the sacred Ramkund bathing ghat. Easily reachable on foot.',
     rituals: ['Shiva Linga Pooja', 'Evening Aarti', 'Maha Pooja', 'Pradosha Vrat prayers'],
-    detailedInfo: 'Kapaleshwar Mahadev Temple is one of the oldest Shiva temples in Nashik. Uniquely, there is no statue of Nandi (the bull) at the entrance. Lord Shiva is believed to have taken Nandi as his spiritual guru here to wash away his sin of killing a cow, hence Nandi is respected as a guru and sits on a higher plane. The temple is directly connected to the Ramkund Kumbh Mela zone and is open 24/7 during Shahi Snan.',
+    detailedInfo: 'Kapaleshwar Mahadev Temple is one of the oldest Shiva temples in Nashik. Uniquely, there is no statue of Nandi (the bull) at the entrance. Lord Shiva is believed to have taken Nandi as his spiritual guru here to wash away his sin of Brahma Hatya (severing Lord Brahma\'s fifth head), hence Nandi is respected as a guru and does not sit facing the deity. The temple is directly connected to the Ramkund Kumbh Mela zone and is open 24/7 during Shahi Snan.',
     images: [
       '/assets/images/tourism/kapaleshwar-temple_1_v3.jpg',
       '/assets/images/tourism/kapaleshwar-temple_2_v3.jpg',
