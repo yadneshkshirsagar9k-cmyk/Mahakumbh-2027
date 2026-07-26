@@ -93,10 +93,10 @@ export const TEMPLES_DATA: TempleData[] = [
     },
     facts: [
       { label: 'Deity Name', value: 'Trimbakeshwar Shiv' },
-      { label: 'Significance', value: '12 Jyotirlingas' },
-      { label: 'Architecture', value: 'Hemadpanthi / Indo-Aryan' },
-      { label: 'District', value: 'Nashik' },
-      { label: 'Holy Pool', value: 'Kushavarta Kund' }
+      { label: 'Significance', value: 'One of 12 Shiva Jyotirlingas' },
+      { label: 'Holy Pool', value: 'Kushavarta Kund (Holy Godavari Source)' },
+      { label: 'Dress Code', value: 'Traditional wear required for inner sanctum entry' },
+      { label: 'District', value: 'Nashik' }
     ],
     faqs: [
       { question: 'How long does the general queue take?', answer: 'On weekdays, it takes 1-2 hours. On Mondays and holidays, it can extend to 4-5 hours. Special passes are available online.' },
@@ -150,11 +150,11 @@ export const TEMPLES_DATA: TempleData[] = [
       walkingRoute: 'Follow the dedicated pedestrian riverwalk from Talkoot Depot (1.5 km).'
     },
     facts: [
-      { label: 'Location', value: 'Nashik' },
+      { label: 'Holy Activities', value: 'Holy Dipping, Snan & Shraddha Rituals' },
       { label: 'Primary Deity', value: 'Goddess Godavari' },
-      { label: 'Built In', value: '1696 (Renovated)' },
-      { label: 'Key Festival', value: 'Kumbh Mela / Ram Navami' },
-      { label: 'Best Time to Visit', value: 'Karthik Poornima' }
+      { label: 'Location', value: 'Panchavati, Nashik' },
+      { label: 'Key Festival', value: 'Mahakumbh Mela, Ram Navami' },
+      { label: 'Best Time to Visit', value: 'Early morning for sunrise prayers' }
     ],
     faqs: [
       { question: 'Is changing rooms available near Ram Kund?', answer: 'Yes, separate female changing rooms are situated adjacent to the primary bathing steps.' },
@@ -210,10 +210,10 @@ export const TEMPLES_DATA: TempleData[] = [
     },
     facts: [
       { label: 'Saint Name', value: 'Shri Sai Baba' },
-      { label: 'Resting Year', value: '1918 (Vijayadashami)' },
-      { label: 'Trust Name', value: 'Shri Saibaba Sansthan' },
-      { label: 'Key Message', value: 'Shraddha & Saburi' },
-      { label: 'Bhandara capacity', value: 'approx 40,000 daily' }
+      { label: 'Key Message', value: 'Shraddha (Faith) & Saburi (Patience)' },
+      { label: 'Darshan Booking', value: 'Online E-Pass recommended' },
+      { label: 'Free Prasad Meals', value: 'Available at Prasadalaya daily' },
+      { label: 'Prohibited Items', value: 'Mobiles, cameras, electronic items' }
     ],
     faqs: [
       { question: 'Is online booking available for Darshan?', answer: 'Yes, devotees can book Kakad Aarti, general darshan, and accommodation passes online through the Sansthan portal.' }
@@ -265,9 +265,9 @@ export const TEMPLES_DATA: TempleData[] = [
     },
     facts: [
       { label: 'Primary Deity', value: 'Swayambhu Lord Shani' },
-      { label: 'Village Feature', value: 'No Doors or Locks' },
-      { label: 'Pedestal Type', value: 'Open-Air Platform' },
-      { label: 'Slab Height', value: '5.5 Feet' },
+      { label: 'Village Feature', value: 'Houses and banks have no doors or locks' },
+      { label: 'Key Offering', value: 'Sesame / Mustard Oil Abhishek' },
+      { label: 'Dress Code', value: 'Traditional dhoti/sari for platform access' },
       { label: 'District', value: 'Ahilyanagar' }
     ],
     faqs: [
@@ -276,6 +276,63 @@ export const TEMPLES_DATA: TempleData[] = [
     guidelines: [
       'Offerings of pure mustard/sesame oil are traditional here and sold by authorized local trust outlets.',
       'Beware of street vendors selling duplicate oils.'
+    ]
+  },
+  {
+    id: 'sapt-006',
+    slug: 'saptashrungi-devi-temple',
+    name: 'Saptashrungi Devi Temple, Vani',
+    location: 'Vani',
+    district: 'Nashik',
+    category: 'Shakti Peetha Temple',
+    heroImage: '/assets/images/temples/saptashrungi.jpg',
+    thumbnailImages: [
+      '/assets/images/tourism/saptashrungi_1_v3.jpg',
+      '/assets/images/tourism/saptashrungi_2_v3.jpg',
+      '/assets/images/tourism/saptashrungi_3_v3.jpg'
+    ],
+    tagline: 'One of the Three and a Half Shakti Peethas of Maharashtra',
+    shortDescription: 'A sacred temple dedicated to Goddess Saptashrungi Nivasini, carved into a hill with seven peaks, attracting millions during Navratri.',
+    historicalImportance: 'The temple is situated on the Saptashrunga hill, representing one of the major Shakti Peethas where a limb of Sati is believed to have fallen.',
+    spiritualImportance: 'Goddess Saptashrungi is self-manifested (Swayambhu) on the high mountain cliff. Devotees offer sarees and perform high prayers for divine blessing.',
+    coordinates: { lat: 20.3831, lng: 73.8964 },
+    exploreRoute: '/temples/saptashrungi-devi-temple',
+    futureWeatherAPIKey: 'WEATHER_PLACEHOLDER_KEY',
+    futureGalleryFolder: 'GALLERY_SAPTASHRUNGI',
+    futureMapLocation: 'MAP_SAPTASHRUNGI',
+    
+    // Compatibility fields
+    title: 'Saptashrungi Devi Temple',
+    subtitle: 'One of the Three and a Half Shakti Peethas',
+    description: 'A sacred temple carved into a hill of seven peaks, dedicated to Goddess Saptashrungi.',
+    longDescription: 'Saptashrungi Devi Temple is located in Vani, Nashik district, perched on a steep cliff surrounded by seven high mountain peaks (Saptashrunga). The temple is recognized as one of the three and a half Shakti Peethas of Maharashtra. The presiding deity, Saptashrungi Nivasini, is an 8-feet-tall, eighteen-armed idol of the goddess holding various weapons. Pilgrims can ascend the hill using the steps or the state-of-the-art funicular trolley system.',
+    religiousSignificance: 'As a major Shakti Peetha, it is a key spiritual destination. Thousands of pilgrims visit during Navratri and the Chaitra Otsav festivals.',
+    timings: '5:00 AM to 9:00 PM daily',
+    weatherPlaceholder: 'Windy and cool, 22°C',
+    medicalInfo: 'Vani Rural Hospital (near the base of the hill)',
+    policeInfo: 'Vani Police Station (near the entrance)',
+    helpCentreInfo: 'Saptashrungi Devasthan Trust Office at the base and top',
+    howToReach: {
+      road: 'Located in Vani, about 60 km from Nashik city. Regular state transport (MSRTC) buses run from Nashik CBS.',
+      rail: 'Nashik Road Railway Station is 70 km away.',
+      air: 'Ozar Airport Nashik is 55 km away.',
+      publicTransport: 'Direct buses from Nashik, shared local cabs from Vani village.',
+      walkingRoute: 'A flight of 510 steps leads to the shrine, or pilgrims can use the funicular trolley.'
+    },
+    facts: [
+      { label: 'Deity Name', value: 'Swayambhu Saptashrungi Mata' },
+      { label: 'Significance', value: 'Shakti Peetha' },
+      { label: 'Access Mode', value: 'Steps or Funicular Trolley' },
+      { label: 'Key Festival', value: 'Navratri, Chaitra Otsav' },
+      { label: 'District', value: 'Nashik' }
+    ],
+    faqs: [
+      { question: 'Is there a ropeway/trolley available?', answer: 'Yes, a funicular trolley (ropeway) is available at the base to carry pilgrims up to the temple entrance.' },
+      { question: 'Is advanced booking required?', answer: 'No, but tickets for the funicular trolley can be purchased at the base counter.' }
+    ],
+    guidelines: [
+      'Traditional modest clothing is recommended.',
+      'Senior citizens and physically challenged pilgrims are advised to use the funicular trolley.'
     ]
   }
 ];
