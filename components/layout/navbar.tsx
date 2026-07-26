@@ -52,11 +52,10 @@ const MENU_ITEMS: MenuItem[] = [
       { label: 'Pilgrim Services', href: '/bookings/pilgrim' },
     ],
   },
-  { label: 'Health', href: '/health-registration' },
+  { label: 'Health Advisory', href: '/health-registration' },
   { label: 'Emergency', href: '/emergency' },
   { label: 'Feedback', href: '/feedback' },
   { label: 'Weather', href: '/weather' },
-  { label: 'Advisory', href: '/health-advisory' },
 ];
 
 // ============================================================

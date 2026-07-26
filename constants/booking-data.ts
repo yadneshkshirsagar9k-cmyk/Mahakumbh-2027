@@ -133,7 +133,7 @@ export const VEHICLE_CATEGORIES_DATA: VehicleCategoryItem[] = [
 
 export const PILGRIM_SERVICES_DATA: PilgrimService[] = [
   { id: 'ps-1', name: 'Digital QR Pass', description: 'Generate secure encrypted checkpoint gate passes.', category: 'qr_pass', icon: 'QrCode', routePath: '/bookings/pilgrim' },
-  { id: 'ps-2', name: 'Medical Registry', description: 'Upload health clearances and request medical wristbands.', category: 'medical', icon: 'HeartPulse', routePath: '/health-registration' },
+  { id: 'ps-2', name: 'Health Advisory', description: 'Review Swasthya Yatra health guides and safety checklists.', category: 'medical', icon: 'HeartPulse', routePath: '/health-registration' },
   { id: 'ps-3', name: 'Volunteer Registration', description: 'Sign up to assist senior citizens and queue marshaling.', category: 'volunteer', icon: 'Users', routePath: '/bookings/pilgrim' },
   { id: 'ps-4', name: 'Senior Citizen Care', description: 'Request wheelchair and e-cart support services.', category: 'senior', icon: 'Smile', routePath: '/bookings/pilgrim' },
   { id: 'ps-5', name: 'Divyang Assistance', description: 'Access special ramps and sign language assistance.', category: 'divyang', icon: 'Info', routePath: '/bookings/pilgrim' },

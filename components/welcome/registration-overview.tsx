@@ -70,12 +70,12 @@ const REGISTRATION_STEPS: RegistrationStep[] = [
   },
   {
     step: 4,
-    title: 'Health Registry',
-    description: 'Submit fitness check results and medical alerts.',
-    details: 'Provide fitness declaration details. Crucial for matching you with nearest first-aid posts if an emergency arises.',
+    title: 'Health Advisory',
+    description: 'Review safety guidelines and health advisories.',
+    details: 'Read the official Swasthya Yatra health advisory document to learn about medical zones, medical safety checklists, and health helpline contacts.',
     icon: <Heart size={18} />,
     isProtected: false,
-    featureName: 'Health Registry',
+    featureName: 'Health Advisory',
     actualUrl: '/health-registration'
   },
   

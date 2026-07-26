@@ -38,7 +38,7 @@ import { cn } from '@/utils/cn';
 
 const HEALTH_DOC_DATA: PDFDocument = {
   id: 'doc-health-1',
-  name: 'Official Health Registration & Safety Guide (Swasthya Yatra)',
+  name: 'Official Pilgrim Health Advisory & Safety Guide (Swasthya Yatra)',
   url: '/swasthya_yatra.pdf',
   totalPages: 8,
   lastUpdated: '10th July 2026',
@@ -50,8 +50,8 @@ const QUICK_GUIDELINES: QuickGuideline[] = [
     id: 'qg-1',
     title: 'Important Notice',
     content: [
-      'Compulsory health clearance is required for all pilgrims above 50 years.',
-      'Mandatory medical screening certificates must be uploaded to receive darshan passes.'
+      'Compulsory health clearance is recommended for all senior pilgrims.',
+      'Mandatory medical advisory certificates and guidelines must be reviewed before travel.'
     ]
   },
   {
@@ -80,7 +80,7 @@ const HELP_CONTACTS: HelpContact[] = [
 // COMPONENT
 // ============================================================
 
-export default function HealthRegistrationPortal() {
+export default function PilgrimHealthAdvisoryPortal() {
   const [currentPage, setCurrentPage] = useState(1);
   const [zoomLevel, setZoomLevel] = useState(100);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -150,10 +150,10 @@ export default function HealthRegistrationPortal() {
               Pilgrim Safety Documents
             </span>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-[#111827] font-[var(--font-heading)]">
-              Health Registration
+              Pilgrim Health Advisory
             </h1>
             <p className="text-xs sm:text-sm text-[#374151]">
-              Please carefully read the official Health Registration document before proceeding with your pilgrimage.
+              Please carefully read the official Swasthya Yatra pilgrim health advisory and safety guidelines before proceeding.
             </p>
           </div>
 
@@ -319,7 +319,7 @@ export default function HealthRegistrationPortal() {
                     src={`${HEALTH_DOC_DATA.url}#page=${currentPage}&zoom=${zoomLevel}`}
                     className="w-full h-full border border-[#E5E7EB] shadow-lg rounded-lg"
                     style={{ minHeight: '520px' }}
-                    title="Health Registration PDF Viewer"
+                    title="Pilgrim Health Advisory PDF Viewer"
                   />
                   <div className="absolute bottom-4 right-4 z-20 px-3 py-1.5 rounded bg-white border border-[#E5E7EB] shadow text-[9px] font-bold text-[#005BAC]">
                     Current Page: {currentPage} / {HEALTH_DOC_DATA.totalPages}
