@@ -320,34 +320,15 @@ export function RegistrationOverview() {
                 Mahakumbh Onboarding Walkthrough Guide
               </h4>
               
-              <div className="w-full aspect-video rounded-lg overflow-hidden bg-stone-950 flex items-center justify-center border border-[#E5E7EB] relative">
-                {!videoError ? (
-                  <video 
-                    controls 
-                    autoPlay
-                    src="/videos/onboarding-guide.mp4" 
-                    className="w-full h-full object-contain"
-                    onError={() => setVideoError(true)}
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-stone-900 text-stone-300 gap-2">
-                    <Info size={32} className="text-amber-500 animate-pulse" />
-                    <p className="text-xs font-bold text-white">Walkthrough Video Ready to Load</p>
-                    <p className="text-[10px] text-stone-400 max-w-xs leading-normal">
-                      To activate custom video playback, please copy your walkthrough video file to:
-                      <br />
-                      <code className="font-mono bg-stone-850 text-emerald-400 px-1.5 py-0.5 rounded block mt-1.5 break-all">
-                        public/videos/onboarding-guide.mp4
-                      </code>
-                    </p>
-                    <button
-                      onClick={() => setVideoError(false)}
-                      className="mt-3 px-3 py-1.5 bg-[#005BAC] text-white rounded text-[10px] font-bold uppercase tracking-wider hover:bg-[#004a8c] cursor-pointer"
-                    >
-                      Retry Loading Video
-                    </button>
-                  </div>
-                )}
+              <div className="w-full aspect-video rounded-lg overflow-hidden bg-black flex items-center justify-center border border-[#E5E7EB] relative">
+                <iframe 
+                  src="https://www.youtube.com/embed/c_QMcLKFPjY?autoplay=1" 
+                  title="Mahakumbh Onboarding Walkthrough Guide" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowFullScreen
+                  className="w-full h-full"
+                ></iframe>
               </div>
             </motion.div>
           </div>
