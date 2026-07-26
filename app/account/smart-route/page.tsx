@@ -53,53 +53,147 @@ export default function SmartRoutePage() {
   }, [journey]);
 
   // Mock Route Data Generation (between origin and destination)
-  const routes = useMemo(() => [
-    {
-      id: 'primary',
-      name: 'Nashik-Trimbakeshwar Hwy (Primary)',
-      path: [
-        [origin.lat, origin.lng],
-        [19.965, 73.750],
-        [19.940, 73.650],
-        [destination.lat, destination.lng]
-      ] as [number, number][],
-      color: '#DC2626', // Red
-      isCongested: true,
-      distance: '28.5 km',
-      duration: '1 hr 45 min',
-      trafficStatus: 'Heavy Congestion'
-    },
-    {
-      id: 'alt-1',
-      name: 'Gangapur Road Bypass',
-      path: [
-        [origin.lat, origin.lng],
-        [20.020, 73.780],
-        [19.980, 73.600],
-        [destination.lat, destination.lng]
-      ] as [number, number][],
-      color: '#10B981', // Green
-      isCongested: false,
-      distance: '32.1 km',
-      duration: '55 min',
-      trafficStatus: 'Fastest Route'
-    },
-    {
-      id: 'alt-2',
-      name: 'Ambad-Satpur Link',
-      path: [
-        [origin.lat, origin.lng],
-        [19.900, 73.750],
-        [19.920, 73.600],
-        [destination.lat, destination.lng]
-      ] as [number, number][],
-      color: '#3B82F6', // Blue
-      isCongested: false,
-      distance: '30.8 km',
-      duration: '1 hr 10 min',
-      trafficStatus: 'Light Traffic'
+  const routes = useMemo(() => {
+    const isToTrimbak = destination.lat === 19.932 || destination.label.includes('Trimbakeshwar');
+    
+    if (isToTrimbak) {
+      return [
+        {
+          id: 'primary',
+          name: 'Nashik-Trimbakeshwar Hwy (Primary NH848)',
+          path: [
+            [origin.lat, origin.lng],
+            [19.972, 73.829], // Bytco Point
+            [19.988, 73.812], // Dwarka Circle approach
+            [19.992, 73.803], // Dwarka Circle
+            [19.998, 73.784], // Thakkar Bazaar / CBS
+            [19.996, 73.765], // Satpur Phata
+            [19.993, 73.733], // Satpur MIDC
+            [19.988, 73.712], // Carbon Naka
+            [19.976, 73.693], // Garware Point
+            [19.968, 73.670], // Satpur Bypass junction
+            [19.961, 73.645], // Dhonda Naka
+            [19.954, 73.618], // Belgaon Dhaga
+            [19.948, 73.590], // Khambale
+            [19.942, 73.565], // Kojoli
+            [19.939, 73.542], // Trimbakeshwar Checkpoint
+            [destination.lat, destination.lng]
+          ] as [number, number][],
+          color: '#DC2626', // Red
+          isCongested: true,
+          distance: '28.5 km',
+          duration: '1 hr 45 min',
+          trafficStatus: 'Heavy Congestion'
+        },
+        {
+          id: 'alt-1',
+          name: 'Gangapur Road Bypass',
+          path: [
+            [origin.lat, origin.lng],
+            [19.972, 73.829],
+            [19.992, 73.803], // Dwarka
+            [20.005, 73.792], // Ramkund / Panchavati area
+            [20.015, 73.778], // Gangapur Road Start
+            [20.022, 73.755], // Someshwar Waterfall Area
+            [20.025, 73.730], // Gangapur Dam Road
+            [20.027, 73.710], // Gangapur Reservoir Side
+            [20.035, 73.670], // Girnare Bypass Road
+            [20.038, 73.640], // Girnare Village road
+            [20.018, 73.605], // Talegaon Junction
+            [19.988, 73.585], // Torangan Phata
+            [19.962, 73.560], // North Trimbak Entrance
+            [19.939, 73.542], // Trimbakeshwar Checkpoint
+            [destination.lat, destination.lng]
+          ] as [number, number][],
+          color: '#10B981', // Green
+          isCongested: false,
+          distance: '32.1 km',
+          duration: '55 min',
+          trafficStatus: 'Fastest Route'
+        },
+        {
+          id: 'alt-2',
+          name: 'Ambad-Satpur Link',
+          path: [
+            [origin.lat, origin.lng],
+            [19.948, 73.825], // Upanagar
+            [19.935, 73.805], // Bodhale Nagar
+            [19.922, 73.785], // Ambad Link Road / Highway crossing
+            [19.915, 73.755], // Ambad MIDC Center
+            [19.920, 73.735], // Satpur-Ambad Link Road
+            [19.945, 73.725], // Satpur Industrial Area South
+            [19.965, 73.705], // Vasasan Village Road
+            [19.968, 73.670], // Rejoin NH848
+            [19.961, 73.645],
+            [19.954, 73.618], // Belgaon Dhaga
+            [19.948, 73.590],
+            [19.942, 73.565],
+            [19.939, 73.542], // Trimbakeshwar Checkpoint
+            [destination.lat, destination.lng]
+          ] as [number, number][],
+          color: '#3B82F6', // Blue
+          isCongested: false,
+          distance: '30.8 km',
+          duration: '1 hr 10 min',
+          trafficStatus: 'Light Traffic'
+        }
+      ];
+    } else {
+      return [
+        {
+          id: 'primary',
+          name: 'Dwarka Highway Route',
+          path: [
+            [origin.lat, origin.lng],
+            [19.972, 73.829],
+            [19.988, 73.812],
+            [19.992, 73.803], // Dwarka Circle
+            [20.001, 73.798], // Panchavati Approach
+            [destination.lat, destination.lng]
+          ] as [number, number][],
+          color: '#DC2626',
+          isCongested: true,
+          distance: '8.2 km',
+          duration: '35 min',
+          trafficStatus: 'Heavy Congestion'
+        },
+        {
+          id: 'alt-1',
+          name: 'Godavari Riverbank Bypass',
+          path: [
+            [origin.lat, origin.lng],
+            [19.965, 73.835],
+            [19.970, 73.815],
+            [19.985, 73.800],
+            [19.998, 73.790],
+            [destination.lat, destination.lng]
+          ] as [number, number][],
+          color: '#10B981',
+          isCongested: false,
+          distance: '9.5 km',
+          duration: '15 min',
+          trafficStatus: 'Fastest Route'
+        },
+        {
+          id: 'alt-2',
+          name: 'Jail Road Route',
+          path: [
+            [origin.lat, origin.lng],
+            [19.968, 73.848], // Jail Road
+            [19.982, 73.840], // Shivaji Nagar
+            [19.995, 73.820], // Panchavati East
+            [20.002, 73.805], // Godavari Bridge
+            [destination.lat, destination.lng]
+          ] as [number, number][],
+          color: '#3B82F6',
+          isCongested: false,
+          distance: '10.1 km',
+          duration: '22 min',
+          trafficStatus: 'Light Traffic'
+        }
+      ];
     }
-  ], [origin, destination]);
+  }, [origin, destination]);
 
   const activeRoute = useMemo(() => {
     return routes.find(r => r.id === activeRouteId) || routes[0];
