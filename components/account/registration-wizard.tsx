@@ -72,8 +72,8 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
   const [endDate, setEndDate] = useState('');
   const [arrivalMode, setArrivalMode] = useState('Train');
   const [arrivalPoint, setArrivalPoint] = useState('Nashik Road Railway Station');
-  const [accommodationType, setAccommodationType] = useState<any>('Tent City');
-  const [accommodationName, setAccommodationName] = useState('Sadhugram Sector-A Tent City');
+  const [accommodationType, setAccommodationType] = useState<any>('');
+  const [accommodationName, setAccommodationName] = useState('Self Arranged / Private');
   
   // New Step 1 Fields
   const [journeySector, setJourneySector] = useState('Sector A');
@@ -84,6 +84,21 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
   const [driverName, setDriverName] = useState('');
   const [driverPhone, setDriverPhone] = useState('');
   const [numPilgrims, setNumPilgrims] = useState(1);
+
+  // Synchronize private vehicle selection with arrival mode and entry checkpoint
+  useEffect(() => {
+    if (hasPrivateVehicle) {
+      setArrivalMode('Private Car');
+      if (arrivalPoint === 'Nashik Road Railway Station' || arrivalPoint === '') {
+        setArrivalPoint(`Security Entry Checkpoint (${journeySector})`);
+      }
+    } else {
+      if (arrivalMode === 'Private Car') {
+        setArrivalMode('Train');
+        setArrivalPoint('Nashik Road Railway Station');
+      }
+    }
+  }, [hasPrivateVehicle, journeySector]);
 
   // --- Step 2 States: Purpose of Visit ---
   const [selectedPurposes, setSelectedPurposes] = useState<string[]>(['darshan', 'snan']);
@@ -111,8 +126,8 @@ export function RegistrationWizard({ editTourId, onClose }: RegistrationWizardPr
       setEndDate(active.endDate || '');
       setArrivalMode(active.arrivalMode || 'Train');
       setArrivalPoint(active.arrivalPoint || '');
-      setAccommodationType(active.accommodation?.type || 'Tent City');
-      setAccommodationName(active.accommodation?.name || '');
+      setAccommodationType(active.accommodation?.type || '');
+      setAccommodationName(active.accommodation?.name || 'Self Arranged / Private');
       setJourneySector(active.journeyMetadata?.sector || 'Sector A');
       setJourneyZone(active.journeyMetadata?.zone || 'Zone 1');
       setVehicleNum((active.vehicleInfo as any)?.vehicleNumber || (active.vehicleInfo as any)?.registrationNumber || '');

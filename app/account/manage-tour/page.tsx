@@ -137,7 +137,7 @@ export default function ManageTourPage() {
               <div>Type: <span className="font-bold text-[#111827] font-mono">{journey.journeyType || (journey as any).journeyCategory}</span></div>
               <div>Dates: <span className="font-bold text-[#111827]">{journey.startDate} to {journey.endDate}</span></div>
               <div>Arrival Hub: <span className="font-bold text-[#111827]">{journey.arrivalPoint} ({journey.arrivalMode})</span></div>
-              <div>Accommodation: <span className="font-bold text-[#111827]">{journey.accommodation?.name || 'N/A'} - {journey.accommodation?.type || 'N/A'}</span></div>
+              <div>Accommodation: <span className="font-bold text-[#111827]">{journey.accommodation?.name || 'N/A'}{journey.accommodation?.type ? ` - ${journey.accommodation.type}` : ''}</span></div>
               <div>Sector & Zone: <span className="font-bold text-[#111827]">{journey.journeyMetadata?.sector || 'N/A'} / {journey.journeyMetadata?.zone || 'N/A'}</span></div>
               <div>Vehicle Reg: <span className="font-bold text-[#111827] font-mono">{(journey.vehicleInfo as any)?.vehicleNumber || (journey.vehicleInfo as any)?.registrationNumber || 'None'} ({(journey.vehicleInfo as any)?.vehicleType || (journey.vehicleInfo as any)?.category || ''})</span></div>
               <div>Driver Info: <span className="font-bold text-[#111827]">{journey.vehicleInfo?.driverName || 'N/A'} ({journey.vehicleInfo?.driverMobile || 'N/A'})</span></div>
