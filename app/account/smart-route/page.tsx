@@ -1,15 +1,25 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+/**
+ * @file SmartRoutePage
+ * @description Smart travel route calculation dashboard incorporating simulated turn-by-turn GPS telemetry, dynamic ETAs, and segmented traffic speeds.
+ */
+
+import { useState, useEffect, useMemo } from 'react';
 import { useJourneyStore } from '@/store/journey-store';
 import dynamic from 'next/dynamic';
-import { MapPin, Route, Navigation, AlertTriangle, Lock, X } from 'lucide-react';
+import { MapPin, Route, Navigation, AlertTriangle, Lock, X, Volume2, VolumeX, Eye } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 // Dynamically import map component to prevent SSR issues
 const SmartRouteMap = dynamic(() => import('@/components/maps/smart-route-map'), {
   ssr: false,
-  loading: () => <div className="w-full h-full bg-slate-50 animate-pulse rounded-2xl flex flex-col items-center justify-center border border-slate-100 text-slate-400 font-medium"><MapPin className="w-8 h-8 mb-2 animate-bounce opacity-50" /> Loading Smart Maps...</div>
+  loading: () => (
+    <div className="w-full h-full min-h-[450px] bg-slate-50 animate-pulse rounded-2xl flex flex-col items-center justify-center border border-slate-100 text-slate-400 font-medium">
+      <MapPin className="w-8 h-8 mb-2 animate-bounce opacity-50 text-[#005BAC]" /> 
+      <span>Loading Live Google Maps Engine...</span>
+    </div>
+  )
 });
 
 const DEFAULT_ORIGIN = { lat: 19.957, lng: 73.844, label: 'Nashik Road Railway Station' };
@@ -20,6 +30,8 @@ export default function SmartRoutePage() {
   
   const [activeRouteId, setActiveRouteId] = useState('alt-1');
   const [isNavigating, setIsNavigating] = useState(false);
+  const [gpsProgress, setGpsProgress] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
 
   // Compute Origin from Journey Data
   const origin = useMemo(() => {
@@ -89,14 +101,90 @@ export default function SmartRoutePage() {
     }
   ], [origin, destination]);
 
+  const activeRoute = useMemo(() => {
+    return routes.find(r => r.id === activeRouteId) || routes[0];
+  }, [routes, activeRouteId]);
+
+  // simulated navigation loop
+  useEffect(() => {
+    let interval: any;
+    if (isNavigating && activeRoute) {
+      setGpsProgress(0);
+      interval = setInterval(() => {
+        setGpsProgress((prev) => {
+          if (prev >= 100) return 0;
+          return prev + 2; // Increments of 2%
+        });
+      }, 700);
+    } else {
+      setGpsProgress(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isNavigating, activeRouteId, activeRoute]);
+
+  // Compute interpolated GPS coordinates for the moving marker
+  const gpsPos = useMemo<[number, number] | null>(() => {
+    if (!isNavigating || !activeRoute || activeRoute.path.length === 0) return null;
+    const path = activeRoute.path;
+    const totalPoints = path.length;
+    const fractionalIdx = (gpsProgress / 100) * (totalPoints - 1);
+    const lowIdx = Math.floor(fractionalIdx);
+    const highIdx = Math.ceil(fractionalIdx);
+    if (lowIdx === highIdx) return path[lowIdx];
+    const t = fractionalIdx - lowIdx;
+    const lat = path[lowIdx][0] + t * (path[highIdx][0] - path[lowIdx][0]);
+    const lng = path[lowIdx][1] + t * (path[highIdx][1] - path[lowIdx][1]);
+    return [lat, lng];
+  }, [isNavigating, activeRoute, gpsProgress]);
+
+  // Compute dynamic turn-by-turn guidance directions
+  const navigationHUD = useMemo(() => {
+    if (!isNavigating) return null;
+    let dist = 'In 200m';
+    let action = 'Head west on the main corridor route.';
+    let speed = '48 km/h';
+
+    if (gpsProgress < 20) {
+      dist = 'In 150m';
+      action = 'Depart from hub and keep left to join transit lane.';
+      speed = '32 km/h';
+    } else if (gpsProgress < 45) {
+      if (activeRoute.isCongested) {
+        dist = 'In 1.2 km';
+        action = 'Caution: Approaching heavy congestion zone. Average speed is dropping.';
+        speed = '12 km/h';
+      } else {
+        dist = 'In 3.5 km';
+        action = 'Merge onto bypass corridor. Traffic is flowing smoothly.';
+        speed = '55 km/h';
+      }
+    } else if (gpsProgress < 75) {
+      dist = 'In 900m';
+      action = 'Keep right for security checkpost clearance gate.';
+      speed = '25 km/h';
+    } else if (gpsProgress < 95) {
+      dist = 'In 400m';
+      action = 'Slow down. Designated pilgrim drop-off zone ahead.';
+      speed = '15 km/h';
+    } else {
+      dist = 'In 20m';
+      action = 'You have arrived at your destination.';
+      speed = '0 km/h';
+    }
+
+    return { dist, action, speed };
+  }, [isNavigating, gpsProgress, activeRoute]);
+
   if (!isPipelineComplete()) {
     return (
-      <div className="flex flex-col items-center justify-center py-32 text-center bg-white border border-slate-200 rounded-2xl mt-10">
+      <div className="flex flex-col items-center justify-center py-32 text-center bg-white border border-slate-200 rounded-2xl mt-10 max-w-lg mx-auto p-6">
         <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
           <Lock className="w-10 h-10 text-slate-300" />
         </div>
-        <h2 className="text-3xl font-black text-slate-800 mb-4">Feature Locked</h2>
-        <p className="text-slate-600 max-w-md text-lg">
+        <h2 className="text-2xl font-black text-slate-800 mb-2">Feature Locked</h2>
+        <p className="text-slate-600 text-xs max-w-sm leading-relaxed">
           Please complete the registration pipeline (Pilgrims, Vehicle, Snan, and Darshan bookings) to unlock the Smart Route Map.
         </p>
       </div>
@@ -104,143 +192,167 @@ export default function SmartRoutePage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-left">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">Smart Route Map</h1>
-          <p className="text-slate-600 mt-1">Real-time GPS navigation with AI traffic prediction</p>
+          <p className="text-slate-600 mt-1 text-xs">Real-time GPS navigation with AI traffic prediction</p>
         </div>
       </div>
 
-      <div className={cn("grid grid-cols-1 gap-6", isNavigating ? "h-[85vh]" : "lg:grid-cols-4 h-[700px]")}>
+      <div className={cn("grid grid-cols-1 gap-6", isNavigating ? "h-[80vh]" : "lg:grid-cols-4 h-[650px]")}>
         {/* Sidebar Panel - Hidden in Navigation Mode */}
         {!isNavigating && (
-          <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col h-full">
-          <div className="mb-6 relative space-y-3">
-            {/* Connecting line */}
-            <div className="absolute left-6 top-8 bottom-8 w-0.5 border-l-2 border-dashed border-slate-200 z-0"></div>
-            
-            <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3 relative z-10">
-              <div className="bg-blue-50 p-1.5 rounded-lg">
-                <MapPin className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Starting Point</span>
-                <p className="text-sm font-bold text-slate-900 line-clamp-2 leading-tight mt-0.5">{origin.label}</p>
-              </div>
-            </div>
-            
-            <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3 relative z-10">
-              <div className="bg-orange-50 p-1.5 rounded-lg">
-                <MapPin className="w-5 h-5 text-orange-500" />
-              </div>
-              <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Destination</span>
-                <p className="text-sm font-bold text-slate-900 line-clamp-2 leading-tight mt-0.5">{destination.label}</p>
-              </div>
-            </div>
-          </div>
-
-          <h3 className="font-bold text-slate-900 mb-3 flex items-center">
-            <Route className="w-4 h-4 mr-2 text-slate-400" /> Suggested Routes
-          </h3>
-          
-          <div className="flex-1 overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
-            {routes.map(route => {
-              const isActive = route.id === activeRouteId;
-              return (
-                <button
-                  key={route.id}
-                  onClick={() => setActiveRouteId(route.id)}
-                  className={cn(
-                    "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 group relative overflow-hidden",
-                    isActive ? "border-blue-600 bg-blue-50/50 shadow-sm" : "border-slate-100 hover:border-slate-200 hover:bg-slate-50"
-                  )}
-                >
-                  {isActive && (
-                    <div className="absolute top-0 right-0 p-1.5 bg-blue-600 rounded-bl-xl shadow-sm">
-                      <Navigation className="w-3.5 h-3.5 text-white" />
-                    </div>
-                  )}
-                  <h4 className={cn("font-bold text-[13px] mb-2 pr-6 leading-tight", isActive ? "text-blue-900" : "text-slate-700")}>
-                    {route.name}
-                  </h4>
-                  <div className="flex items-center space-x-4 text-xs font-bold">
-                    <span className={route.isCongested ? "text-red-600" : "text-emerald-600"}>
-                      {route.duration}
-                    </span>
-                    <span className="text-slate-300">•</span>
-                    <span className="text-slate-600">{route.distance}</span>
+          <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl shadow-sm p-4 flex flex-col h-full justify-between">
+            <div className="space-y-4">
+              <div className="relative space-y-3">
+                <div className="absolute left-6 top-8 bottom-8 w-0.5 border-l-2 border-dashed border-slate-200 z-0"></div>
+                
+                <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3 relative z-10">
+                  <div className="bg-blue-50 p-1.5 rounded-lg shrink-0">
+                    <MapPin className="w-4 h-4 text-blue-600" />
                   </div>
-                  {route.isCongested && (
-                    <div className="mt-3 flex items-center text-[10px] font-bold text-red-600 bg-red-50 py-1.5 px-2.5 rounded-lg w-fit border border-red-100">
-                      <AlertTriangle className="w-3 h-3 mr-1.5" /> Heavy Congestion Detected
-                    </div>
-                  )}
-                  {!route.isCongested && isActive && (
-                    <div className="mt-3 flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 py-1.5 px-2.5 rounded-lg w-fit border border-emerald-100">
-                      <Navigation className="w-3 h-3 mr-1.5" /> Fastest Route (Live)
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-          <div className="mt-4 pt-4 border-t border-slate-100">
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Starting Hub</span>
+                    <p className="text-[11px] font-bold text-slate-900 line-clamp-2 leading-tight mt-0.5">{origin.label}</p>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3 relative z-10">
+                  <div className="bg-orange-50 p-1.5 rounded-lg shrink-0">
+                    <MapPin className="w-4 h-4 text-orange-500" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-wider block">Destination</span>
+                    <p className="text-[11px] font-bold text-slate-900 line-clamp-2 leading-tight mt-0.5">{destination.label}</p>
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="font-extrabold text-xs text-slate-900 pt-2 border-t border-slate-100 flex items-center uppercase tracking-wider">
+                <Route className="w-4 h-4 mr-1.5 text-slate-400" /> Alternatives
+              </h3>
+              
+              <div className="space-y-2.5 overflow-y-auto max-h-[300px] pr-1">
+                {routes.map(route => {
+                  const isActive = route.id === activeRouteId;
+                  return (
+                    <button
+                      key={route.id}
+                      onClick={() => setActiveRouteId(route.id)}
+                      className={cn(
+                        "w-full text-left p-3.5 rounded-xl border-2 transition-all duration-200 group relative overflow-hidden",
+                        isActive ? "border-blue-600 bg-blue-50/20 shadow-sm" : "border-slate-100 hover:border-slate-200 hover:bg-slate-50"
+                      )}
+                    >
+                      {isActive && (
+                        <div className="absolute top-0 right-0 p-1 bg-blue-600 rounded-bl-lg shadow-sm">
+                          <Navigation className="w-3 h-3 text-white" />
+                        </div>
+                      )}
+                      <h4 className={cn("font-bold text-[12px] pr-6 leading-tight", isActive ? "text-blue-900 font-extrabold" : "text-slate-700")}>
+                        {route.name}
+                      </h4>
+                      <div className="flex items-center space-x-2 text-[10px] font-bold mt-1.5">
+                        <span className={route.isCongested ? "text-red-600 bg-red-50 px-1.5 py-0.5 rounded" : "text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded"}>
+                          {route.duration}
+                        </span>
+                        <span className="text-slate-300">•</span>
+                        <span className="text-slate-600">{route.distance}</span>
+                      </div>
+                      
+                      {route.isCongested ? (
+                        <div className="mt-2.5 flex items-center text-[9px] font-bold text-red-600 bg-red-50/50 py-1 px-2 rounded w-fit border border-red-100/50">
+                          <AlertTriangle className="w-2.5 h-2.5 mr-1" /> Heavy Congestion
+                        </div>
+                      ) : (
+                        isActive && (
+                          <div className="mt-2.5 flex items-center text-[9px] font-bold text-emerald-700 bg-emerald-50/50 py-1 px-2 rounded w-fit border border-emerald-100/50">
+                            <Navigation className="w-2.5 h-2.5 mr-1" /> Fastest Route
+                          </div>
+                        )
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <button 
               onClick={() => setIsNavigating(true)}
-              className="w-full bg-[#005BAC] hover:bg-[#004a8c] text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center transition-colors shadow-sm shadow-blue-600/20 active:scale-[0.98]"
+              className="w-full bg-[#005BAC] hover:bg-[#004a8c] text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-colors shadow-md text-xs uppercase tracking-wider select-none outline-none border-none cursor-pointer mt-4"
             >
-              <Navigation className="w-4 h-4 mr-2" /> Start Navigation
+              <Navigation className="w-3.5 h-3.5 mr-2" /> Start Navigation
             </button>
           </div>
-        </div>
         )}
 
         {/* Map View */}
         <div className={cn(
-          "bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden relative z-0",
-          isNavigating ? "lg:col-span-1 h-full" : "lg:col-span-3 h-[500px] lg:h-auto"
+          "bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden relative z-0 flex flex-col",
+          isNavigating ? "lg:col-span-4 h-full" : "lg:col-span-3 h-[450px] lg:h-auto"
         )}>
-          {/* Navigation Overlay */}
-          {isNavigating && (
-            <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-start pointer-events-none">
-              <div className="bg-[#005BAC] text-white p-4 rounded-xl shadow-lg pointer-events-auto max-w-sm">
-                <div className="flex items-center gap-3 border-b border-blue-500/50 pb-3 mb-3">
-                  <div className="bg-white/20 p-2 rounded-lg">
-                    <Navigation className="w-6 h-6" />
+          {/* Navigation Overlay HUD */}
+          {isNavigating && navigationHUD && (
+            <div className="absolute top-4 left-4 right-4 z-20 flex flex-col sm:flex-row justify-between items-start gap-4 pointer-events-none">
+              
+              {/* Turn-by-Turn Card */}
+              <div className="bg-[#005BAC]/95 backdrop-blur-md text-white p-4.5 rounded-2xl shadow-xl pointer-events-auto max-w-sm w-full border border-blue-400/20 text-left">
+                <div className="flex items-start gap-3 border-b border-blue-400/40 pb-3 mb-3">
+                  <div className="bg-white/10 p-2.5 rounded-xl shrink-0">
+                    <Navigation className="w-6 h-6 transform rotate-45 text-white animate-pulse" />
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-blue-200 uppercase tracking-wider">In 200m</span>
-                    <h3 className="text-lg font-black leading-tight">Turn Left onto Gangapur Rd</h3>
+                    <span className="block text-[9px] font-bold text-blue-200 uppercase tracking-widest">{navigationHUD.dist}</span>
+                    <h3 className="text-sm font-black leading-snug mt-0.5">{navigationHUD.action}</h3>
                   </div>
                 </div>
-                <div className="flex items-center justify-between font-bold text-sm">
-                  <span>{routes.find(r => r.id === activeRouteId)?.duration}</span>
-                  <span className="text-blue-200">•</span>
-                  <span>{routes.find(r => r.id === activeRouteId)?.distance}</span>
-                  <span className="text-blue-200">•</span>
-                  <span className="text-emerald-400">ETA 12:45 PM</span>
+                <div className="flex items-center justify-between font-bold text-xs">
+                  <div className="space-y-0.5">
+                    <span className="text-[9px] text-blue-200 block uppercase">Time Left</span>
+                    <span className="text-emerald-400 font-black">{activeRoute.duration}</span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-[9px] text-blue-200 block uppercase">Distance</span>
+                    <span>{activeRoute.distance}</span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-[9px] text-blue-200 block uppercase">Speed</span>
+                    <span className="font-mono text-emerald-300">{navigationHUD.speed}</span>
+                  </div>
                 </div>
               </div>
-              
-              <button 
-                onClick={() => setIsNavigating(false)}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-xl shadow-lg pointer-events-auto transition-colors flex items-center gap-2 active:scale-95 border-2 border-red-600"
-              >
-                <X className="w-4 h-4" /> Exit
-              </button>
+
+              {/* Voice / Exit buttons */}
+              <div className="flex gap-2 pointer-events-auto shrink-0 self-end sm:self-start">
+                <button
+                  onClick={() => setIsMuted(!isMuted)}
+                  className="bg-white hover:bg-stone-50 text-stone-700 p-3 rounded-xl shadow-lg transition-colors border border-stone-200 outline-none cursor-pointer"
+                  title={isMuted ? "Unmute navigation guidance" : "Mute navigation guidance"}
+                >
+                  {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                </button>
+                <button 
+                  onClick={() => setIsNavigating(false)}
+                  className="bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs px-4 py-3 rounded-xl shadow-lg transition-all flex items-center gap-1.5 active:scale-95 border-none outline-none cursor-pointer uppercase tracking-wider"
+                >
+                  <X className="w-3.5 h-3.5" /> End Navigation
+                </button>
+              </div>
             </div>
           )}
           
-          <SmartRouteMap
-            origin={origin}
-            destination={destination}
-            routes={routes}
-            activeRouteId={activeRouteId}
-            onSelectRoute={setActiveRouteId}
-            isNavigating={isNavigating}
-          />
+          <div className="flex-1 w-full h-full min-h-[400px]">
+            <SmartRouteMap
+              origin={origin}
+              destination={destination}
+              routes={routes}
+              activeRouteId={activeRouteId}
+              onSelectRoute={setActiveRouteId}
+              isNavigating={isNavigating}
+              gpsPos={gpsPos}
+            />
+          </div>
         </div>
       </div>
     </div>
