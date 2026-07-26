@@ -21,7 +21,9 @@ import {
   Play,
   ShieldCheck,
   Info,
-  X
+  X,
+  Users,
+  Compass
 } from 'lucide-react';
 import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
 import { cn } from '@/utils/cn';
@@ -41,8 +43,8 @@ const REGISTRATION_STEPS: RegistrationStep[] = [
   {
     step: 1,
     title: 'Create Account',
-    description: 'Register with basic personal details and email identifier.',
-    details: 'Fill in your primary credentials on the official portal. This registers your identity key in the central database.',
+    description: 'Register with basic credentials and verify with OTP.',
+    details: 'Fill in your primary credentials on the official portal and verify via SMS OTP. This registers your identity key in the central database.',
     icon: <UserPlus size={18} />,
     isProtected: false,
     featureName: 'Registration',
@@ -50,63 +52,73 @@ const REGISTRATION_STEPS: RegistrationStep[] = [
   },
   {
     step: 2,
-    title: 'Verify Mobile',
-    description: 'Authenticate your identity using SMS OTP.',
-    details: 'Verify your phone via a 6-digit OTP code to enable secure mobile transactions, SMS passes, and broadcast alerts.',
-    icon: <Smartphone size={18} />,
-    isProtected: false,
-    featureName: 'SMS Verification',
-    actualUrl: '/auth/register'
-  },
-  {
-    step: 3,
     title: 'Complete Profile',
-    description: 'Provide details like Aadhaar/ID and address verification.',
-    details: 'Complete your profile details. Uploading a valid national ID card ensures verified pass generation.',
+    description: 'Add Aadhaar card, photo, and emergency details.',
+    details: 'Complete your profile details. Uploading a valid national ID card ensures verified pass generation and biometric security.',
     icon: <FileText size={18} />,
     isProtected: false,
     featureName: 'Profile Update',
     actualUrl: '/account/profile'
   },
   {
-    step: 4,
-    title: 'Health Advisory',
-    description: 'Review safety guidelines and health advisories.',
-    details: 'Read the official Swasthya Yatra health advisory document to learn about medical zones, medical safety checklists, and health helpline contacts.',
-    icon: <Heart size={18} />,
+    step: 3,
+    title: 'Register Journey',
+    description: 'Setup journey dates, transport modes, and sectors.',
+    details: 'Submit journey start/end dates, travel modes, and sector boundaries. This sets up your itinerary bounds for security zones.',
+    icon: <MapPin size={18} />,
     isProtected: false,
-    featureName: 'Health Advisory',
-    actualUrl: '/health-registration'
-  },
-  
-  { step: 5,
-    title: 'Smart QR Pass',
-    description: 'Generate your digital passport to pass checkpoints.',
-    details: 'Receive your encrypted, high-fidelity secure QR Pass on mobile for checkpoint scanning across Nashik.',
-    icon: <QrCode size={18} />,
-    isProtected: true,
-    featureName: 'Smart QR Pass',
+    featureName: 'Journey Registry',
     actualUrl: '/account/dashboard'
+  },
+  {
+    step: 4,
+    title: 'Add Pilgrims',
+    description: 'Register accompanying family members or companions.',
+    details: 'Add details for all accompanying family members or group pilgrims including names, ages, and government ID cards.',
+    icon: <Users size={18} />,
+    isProtected: false,
+    featureName: 'Pilgrim Registry',
+    actualUrl: '/account/manage-pilgrims'
+  },
+  {
+    step: 5,
+    title: 'Register Vehicle',
+    description: 'Register private vehicle for parking slot passes.',
+    details: 'Enter registration numbers, category, and driver info to get authorized parking passes at city security entry gates.',
+    icon: <Car size={18} />,
+    isProtected: false,
+    featureName: 'Vehicle Entry Permit',
+    actualUrl: '/bookings/vehicle'
+  },
+  {
+    step: 6,
+    title: 'Smart Snan Slot',
+    description: 'Reserve timed bathing ghat slot with river sensors.',
+    details: 'Book a safe time slot at Ramkund or Kushavarta ghats. River sensors monitor telemetry, currents, and safety boundaries.',
+    icon: <Compass size={18} />,
+    isProtected: false,
+    featureName: 'Snan Booking',
+    actualUrl: '/account/smart-snan'
   },
   {
     step: 7,
-    title: 'Arrival Check',
-    description: 'Scan QR at city entry checkpoints on arrival.',
-    details: 'Upon reaching the outer checkpoints, administrators scan your QR pass to update city crowd density metrics in real-time.',
-    icon: <MapPin size={18} />,
+    title: 'Smart Darshan Slot',
+    description: 'Book timed entry pass for key temples.',
+    details: 'Select dates and time slots for Trimbakeshwar or Sai Baba temples to minimize queue wait times with simulated crowd gates.',
+    icon: <Heart size={18} />,
     isProtected: false,
-    featureName: 'Arrival Verification',
-    actualUrl: '/account/dashboard'
+    featureName: 'Darshan Booking',
+    actualUrl: '/account/smart-darshan'
   },
   {
     step: 8,
-    title: 'Complete Darshan',
-    description: 'Proceed to ghats and temples for holy rituals.',
-    details: 'Follow real-time route instructions to enjoy a smooth, peaceful, and auspicious Darshan experience at the temples.',
-    icon: <CheckCircle size={18} />,
-    isProtected: false,
-    featureName: 'Darshan',
-    actualUrl: '/account/smart-darshan'
+    title: 'Download Smart QR',
+    description: 'Receive verified digital QR Pass for entry gates.',
+    details: 'Obtain your official biometric QR Pass containing all verified pilgrim clearances, vehicle passes, and Snan/Darshan barcodes.',
+    icon: <QrCode size={18} />,
+    isProtected: true,
+    featureName: 'Gate Entry QR Pass',
+    actualUrl: '/account/dashboard'
   }
 ];
 
@@ -201,7 +213,7 @@ export function RegistrationOverview() {
               <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
                 <div>
                   <span className="text-[10px] font-black uppercase text-[#005BAC] tracking-widest">
-                    Step {currentStepData.step} of 9
+                    Step {currentStepData.step} of {REGISTRATION_STEPS.length}
                   </span>
                   <h3 className="text-2xl font-extrabold text-[#111827] font-[var(--font-heading)]">
                     {currentStepData.title}
