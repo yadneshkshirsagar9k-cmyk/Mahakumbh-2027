@@ -8,7 +8,6 @@ import {
   TempleFacts,
   TempleSection,
   TempleNavigationCard,
-  TempleGallery,
   TempleSidebar,
 } from '@/components/temples/reusable-components';
 import { HelpCircle, ChevronRight, Compass } from 'lucide-react';
@@ -88,11 +87,6 @@ export default async function TempleDetailPage({ params }: PageProps) {
               {/* How to Reach section */}
               <TempleSection title="How to Reach">
                 <TempleNavigationCard howToReach={temple.howToReach} />
-              </TempleSection>
-
-              {/* Image Gallery */}
-              <TempleSection title="Photo Gallery">
-                <TempleGallery images={temple.thumbnailImages} />
               </TempleSection>
 
               {/* FAQ */}
