@@ -59,7 +59,7 @@ export default function PilgrimServicesPage() {
                     <span className="text-xs font-bold text-[#2E7D32]">Active</span>
                   </div>
                   <Link 
-                    href="/account/profile"
+                    href={ps.routePath}
                     className="px-4 py-2 bg-[#005BAC] hover:bg-[#0F4C81] text-white text-xs font-bold uppercase tracking-wider rounded text-center select-none"
                   >
                     Access Service

@@ -65,7 +65,7 @@ export interface PilgrimService {
   id: string;
   name: string;
   description: string;
-  category: 'qr_pass' | 'medical' | 'volunteer' | 'special_assistance' | 'senior' | 'divyang' | 'group' | 'family';
+  category: 'qr_pass' | 'medical' | 'volunteer' | 'special_assistance' | 'senior' | 'divyang' | 'group' | 'family' | 'vehicle' | 'snan' | 'darshan';
   icon: string; // lucide icon name
   routePath: string;
 }

@@ -132,10 +132,10 @@ export const VEHICLE_CATEGORIES_DATA: VehicleCategoryItem[] = [
 // ============================================================
 
 export const PILGRIM_SERVICES_DATA: PilgrimService[] = [
-  { id: 'ps-1', name: 'Digital QR Pass', description: 'Generate secure encrypted checkpoint gate passes.', category: 'qr_pass', icon: 'QrCode', routePath: '/bookings/pilgrim' },
-  { id: 'ps-2', name: 'Health Advisory', description: 'Review Swasthya Yatra health guides and safety checklists.', category: 'medical', icon: 'HeartPulse', routePath: '/health-registration' },
-  { id: 'ps-3', name: 'Volunteer Registration', description: 'Sign up to assist senior citizens and queue marshaling.', category: 'volunteer', icon: 'Users', routePath: '/bookings/pilgrim' },
-  { id: 'ps-4', name: 'Senior Citizen Care', description: 'Request wheelchair and e-cart support services.', category: 'senior', icon: 'Smile', routePath: '/bookings/pilgrim' },
-  { id: 'ps-5', name: 'Divyang Assistance', description: 'Access special ramps and sign language assistance.', category: 'divyang', icon: 'Info', routePath: '/bookings/pilgrim' },
-  { id: 'ps-6', name: 'Group Bookings', description: 'Pre-clear routes for groups of 15+ pilgrims.', category: 'group', icon: 'Layers', routePath: '/bookings/pilgrim' }
+  { id: 'ps-1', name: 'Digital QR Pass', description: 'Access and print your secure biometric gate credentials and active entry permissions.', category: 'qr_pass', icon: 'QrCode', routePath: '/account/dashboard' },
+  { id: 'ps-2', name: 'Health Advisory', description: 'Review Swasthya Yatra health guides, safety checklists, and medical helpline directories.', category: 'medical', icon: 'Heart', routePath: '/health-registration' },
+  { id: 'ps-3', name: 'Smart Snan Booking', description: 'Reserve timed ghat bathing slots with live telemetry, water safety metrics, and river flow trackers.', category: 'snan', icon: 'Compass', routePath: '/account/smart-snan' },
+  { id: 'ps-4', name: 'Smart Darshan Booking', description: 'Book timed temple entry slots for Trimbakeshwar Shiva Temple with simulated real-time wait times.', category: 'darshan', icon: 'Sparkles', routePath: '/account/smart-darshan' },
+  { id: 'ps-5', name: 'Vehicle Permit Pass', description: 'Register private transit vehicles to obtain checkpoint access passes and parking slots.', category: 'vehicle', icon: 'Car', routePath: '/bookings/vehicle' },
+  { id: 'ps-6', name: 'Family Registration', description: 'Add and manage accompanying group members, family pilgrims, and document credentials.', category: 'family', icon: 'Users', routePath: '/account/manage-pilgrims' }
 ];
