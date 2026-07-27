@@ -13,8 +13,33 @@ import Link from 'next/link';
 
 export default function TourPackagesPage() {
   const packages = [
-    { id: 'pkg-1', name: 'Simhastha Holy Snan Yatra', duration: '1 Day', routes: 'Nashik Road -> Ram Kund -> Trimbakeshwar -> Nashik Road', price: 'Free (Govt Shuttle)', type: 'government' },
-    { id: 'pkg-3', name: 'Trimbakeshwar Brahmagiri Trek', duration: '1 Day', routes: 'Kushavarta Kund -> Brahmagiri Hill Temple -> Trimbakeshwar Spire', price: 'Self-guided', type: 'adventure' }
+    { 
+      id: 'pkg-1', 
+      name: 'Slots & Route Directory', 
+      duration: 'Daily Schedule', 
+      routes: 'Real-time temple schedules, estimated queue wait times, and medical post locations.', 
+      price: 'Free (Public)', 
+      type: 'government',
+      routePath: '/account/timings-route-map'
+    },
+    { 
+      id: 'pkg-2', 
+      name: 'Smart Route Navigation', 
+      duration: 'Live Telemetry', 
+      routes: 'GPS road-tracing highway paths, satellite maps, and real-time checkpoint traffic density indicators.', 
+      price: 'Free (GPS)', 
+      type: 'transit',
+      routePath: '/account/smart-route'
+    },
+    { 
+      id: 'pkg-3', 
+      name: 'Spiritual Heritage Circuits', 
+      duration: 'Self-guided', 
+      routes: 'Curated spiritual walk circuits, godavari riverfront trails, and historical landmarks directories.', 
+      price: 'Free (MTDC)', 
+      type: 'tourism',
+      routePath: '/account/discover-maharashtra'
+    }
   ];
 
   return (
@@ -53,7 +78,9 @@ export default function TourPackagesPage() {
                       'text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border',
                       pkg.type === 'government'
                         ? 'bg-[#F0FDF4] border-[#DCFCE7] text-[#2E7D32]'
-                        : 'bg-[#F5F7FA] border-[#E5E7EB] text-[#005BAC]'
+                        : pkg.type === 'transit'
+                        ? 'bg-blue-50 border-blue-100 text-[#005BAC]'
+                        : 'bg-[#FFFBEB] border-[#FEF3C7] text-[#D97706]'
                     )}>
                       {pkg.type.toUpperCase()}
                     </span>
@@ -72,10 +99,10 @@ export default function TourPackagesPage() {
                 <div className="pt-6 mt-6 border-t border-[#E5E7EB] flex items-center justify-between">
                   <div className="flex flex-col">
                     <span className="text-[9px] uppercase font-bold text-[#6B7280]">Package Tariff</span>
-                    <span className="text-base font-extrabold text-[#111827]">{pkg.price}</span>
+                    <span className="text-sm font-extrabold text-[#111827]">{pkg.price}</span>
                   </div>
                   <Link 
-                    href="/account/timings-route-map"
+                    href={pkg.routePath}
                     className="px-4 py-2 bg-[#005BAC] hover:bg-[#0F4C81] text-white text-xs font-bold uppercase tracking-wider rounded text-center select-none"
                   >
                     View Routes
