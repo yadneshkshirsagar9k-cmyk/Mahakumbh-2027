@@ -362,7 +362,7 @@ const SAFETY_GUIDES_DATA = [
 
 export default function EmergencyPortal() {
   const [lang, setLang] = useState<'en' | 'hi' | 'mr'>('en');
-  const [highContrast, setHighContrast] = useState(false);
+  const highContrast = false;
   const [isOffline, setIsOffline] = useState(false);
 
   // SOS States
@@ -388,6 +388,22 @@ export default function EmergencyPortal() {
   const [mapLayer, setMapLayer] = useState<'routes' | 'density' | 'camps'>('camps');
 
   const text = TRANSLATIONS[lang];
+
+  // Load missing/found person reports from database on mount
+  useEffect(() => {
+    const fetchMissingReports = async () => {
+      try {
+        const res = await fetch('/api/emergency/missing');
+        if (res.ok) {
+          const data = await res.json();
+          setMissingList(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch missing reports:', err);
+      }
+    };
+    fetchMissingReports();
+  }, []);
 
   // Offline detection hook
   useEffect(() => {
@@ -474,22 +490,34 @@ export default function EmergencyPortal() {
     }
   };
 
-  // Handle Missing Persons form submission
-  const handleMissingSubmit = (e: React.FormEvent) => {
+  // Handle Missing Persons form submission to database
+  const handleMissingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!missingForm.name || !missingForm.phone) return;
-    setMissingList([
-      {
-        name: missingForm.name,
-        ageGroup: missingForm.ageGroup,
-        sector: missingForm.sector,
-        phone: missingForm.phone,
-        type: missingTab
-      },
-      ...missingList
-    ]);
-    setMissingForm({ name: '', ageGroup: 'child', sector: 'Sector 4 Hub', phone: '' });
-    alert(`Submit Successful. Details shared with all Sector Biometric Command booths.`);
+    try {
+      const res = await fetch('/api/emergency/missing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: missingForm.name,
+          ageGroup: missingForm.ageGroup,
+          sector: missingForm.sector,
+          phone: missingForm.phone,
+          type: missingTab
+        })
+      });
+      if (res.ok) {
+        const savedReport = await res.json();
+        setMissingList(prev => [savedReport, ...prev]);
+        setMissingForm({ name: '', ageGroup: 'child', sector: 'Sector 4 Hub', phone: '' });
+        alert(`Submit Successful. Details saved to database and shared with all Sector Biometric Command booths.`);
+      } else {
+        alert('Failed to submit report. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error. Failed to save report.');
+    }
   };
 
   const handlePhoneDial = (num: string) => {
@@ -497,22 +525,8 @@ export default function EmergencyPortal() {
   };
 
   return (
-    <div className={cn(
-      "relative min-h-screen flex flex-col bg-[#FAFBFC] text-[#111827] transition-all",
-      highContrast && "bg-white text-black font-extrabold"
-    )}>
+    <div className="relative min-h-screen flex flex-col bg-[#FAFBFC] text-[#111827] transition-all">
       <Navbar />
-
-      {/* EMERGENCY ACCESSIBILITY CONTROLLER - FIXED BOTTOM FOR ONE-HANDED ACCESSIBILITY */}
-      <div className="fixed bottom-4 right-4 z-[999] flex flex-col gap-2">
-        <button
-          onClick={() => setHighContrast(!highContrast)}
-          className="p-3 bg-slate-900 text-white rounded-full shadow-2xl border-2 border-white flex items-center justify-center font-bold text-xs uppercase tracking-wide cursor-pointer hover:bg-slate-800"
-          aria-label={text.contrastMode}
-        >
-          {highContrast ? "NORMAL STYLE" : "⚡ CONTRAST MODE"}
-        </button>
-      </div>
 
       {/* TOP CONTROLS FOR QUICK CONFIGURATION */}
       <div className="w-full pt-[90px] px-4 sm:px-6 lg:px-8 bg-white border-b border-[#E5E7EB] dark:border-white/5 py-3 flex flex-wrap items-center justify-between gap-4">
@@ -554,11 +568,8 @@ export default function EmergencyPortal() {
 
       <main className="flex-grow pb-24 px-4 sm:px-6 lg:px-8 space-y-6 max-w-[1280px] mx-auto w-full pt-4">
         
-        {/* SECTION 1: EMERGENCY ALERT BANNER */}
-        <div className={cn(
-          "border rounded-xl p-4 bg-red-50 border-red-200 text-xs font-bold text-[#374151]",
-          highContrast && "border-4 border-red-800 bg-white text-black"
-        )}>
+        {/* SECTION 1: EMERGENCY ALERT BANNER (CRITICAL) */}
+        <div className="border rounded-xl p-4 bg-red-50 border-red-200 text-xs font-bold text-[#374151]">
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
             <div className="flex items-start gap-3">
               <AlertTriangle className="text-red-600 flex-shrink-0 mt-0.5" size={24} />
@@ -586,41 +597,40 @@ export default function EmergencyPortal() {
           </div>
         </div>
 
-        {/* SECTION 2: UNIVERSAL ONE-TAP SOS BUTTON */}
-        <div className={cn(
-          "bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-md text-center space-y-4",
-          highContrast && "border-4 border-black"
-        )}>
-          <div className="max-w-xl mx-auto space-y-3">
-            <h2 className="text-xl font-extrabold text-red-600 uppercase tracking-tight flex items-center justify-center gap-2">
-              <ShieldAlert className="text-red-600 animate-bounce" size={28} />
-              <span>{text.sosTitle}</span>
-            </h2>
-            <p className="text-xs text-[#6B7280] font-bold">
-              {text.sosSubtitle}
-            </p>
-
-            <button
-              onClick={triggerUniversalSOS}
-              className={cn(
-                "w-full py-8 rounded-2xl border-4 text-xl font-black text-white transition-all shadow-lg active:scale-95 flex flex-col items-center justify-center gap-2 cursor-pointer",
-                sosActive 
-                  ? "bg-emerald-600 border-emerald-700 animate-pulse" 
-                  : "bg-red-600 border-red-700 hover:bg-red-700"
-              )}
-            >
-              <span>{sosActive ? text.sosActiveText : text.sosButtonText}</span>
-              <span className="text-xs font-medium tracking-wide opacity-90">
-                {sosActive ? "GPS BROADCAST ONGOING..." : text.sosSubtext}
-              </span>
-            </button>
-
-            {/* Simulated GPS values under the SOS */}
-            {gpsCoordinates && (
-              <p className="text-[10px] text-stone-grey-500 font-mono">
-                Telemetry Coordinates: {gpsCoordinates.lat.toFixed(6)}, {gpsCoordinates.lng.toFixed(6)}
+        {/* TOP CRITICAL ACTION AREA (SOS & HELPLINES SIDE-BY-SIDE OR VERTICAL) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Universal SOS Button (Col-span 7) */}
+          <div className="lg:col-span-7 bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-md text-center flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <h2 className="text-xl font-extrabold text-red-600 uppercase tracking-tight flex items-center justify-center gap-2">
+                <ShieldAlert className="text-red-600 animate-bounce" size={28} />
+                <span>{text.sosTitle}</span>
+              </h2>
+              <p className="text-xs text-[#6B7280] font-bold">
+                {text.sosSubtitle}
               </p>
-            )}
+
+              <button
+                onClick={triggerUniversalSOS}
+                className={cn(
+                  "w-full py-8 rounded-2xl border-4 text-xl font-black text-white transition-all shadow-lg active:scale-95 flex flex-col items-center justify-center gap-2 cursor-pointer",
+                  sosActive 
+                    ? "bg-emerald-600 border-emerald-700 animate-pulse" 
+                    : "bg-red-600 border-red-700 hover:bg-red-700"
+                )}
+              >
+                <span>{sosActive ? text.sosActiveText : text.sosButtonText}</span>
+                <span className="text-xs font-medium tracking-wide opacity-90">
+                  {sosActive ? "GPS BROADCAST ONGOING..." : text.sosSubtext}
+                </span>
+              </button>
+
+              {gpsCoordinates && (
+                <p className="text-[10px] text-stone-grey-500 font-mono">
+                  Telemetry Coordinates: {gpsCoordinates.lat.toFixed(6)}, {gpsCoordinates.lng.toFixed(6)}
+                </p>
+              )}
+            </div>
 
             {/* REQUEST STATUS SECTION (VISIBLE AFTER SOS CLICK) */}
             <AnimatePresence>
@@ -629,7 +639,7 @@ export default function EmergencyPortal() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="mt-6 p-5 border-2 border-emerald-500 bg-emerald-50/50 rounded-xl text-left space-y-4"
+                  className="mt-4 p-5 border-2 border-emerald-500 bg-emerald-50/50 rounded-xl text-left space-y-4"
                 >
                   <div className="flex items-center justify-between border-b border-emerald-200 pb-2">
                     <span className="text-xs font-black text-emerald-800 uppercase tracking-wider">
@@ -680,6 +690,73 @@ export default function EmergencyPortal() {
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+
+          {/* Quick-Dial Helplines (Col-span 5) */}
+          <div className="lg:col-span-5 bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-md flex flex-col justify-between space-y-4">
+            <div>
+              <h2 className="text-xl font-extrabold text-[#111827] uppercase tracking-tight flex items-center gap-2">
+                <Phone className="text-red-600 animate-pulse" size={24} />
+                <span>{text.helplinesTitle}</span>
+              </h2>
+              <p className="text-xs text-[#6B7280] font-bold mt-1">
+                {text.helplinesSub}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              {QUICK_HELPLINES.map((line, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handlePhoneDial(line.number)}
+                  className="p-3 bg-red-50 hover:bg-red-100 border border-red-200 rounded-xl flex items-center justify-between text-left cursor-pointer transition-all active:scale-95 text-red-900 shadow-sm"
+                >
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-[9px] font-black uppercase tracking-wide leading-tight text-red-900 truncate">{line.name}</h4>
+                    <p className="text-sm font-black mt-1 font-mono text-red-650">{line.number}</p>
+                  </div>
+                  <Phone size={14} className="text-red-600 flex-shrink-0 ml-1.5" />
+                </button>
+              ))}
+            </div>
+
+            <div className="p-3 bg-[#FAFBFC] rounded-xl border border-[#E5E7EB] text-[10px] text-[#6B7280] leading-normal font-semibold">
+              ⚠️ In case of phone network failure, use the telemetry SMS sharing tools below to bypass voice cellular grid.
+            </div>
+          </div>
+        </div>
+
+        {/* GPS TELEMETRY & OFFLINE CHANNELS */}
+        <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E5E7EB] pb-2">
+            <div>
+              <h3 className="text-sm font-black text-[#111827] uppercase tracking-wide">
+                {text.shareTitle}
+              </h3>
+              <p className="text-[10px] text-[#6B7280] font-semibold">Offline message bypass using mobile SMS/WhatsApp links.</p>
+            </div>
+            {gpsCoordinates && (
+              <span className="font-mono text-xs font-black bg-stone-100 px-2 py-1 rounded text-stone-700 border">
+                🛰️ Lat: {gpsCoordinates.lat.toFixed(6)} | Lng: {gpsCoordinates.lng.toFixed(6)}
+              </span>
+            )}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a
+              href={`sms:?body=Kumbh emergency coordinates trigger: ${gpsCoordinates?.lat.toFixed(6) || '20.0058'}, ${gpsCoordinates?.lng.toFixed(6) || '73.7919'}`}
+              className="p-3 border-2 border-[#005BAC] text-[#005BAC] hover:bg-blue-50 rounded-xl text-xs font-black uppercase tracking-wide text-center flex items-center justify-center gap-2 shadow-sm"
+            >
+              <Send size={14} />
+              <span>{text.shareSMS}</span>
+            </a>
+            <a
+              href={`https://wa.me/?text=Kumbh emergency coordinates: ${gpsCoordinates?.lat.toFixed(6) || '20.0058'}, ${gpsCoordinates?.lng.toFixed(6) || '73.7919'}`}
+              target="_blank"
+              className="p-3 border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 rounded-xl text-xs font-black uppercase tracking-wide text-center flex items-center justify-center gap-2 shadow-sm"
+            >
+              <Share2 size={14} />
+              <span>{text.shareWhatsApp}</span>
+            </a>
           </div>
         </div>
 
@@ -899,7 +976,7 @@ export default function EmergencyPortal() {
                           setSelectedHelpCentre(centre);
                           alert(`Navigating to ${centre.name}. Simulated directional markers loaded on GIS Map.`);
                         }}
-                        className="px-3 py-1 bg-[#005BAC] text-white text-[9px] font-black rounded uppercase"
+                        className="px-3 py-1 bg-[#005BAC] text-white rounded text-[9px] font-bold uppercase tracking-wider hover:bg-[#0F4C81] transition"
                       >
                         Navigate
                       </button>
@@ -908,7 +985,7 @@ export default function EmergencyPortal() {
                           e.stopPropagation();
                           handlePhoneDial(centre.contact);
                         }}
-                        className="px-3 py-1 border border-[#005BAC] text-[#005BAC] text-[9px] font-black rounded uppercase bg-transparent"
+                        className="px-3 py-1 border border-[#E5E7EB] text-slate-700 rounded text-[9px] font-bold uppercase tracking-wider hover:bg-slate-50 transition"
                       >
                         Call
                       </button>
@@ -919,101 +996,93 @@ export default function EmergencyPortal() {
             </div>
           </div>
 
-          {/* SECTION 6: LIVE EMERGENCY MAP */}
-          <div className="lg:col-span-7 flex flex-col space-y-2">
-            <div className="flex flex-wrap items-center justify-between gap-2">
+          {/* Right Column: GIS Live Map wrapper */}
+          <div className="lg:col-span-7 flex flex-col space-y-4">
+            <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-md font-black text-slate-900 uppercase tracking-wide">
                   {text.mapTitle}
                 </h3>
                 <span className="text-xs text-[#6B7280] font-medium">{text.mapSub}</span>
               </div>
-              {/* Map Layer control */}
-              <div className="flex items-center gap-1 bg-[#FAFBFC] p-1 rounded border">
+
+              {/* Map layer switch buttons */}
+              <div className="flex items-center gap-1 bg-[#FAFBFC] border border-[#E5E7EB] p-1 rounded-lg">
                 <button
                   onClick={() => setMapLayer('camps')}
-                  className={cn("px-2 py-1 text-[9px] font-black uppercase rounded", mapLayer === 'camps' ? 'bg-[#005BAC] text-white' : 'text-[#374151] hover:bg-[#F5F7FA]')}
+                  className={cn("px-2.5 py-1 rounded text-[9px] font-bold uppercase tracking-wider transition", mapLayer === 'camps' ? 'bg-[#005BAC] text-white' : 'text-slate-600 hover:bg-slate-50')}
                 >
                   Camps
                 </button>
                 <button
                   onClick={() => setMapLayer('routes')}
-                  className={cn("px-2 py-1 text-[9px] font-black uppercase rounded", mapLayer === 'routes' ? 'bg-[#005BAC] text-white' : 'text-[#374151] hover:bg-[#F5F7FA]')}
+                  className={cn("px-2.5 py-1 rounded text-[9px] font-bold uppercase tracking-wider transition", mapLayer === 'routes' ? 'bg-[#005BAC] text-white' : 'text-slate-600 hover:bg-slate-50')}
                 >
                   Routes
                 </button>
                 <button
                   onClick={() => setMapLayer('density')}
-                  className={cn("px-2 py-1 text-[9px] font-black uppercase rounded", mapLayer === 'density' ? 'bg-[#005BAC] text-white' : 'text-[#374151] hover:bg-[#F5F7FA]')}
+                  className={cn("px-2.5 py-1 rounded text-[9px] font-bold uppercase tracking-wider transition", mapLayer === 'density' ? 'bg-[#005BAC] text-white' : 'text-slate-600 hover:bg-slate-50')}
                 >
                   Density
                 </button>
               </div>
             </div>
 
-            <div className="relative flex-grow h-[350px] lg:h-auto rounded-xl overflow-hidden border border-[#E5E7EB] shadow-sm">
-              <EmergencyMapWrapper 
-                centres={HELP_CENTRES_DATA} 
-                selectedCentre={selectedHelpCentre} 
+            <div className="flex-grow aspect-video lg:aspect-auto min-h-[350px] border border-[#E5E7EB] rounded-xl overflow-hidden shadow-sm relative bg-slate-50">
+              <EmergencyMapWrapper
+                centres={HELP_CENTRES_DATA}
+                selectedCentre={selectedHelpCentre}
               />
-              <div className="absolute top-2 right-2 z-[400] bg-white/95 px-2 py-1 border border-red-200 rounded text-[9px] font-black text-red-600">
-                ACTIVE MAP LAYER: {mapLayer.toUpperCase()}
-              </div>
             </div>
           </div>
         </div>
 
-        {/* SECTION 8: MISSING PERSONS WORKFLOW */}
-        <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-sm space-y-4" id="missing-section">
-          <div>
+        {/* MISSING & FOUND REGISTRY DESK */}
+        <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-sm space-y-4" id="missing-section">
+          <div className="border-b pb-2">
             <h3 className="text-md font-black text-slate-900 uppercase tracking-wide">
               {text.missingTitle}
             </h3>
             <span className="text-xs text-[#6B7280] font-medium">{text.missingSub}</span>
           </div>
 
-          {/* Tab Switcher */}
-          <div className="flex gap-2 border-b border-[#E5E7EB] pb-2">
+          {/* Registry navigation tabs */}
+          <div className="flex items-center border-b">
             <button
               onClick={() => setMissingTab('missing')}
-              className={cn(
-                "pb-2 px-4 text-xs font-black uppercase border-b-2 transition-all bg-transparent cursor-pointer",
-                missingTab === 'missing' ? "border-red-600 text-red-600" : "border-transparent text-[#6B7280]"
-              )}
+              className={cn("px-4 py-2 text-xs font-black uppercase border-b-2 tracking-wide transition-all", missingTab === 'missing' ? 'border-red-600 text-red-650 font-bold' : 'border-transparent text-slate-600 hover:text-slate-900')}
             >
               {text.reportMissing}
             </button>
             <button
               onClick={() => setMissingTab('found')}
-              className={cn(
-                "pb-2 px-4 text-xs font-black uppercase border-b-2 transition-all bg-transparent cursor-pointer",
-                missingTab === 'found' ? "border-emerald-600 text-emerald-600" : "border-transparent text-[#6B7280]"
-              )}
+              className={cn("px-4 py-2 text-xs font-black uppercase border-b-2 tracking-wide transition-all", missingTab === 'found' ? 'border-emerald-600 text-emerald-700 font-bold' : 'border-transparent text-slate-600 hover:text-slate-900')}
             >
               {text.reportFound}
             </button>
           </div>
 
-          <form onSubmit={handleMissingSubmit} className="space-y-3 text-xs">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <form onSubmit={handleMissingSubmit} className="space-y-4 text-xs font-bold">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-[#374151] mb-1 uppercase tracking-wide">{text.formName}</label>
+                <label className="block text-[#374151] mb-1 uppercase tracking-wide">{text.formName}</label>
                 <input
-                  required
                   type="text"
+                  required
+                  placeholder="e.g. Rahul Sharma"
                   value={missingForm.name}
                   onChange={(e) => setMissingForm({ ...missingForm, name: e.target.value })}
-                  placeholder="e.g. Rahul Sharma"
-                  className="w-full p-2.5 border rounded outline-none text-xs"
+                  className="w-full p-2.5 border rounded outline-none focus:border-red-500 font-semibold"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#374151] mb-1 uppercase tracking-wide">{text.formAge}</label>
+                <label className="block text-[#374151] mb-1 uppercase tracking-wide">{text.formAge}</label>
                 <select
                   value={missingForm.ageGroup}
                   onChange={(e) => setMissingForm({ ...missingForm, ageGroup: e.target.value })}
-                  className="w-full p-2.5 border rounded outline-none font-bold text-xs"
+                  className="w-full p-2.5 border rounded outline-none font-semibold bg-white cursor-pointer"
                 >
                   <option value="child">{text.child}</option>
                   <option value="adult">{text.adult}</option>
@@ -1021,31 +1090,31 @@ export default function EmergencyPortal() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-bold text-[#374151] mb-1 uppercase tracking-wide">{text.formLastSector}</label>
+                <label className="block text-[#374151] mb-1 uppercase tracking-wide">{text.formLastSector}</label>
                 <select
                   value={missingForm.sector}
                   onChange={(e) => setMissingForm({ ...missingForm, sector: e.target.value })}
-                  className="w-full p-2.5 border rounded outline-none font-bold text-xs"
+                  className="w-full p-2.5 border rounded outline-none font-semibold bg-white cursor-pointer"
                 >
-                  <option>Sector 4 Core Zone</option>
-                  <option>Ram Kund Ghat Steps</option>
-                  <option>Sadhugram Sector 3</option>
-                  <option>Trimbakeshwar Entrance</option>
-                  <option>CBS Central Bus Terminal</option>
+                  <option value="Sector 4 Core Zone">Sector 4 Core Zone</option>
+                  <option value="Sector 2 Transit Hub">Sector 2 Transit Hub</option>
+                  <option value="Ram Kund Ghat Entry">Ram Kund Ghat Entry</option>
+                  <option value="Trimbak Temple Outer Area">Trimbak Temple Outer Area</option>
                 </select>
               </div>
 
               <div>
-                <label className="block font-bold text-[#374151] mb-1 uppercase tracking-wide">{text.formContact}</label>
+                <label className="block text-[#374151] mb-1 uppercase tracking-wide">{text.formContact}</label>
                 <input
-                  required
                   type="tel"
+                  required
+                  pattern="[0-9]{10}"
+                  placeholder="10-digit mobile number"
                   value={missingForm.phone}
                   onChange={(e) => setMissingForm({ ...missingForm, phone: e.target.value })}
-                  placeholder="10-digit mobile number"
-                  className="w-full p-2.5 border rounded outline-none text-xs"
+                  className="w-full p-2.5 border rounded outline-none focus:border-red-500 font-semibold"
                 />
               </div>
             </div>
@@ -1080,7 +1149,7 @@ export default function EmergencyPortal() {
                     <span className={cn("px-1 rounded text-[8px] uppercase", entry.type === 'missing' ? 'bg-red-100 text-red-800' : 'bg-emerald-100 text-emerald-800')}>
                       {entry.type.toUpperCase()}
                     </span>
-                    <p className="mt-1">{entry.name} ({entry.ageGroup})</p>
+                    <p className="mt-1">{entry.name} ({entry.ageGroup === 'child' ? text.child : text.adult})</p>
                     <p className="text-slate-500">Sector: {entry.sector}</p>
                   </div>
                 ))}
@@ -1107,83 +1176,6 @@ export default function EmergencyPortal() {
                 <p className="text-[#6B7280]">Nashik Road station</p>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* SECTION 9: QUICK VISUAL SAFETY GUIDES (DO / DO NOT) */}
-        <div className="space-y-3">
-          <div>
-            <h3 className="text-md font-black text-slate-900 uppercase tracking-wide">
-              {text.safetyTitle}
-            </h3>
-            <span className="text-xs text-[#6B7280] font-medium">{text.safetySub}</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {SAFETY_GUIDES_DATA.map((guide) => (
-              <div key={guide.id} className="p-4 bg-white border border-[#E5E7EB] rounded-xl flex flex-col justify-between space-y-3 shadow-sm">
-                <div className="border-b pb-1.5 flex items-center justify-between">
-                  <h4 className="font-black text-xs text-[#111827] uppercase">
-                    {lang === 'hi' ? guide.titleHi : lang === 'mr' ? guide.titleMr : guide.title}
-                  </h4>
-                  <span className="text-[8px] font-bold text-red-600 bg-red-50 border border-red-200 px-1 rounded uppercase">
-                    Hotline: {guide.hotline}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 text-[10px]">
-                  {/* DO COLUMN */}
-                  <div className="space-y-1.5 border-r pr-2">
-                    <span className="text-emerald-700 font-black block border-b pb-0.5 uppercase tracking-wide">
-                      ✅ {text.guideDo}
-                    </span>
-                    <ul className="space-y-1 text-slate-800 font-bold list-none">
-                      {guide.dos.map((d, i) => (
-                        <li key={i} className="leading-tight">• {d}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* DO NOT COLUMN */}
-                  <div className="space-y-1.5 pl-1">
-                    <span className="text-red-700 font-black block border-b pb-0.5 uppercase tracking-wide">
-                      ❌ {text.guideDoNot}
-                    </span>
-                    <ul className="space-y-1 text-slate-800 font-bold list-none">
-                      {guide.donts.map((d, i) => (
-                        <li key={i} className="leading-tight">• {d}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* SECTION 10: HELPLINES */}
-        <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-sm space-y-3">
-          <div>
-            <h3 className="text-md font-black text-slate-900 uppercase tracking-wide">
-              {text.helplinesTitle}
-            </h3>
-            <span className="text-xs text-[#6B7280] font-medium">{text.helplinesSub}</span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            {QUICK_HELPLINES.map((line, idx) => (
-              <button
-                key={idx}
-                onClick={() => handlePhoneDial(line.number)}
-                className="p-3 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg flex items-center justify-between text-left cursor-pointer transition-all active:scale-95 text-red-800"
-              >
-                <div>
-                  <h4 className="text-[10px] font-black uppercase tracking-wide leading-tight">{line.name}</h4>
-                  <p className="text-sm font-black mt-1 font-mono">{line.number}</p>
-                </div>
-                <Phone size={14} className="text-red-600 flex-shrink-0" />
-              </button>
-            ))}
           </div>
         </div>
 
@@ -1239,27 +1231,54 @@ export default function EmergencyPortal() {
           </div>
         </div>
 
-        {/* SECTION 13: SHARE MY LOCATION OFFLINE FALLBACKS */}
-        <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-sm space-y-3">
-          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wide">
-            {text.shareTitle}
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a
-              href={`sms:?body=Kumbh emergency coordinates trigger: ${gpsCoordinates?.lat.toFixed(6) || '20.0058'}, ${gpsCoordinates?.lng.toFixed(6) || '73.7919'}`}
-              className="p-3 border-2 border-[#005BAC] text-[#005BAC] hover:bg-blue-50 rounded-lg text-xs font-black uppercase tracking-wide text-center flex items-center justify-center gap-2"
-            >
-              <Send size={14} />
-              <span>{text.shareSMS}</span>
-            </a>
-            <a
-              href={`https://wa.me/?text=Kumbh emergency coordinates: ${gpsCoordinates?.lat.toFixed(6) || '20.0058'}, ${gpsCoordinates?.lng.toFixed(6) || '73.7919'}`}
-              target="_blank"
-              className="p-3 border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 rounded-lg text-xs font-black uppercase tracking-wide text-center flex items-center justify-center gap-2"
-            >
-              <Share2 size={14} />
-              <span>{text.shareWhatsApp}</span>
-            </a>
+        {/* SECTION 9: QUICK VISUAL SAFETY GUIDES (DO / DO NOT) */}
+        <div className="space-y-3">
+          <div>
+            <h3 className="text-md font-black text-slate-900 uppercase tracking-wide">
+              {text.safetyTitle}
+            </h3>
+            <span className="text-xs text-[#6B7280] font-medium">{text.safetySub}</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {SAFETY_GUIDES_DATA.map((guide) => (
+              <div key={guide.id} className="p-4 bg-white border border-[#E5E7EB] rounded-xl flex flex-col justify-between space-y-3 shadow-sm">
+                <div className="border-b pb-1.5 flex items-center justify-between">
+                  <h4 className="font-black text-xs text-[#111827] uppercase">
+                    {lang === 'hi' ? guide.titleHi : lang === 'mr' ? guide.titleMr : guide.title}
+                  </h4>
+                  <span className="text-[8px] font-bold text-red-600 bg-red-50 border border-red-200 px-1 rounded uppercase">
+                    Hotline: {guide.hotline}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-[10px]">
+                  {/* DO COLUMN */}
+                  <div className="space-y-1.5 border-r pr-2">
+                    <span className="text-emerald-700 font-black block border-b pb-0.5 uppercase tracking-wide">
+                      ✅ {text.guideDo}
+                    </span>
+                    <ul className="space-y-1 text-slate-800 font-bold list-none">
+                      {guide.dos.map((d, i) => (
+                        <li key={i} className="leading-tight">• {d}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* DO NOT COLUMN */}
+                  <div className="space-y-1.5 pl-1">
+                    <span className="text-red-700 font-black block border-b pb-0.5 uppercase tracking-wide">
+                      ❌ {text.guideDoNot}
+                    </span>
+                    <ul className="space-y-1 text-slate-800 font-bold list-none">
+                      {guide.donts.map((d, i) => (
+                        <li key={i} className="leading-tight">• {d}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -1274,19 +1293,19 @@ export default function EmergencyPortal() {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[10px] font-bold text-slate-300">
             <div className="p-2 bg-white/5 rounded border border-white/10 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               <span>{text.ccControlRoom}</span>
             </div>
             <div className="p-2 bg-white/5 rounded border border-white/10 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               <span>{text.ccMedicalActive}</span>
             </div>
             <div className="p-2 bg-white/5 rounded border border-white/10 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               <span>{text.ccPoliceActive}</span>
             </div>
             <div className="p-2 bg-white/5 rounded border border-white/10 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               <span>{text.ccNetworkStatus}</span>
             </div>
           </div>
@@ -1301,8 +1320,8 @@ export default function EmergencyPortal() {
         </div>
 
       </main>
-
       <Footer />
     </div>
   );
 }
+
