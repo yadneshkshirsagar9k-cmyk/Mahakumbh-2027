@@ -1,7 +1,39 @@
 import type { Metadata, Viewport } from 'next';
+import { Inter, Noto_Sans_Devanagari, Outfit, JetBrains_Mono, Dancing_Script } from 'next/font/google';
 import './globals.css';
 import { AIChatbot } from '@/components/ai-chatbot';
 import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-heading',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-mono',
+});
+
+const notoSansDevanagari = Noto_Sans_Devanagari({
+  subsets: ['devanagari', 'latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-devanagari',
+});
+
+const dancingScript = Dancing_Script({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-signature',
+});
+
 
 export const metadata: Metadata = {
   title: GOVERNMENT_PORTAL_ENABLED 
@@ -38,7 +70,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+    <html lang="en" className={`h-full antialiased ${inter.variable} ${outfit.variable} ${jetbrainsMono.variable} ${notoSansDevanagari.variable} ${dancingScript.variable}`} suppressHydrationWarning>
       <head>
         {/* Additional government portal metatags */}
         <meta name="application-name" content="Nashik Mahakumbh Portal" />

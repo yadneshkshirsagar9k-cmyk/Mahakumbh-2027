@@ -1040,8 +1040,8 @@ export default function AuthPage() {
           <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
               <div className="flex items-center gap-5">
-                <div className="w-16 h-16 rounded-full border-2 border-[#F26F21]/60 bg-[#F26F21]/10 flex items-center justify-center shrink-0">
-                  <span className="text-3xl" role="img" aria-label="Om symbol">🕉️</span>
+                <div className="w-16 h-16 rounded-full border-2 border-white/20 bg-white flex items-center justify-center shrink-0 overflow-hidden shadow-md">
+                  <img src="/assets/images/logo.svg" className="w-full h-full object-cover" alt="Logo" />
                 </div>
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">

@@ -160,10 +160,10 @@ function VerifyScreen() {
             {payload.ct === 'REGISTRATION_CERTIFICATE' && (
               <div className="bg-white border-[3px] border-[#111827] p-6 shadow-xl relative overflow-hidden flex flex-col font-sans">
                 {/* Watermark Background */}
-                <div className="absolute inset-0 opacity-[0.02] flex items-center justify-center pointer-events-none">
-                  <div className="w-64 h-64 border-4 border-[#005BAC] rounded-full flex flex-col items-center justify-center">
-                    <span className="text-4xl font-black text-[#005BAC]">🕉️</span>
-                    <span className="text-sm font-black text-[#005BAC] mt-2">MAHAKUMBH 2027</span>
+                <div className="absolute inset-0 opacity-[0.03] flex items-center justify-center pointer-events-none">
+                  <div className="w-64 h-64 border-4 border-[#005BAC]/30 rounded-full flex flex-col items-center justify-center relative overflow-hidden">
+                    <img src="/assets/images/logo.svg" className="absolute inset-0 w-full h-full object-cover opacity-[0.08]" alt="" />
+                    <span className="text-sm font-black text-[#005BAC] mt-24 relative z-10">MAHAKUMBH 2027</span>
                   </div>
                 </div>
 
@@ -260,7 +260,9 @@ function VerifyScreen() {
               <div className="w-[323.5px] h-[204px] bg-white border-2 border-[#111827] rounded-md shadow-md flex flex-col justify-between overflow-hidden relative select-none shrink-0 mx-auto" style={{ width: '323.5px', height: '204px' }}>
                 {/* Background security micro-pattern */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0" style={{ backgroundImage: `repeating-linear-gradient(45deg, #005BAC 0px, #005BAC 1px, transparent 1px, transparent 10px)` }} />
-                <div className="absolute right-12 top-8 opacity-10 pointer-events-none z-0 text-[#005BAC] font-black text-6xl rotate-[-20deg]">🕉️</div>
+                <div className="absolute right-12 top-8 opacity-[0.06] pointer-events-none z-0 w-16 h-16 rotate-[-20deg]">
+                  <img src="/assets/images/logo.svg" className="w-full h-full object-contain" alt="" />
+                </div>
           
                 {/* Top Banner Bar (34px) */}
                 <div className="w-full bg-gradient-to-r from-[#005BAC] via-[#0A3161] to-[#005BAC] text-white px-2 py-1 flex items-center justify-between border-b-2 border-[#EA580C] z-10 shrink-0 h-[34px]">

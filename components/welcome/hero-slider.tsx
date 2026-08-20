@@ -17,6 +17,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Compass } from 'lucide-react';
 import { TEMPLES_DATA } from '@/constants/temples-data';
@@ -151,9 +152,19 @@ export function HeroSlider() {
             <div
               className="absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-700"
               style={{
-                backgroundImage: `url(${activeSlide.heroImage}), linear-gradient(135deg, #F5F7FA 0%, #FAFBFC 100%)`
+                backgroundImage: `linear-gradient(135deg, #F5F7FA 0%, #FAFBFC 100%)`
               }}
-            />
+            >
+              <Image
+                src={activeSlide.heroImage}
+                alt={activeSlide.name}
+                fill
+                priority={currentIndex === 0}
+                className="object-cover object-center transition-all duration-700"
+                sizes="100vw"
+                quality={85}
+              />
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

@@ -219,9 +219,9 @@ export function WelcomePopup({ isOpen, onClose, className }: WelcomePopupProps) 
 
             {/* Header */}
             <div className="relative px-6 pt-16 pb-4 sm:px-10 sm:pt-16 sm:pb-5 text-center flex-shrink-0">
-              {/* Om symbol */}
-              <div className="text-4xl sm:text-5xl mb-3 leading-none" aria-hidden="true">
-                🕉️
+              {/* Logo Emblem */}
+              <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden border border-[#E5E7EB] shadow-sm bg-white flex items-center justify-center">
+                <img src="/assets/images/logo.svg" className="w-full h-full object-cover" alt="Logo" />
               </div>
 
               {/* Dynamic Title */}

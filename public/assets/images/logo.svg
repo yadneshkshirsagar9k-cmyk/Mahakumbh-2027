@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Gold gradient for outer border and details -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3A63B" />
+      <stop offset="30%" stop-color="#FCDA7C" />
+      <stop offset="70%" stop-color="#E59E30" />
+      <stop offset="100%" stop-color="#B87D1B" />
+    </linearGradient>
+    
+    <!-- Sun glow radial gradient -->
+    <radialGradient id="sunGlow" cx="50%" cy="55%" r="50%">
+      <stop offset="0%" stop-color="#FFF0D4" />
+      <stop offset="25%" stop-color="#FFE0B2" />
+      <stop offset="60%" stop-color="#FFB74D" />
+      <stop offset="100%" stop-color="#F57C00" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Sun rays linear gradient -->
+    <linearGradient id="sunRayGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#E65100" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#FF9800" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Godavari river wave gradients -->
+    <linearGradient id="waveLight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#29B6F6" />
+      <stop offset="50%" stop-color="#0288D1" />
+      <stop offset="100%" stop-color="#0277BD" />
+    </linearGradient>
+    
+    <linearGradient id="waveDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0D254C" />
+      <stop offset="50%" stop-color="#08183A" />
+      <stop offset="100%" stop-color="#050F28" />
+    </linearGradient>
+
+    <!-- Clip path to keep elements inside the inner border -->
+    <clipPath id="innerCircleClip">
+      <circle cx="100" cy="100" r="76" />
+    </clipPath>
+  </defs>
+
+  <!-- Outer Double Gold Ring -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="url(#goldGrad)" stroke-width="3" />
+  <circle cx="100" cy="100" r="91" fill="none" stroke="#FFFFFF" stroke-width="1.5" />
+  
+  <!-- Main Navy Blue Circular Band -->
+  <circle cx="100" cy="100" r="86" fill="#071936" stroke="url(#goldGrad)" stroke-width="2" />
+  
+  <!-- Inner White/Gold Separator Ring -->
+  <circle cx="100" cy="100" r="77" fill="none" stroke="#FFFFFF" stroke-width="1.5" />
+
+  <!-- Stars on the Navy Blue Band (Outer Ring) -->
+  <!-- 5 Gold Stars at the Bottom Center -->
+  <g fill="url(#goldGrad)">
+    <!-- Bottom center star -->
+    <polygon points="100,169 102,172.5 106,172.5 103,174.5 104,178 100,176 96,178 97,174.5 94,172.5 98,172.5" />
+    <!-- Bottom left stars -->
+    <polygon points="87,167 89,170.5 93,170.5 90,172.5 91,176 87,174 83,176 84,172.5 81,170.5 85,170.5" />
+    <polygon points="75,161 77,164.5 81,164.5 78,166.5 79,170 75,168 71,170 72,166.5 69,164.5 73,164.5" />
+    <!-- Bottom right stars -->
+    <polygon points="113,167 115,170.5 119,170.5 116,172.5 117,176 113,174 109,176 110,172.5 107,170.5 111,170.5" />
+    <polygon points="125,161 127,164.5 131,164.5 128,166.5 129,170 125,168 121,170 122,166.5 119,164.5 123,164.5" />
+    
+    <!-- Mid-lower left stars -->
+    <polygon points="64,151 66,154.5 70,154.5 67,156.5 68,160 64,158 60,160 61,156.5 58,154.5 62,154.5" />
+    <polygon points="55,138 57,141.5 61,141.5 58,143.5 59,147 55,145 51,147 52,143.5 49,141.5 53,141.5" />
+    <!-- Mid-lower right stars -->
+    <polygon points="136,151 138,154.5 142,154.5 139,156.5 140,160 136,158 132,160 133,156.5 130,154.5 134,154.5" />
+    <polygon points="145,138 147,141.5 151,141.5 148,143.5 149,147 145,145 141,147 142,143.5 139,141.5 143,141.5" />
+  </g>
+  
+  <!-- White Stars on Upper Sides -->
+  <g fill="#FFFFFF">
+    <!-- Left side white stars -->
+    <polygon points="48,124 50,127 54,127 51,129 52,132.5 48,130.5 44,132.5 45,129 42,127 46,127" />
+    <polygon points="43,109 45,112 49,112 46,114 47,117.5 43,115.5 39,117.5 40,114 37,112 41,112" />
+    <polygon points="41,94 43,97 47,97 44,99 45,102.5 41,100.5 37,102.5 38,99 35,97 39,97" />
+    
+    <!-- Right side white stars -->
+    <polygon points="152,124 154,127 158,127 155,129 156,132.5 152,130.5 148,132.5 149,129 146,127 150,127" />
+    <polygon points="157,109 159,112 163,112 160,114 161,117.5 157,115.5 153,117.5 154,114 151,112 155,112" />
+    <polygon points="159,94 161,97 165,97 162,99 163,102.5 159,100.5 155,102.5 156,99 153,97 157,97" />
+  </g>
+
+  <!-- Inner Circle Graphic Elements -->
+  <g clip-path="url(#innerCircleClip)">
+    <!-- Light grey/sky background inside -->
+    <rect x="20" y="20" width="160" height="160" fill="#F4F7F9" />
+
+    <!-- Orange Radial Sunburst -->
+    <circle cx="100" cy="100" r="76" fill="url(#sunGlow)" />
+    
+    <!-- Sharp Sun Rays -->
+    <g fill="url(#sunRayGrad)" opacity="0.6">
+      <polygon points="100,100 80,30 85,26 100,100" />
+      <polygon points="100,100 60,40 65,35 100,100" />
+      <polygon points="100,100 45,55 50,50 100,100" />
+      <polygon points="100,100 35,75 39,69 100,100" />
+      <polygon points="100,100 120,30 115,26 100,100" />
+      <polygon points="100,100 140,40 135,35 100,100" />
+      <polygon points="100,100 155,55 150,50 100,100" />
+      <polygon points="100,100 165,75 161,69 100,100" />
+    </g>
+
+    <!-- Green Fields at the bottom -->
+    <path d="M20,130 Q60,112 100,126 T180,118 L180,180 L20,180 Z" fill="#207436" stroke="#1B5E20" stroke-width="1" />
+    <path d="M20,136 Q60,122 100,134 T180,124 L180,180 L20,180 Z" fill="#388E3C" opacity="0.8" />
+
+    <!-- Godavari River Waves -->
+    <path d="M20,142 Q60,128 100,146 T180,132 L180,180 L20,180 Z" fill="url(#waveLight)" />
+    <path d="M20,149 Q60,136 100,152 T180,140 L180,180 L20,180 Z" fill="url(#waveDark)" />
+    <!-- White crest lines for waves -->
+    <path d="M20,149 Q60,136 100,152 T180,140" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.7" />
+
+    <!-- Tech Integration / Circuit Tracks (Smart Platform Theme) -->
+    <!-- Left Circuit tracks -->
+    <path d="M78,92 L52,92" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="52" cy="92" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="52" cy="92" r="1.5" fill="url(#goldGrad)" />
+
+    <path d="M74,80 L48,80" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="48" cy="80" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="48" cy="80" r="1.5" fill="url(#goldGrad)" />
+
+    <path d="M78,68 L56,58" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="56" cy="58" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="56" cy="58" r="1.5" fill="url(#goldGrad)" />
+
+    <path d="M84,58 L68,44" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="68" cy="44" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="68" cy="44" r="1.5" fill="url(#goldGrad)" />
+
+    <!-- Right Circuit tracks -->
+    <path d="M122,92 L148,92" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="148" cy="92" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="148" cy="92" r="1.5" fill="url(#goldGrad)" />
+
+    <path d="M126,80 L152,80" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="152" cy="80" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="152" cy="80" r="1.5" fill="url(#goldGrad)" />
+
+    <path d="M122,68 L144,58" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="144" cy="58" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="144" cy="58" r="1.5" fill="url(#goldGrad)" />
+
+    <path d="M116,58 L132,44" stroke="#071936" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    <circle cx="132" cy="44" r="3.5" fill="#FFF" stroke="#071936" stroke-width="1.5" />
+    <circle cx="132" cy="44" r="1.5" fill="url(#goldGrad)" />
+
+    <!-- Central Trishul (Trident) Logo Symbol -->
+    <!-- Location Pin Base (represents mapping/GIS) -->
+    <path d="M100,124 C94,124 90,116 90,109 C90,102 100,91 100,91 C100,91 110,102 110,109 C110,116 106,124 100,124 Z" fill="#071936" stroke="#FFFFFF" stroke-width="2" />
+    <circle cx="100" cy="109" r="4.5" fill="url(#goldGrad)" stroke="#FFFFFF" stroke-width="1" />
+
+    <!-- Trishul Shaft -->
+    <rect x="97" y="66" width="6" height="26" fill="#071936" stroke="#FFFFFF" stroke-width="1.5" rx="1.5" />
+
+    <!-- Trishul Blades -->
+    <!-- Center Blade -->
+    <path d="M96,68 L100,40 L104,68 Z" fill="#071936" stroke="#FFFFFF" stroke-width="1.5" />
+    <!-- Left Blade Curve -->
+    <path d="M96,71 C84,71 80,66 84,51 C86,55 91,62 96,62 Z" fill="#071936" stroke="#FFFFFF" stroke-width="1.5" />
+    <!-- Right Blade Curve -->
+    <path d="M104,71 C116,71 120,66 116,51 C114,55 109,62 104,62 Z" fill="#071936" stroke="#FFFFFF" stroke-width="1.5" />
+    
+    <!-- Gold Trishul Inlays -->
+    <path d="M100,45 L100,65" stroke="url(#goldGrad)" stroke-width="1.5" stroke-linecap="round" />
+    <circle cx="100" cy="74" r="2.5" fill="url(#goldGrad)" />
+  </g>
+</svg>

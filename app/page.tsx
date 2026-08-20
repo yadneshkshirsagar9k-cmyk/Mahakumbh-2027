@@ -8,18 +8,40 @@
  * welcome popup, and footer.
  */
 
+import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { HeroSlider } from '@/components/welcome/hero-slider';
 import { LiveAnnouncements } from '@/components/welcome/live-announcements';
 import { RegistrationOverview } from '@/components/welcome/registration-overview';
-import { RegistrationNetwork } from '@/components/welcome/registration-network';
-import { ExploreMaharashtra } from '@/components/welcome/explore-maharashtra';
-import { WelcomePopup } from '@/components/welcome/welcome-popup';
 import { useWelcomePopup } from '@/hooks/use-welcome-popup';
 import { HelpCircle } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { GOVERNMENT_PORTAL_ENABLED } from '@/config/features';
+
+const RegistrationNetwork = dynamic(() => import('@/components/welcome/registration-network'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[500px] flex flex-col items-center justify-center gap-3 bg-white border border-[#E5E7EB] rounded-2xl animate-pulse">
+      <div className="w-8 h-8 border-4 border-gov-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <span className="text-sm font-semibold text-gray-500">Loading GIS Engine...</span>
+    </div>
+  )
+});
+
+const ExploreMaharashtra = dynamic(() => import('@/components/welcome/explore-maharashtra'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[500px] flex flex-col items-center justify-center gap-3 bg-[#011D40] border border-white/10 rounded-2xl animate-pulse">
+      <div className="w-8 h-8 border-4 border-saffron-500 border-t-transparent rounded-full animate-spin"></div>
+      <span className="text-sm font-semibold text-stone-400">Loading Interactive Map...</span>
+    </div>
+  )
+});
+
+const WelcomePopup = dynamic(() => import('@/components/welcome/welcome-popup'), {
+  ssr: false,
+});
 
 export default function Home() {
   const { isOpen, close, reopen } = useWelcomePopup();

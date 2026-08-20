@@ -106,16 +106,16 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#005BAC] rounded-lg p-1"
         >
-          {/* Reusable Government Logo Placeholder */}
-          <div className="relative w-11 h-11 rounded-full flex items-center justify-center bg-[#F5F7FA] border border-[#E5E7EB] shadow-sm">
-            <span className="text-xl font-bold text-[#111827]">🕉️</span>
+          {/* Reusable Government Logo SVG */}
+          <div className="relative w-11 h-11 rounded-full flex items-center justify-center overflow-hidden border border-[#E5E7EB] shadow-sm shrink-0 bg-white">
+            <img src="/assets/images/logo.svg" className="w-full h-full object-cover" alt="Logo" />
           </div>
           <div className="flex flex-col">
-            <span className="text-base font-bold tracking-wide text-[#111827] font-[var(--font-heading)] leading-tight">
-              Nashik Mahakumbh
+            <span className="text-xs sm:text-sm font-extrabold tracking-tight text-[#111827] font-[var(--font-heading)] leading-tight max-w-[200px] sm:max-w-none">
+              Integrated Smart Pilgrim Management Platform
             </span>
-            <span className="text-[10px] font-medium tracking-wider uppercase text-[#6B7280]">
-              Smart Crowd Management Portal
+            <span className="text-[9px] font-bold tracking-wider uppercase text-[#F26F21] leading-none mt-0.5">
+              NTKMA • Government of Maharashtra
             </span>
           </div>
         </Link>
